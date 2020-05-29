@@ -38,10 +38,23 @@ function createTemplate(program)
 {
 	let template = program.makeTemplate();
 
-	console.log(template)
 	Templates.add(template);
 
 	return id(`_tpl$${ Templates.size }`);
+}
+
+function getTemplates()
+{
+	let code = '';
+	let i = 0;
+
+	for(let tpl of Templates) {
+		let index = ++i;
+		code += `let _tpl$${ index } = document.createElement("template");\n`;
+		code += `_tpl$${ index }.innerHTML = "${ tpl }";\n\n`;
+	}
+
+	return code;
 }
 
 function getLastVariableId()
@@ -104,4 +117,5 @@ export function compile(entity)
 	});
 
 	console.log(code.code);
+	console.log(getTemplates())
 }

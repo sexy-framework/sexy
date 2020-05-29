@@ -7,7 +7,7 @@ export default function node(context, options)
 {
 	let template = options.createVariable(context, (n, l) => {
 		return new memberExpression(
-			l, id('nextElement')
+			l, id('nextSibling')
 		);
 	});
 
