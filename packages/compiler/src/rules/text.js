@@ -7,12 +7,12 @@ export default function node(context, options)
 {
 	let template = options.createVariable(context, (n, l) => {
 		return new memberExpression(
-			l, id('nextSibling')
+			l, id(options.firstChild ? 'firstChild' : 'nextSibling')
 		);
 	});
 
 	context.push(template.value);
-	
+
 	// let template = createVariable(context, (n, l) => {
 	// 	return id('createTeamplate');
 	// });

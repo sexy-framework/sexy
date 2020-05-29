@@ -8,48 +8,49 @@ import { compile } from '@hawa/compiler';
 
 function test() {
 
-	let _tpl$1 = document.createElement("template");
-	_tpl$1.innerHTML = "<div>start</div><!---->end";
-
-	let _tpl$2 = document.createElement("template");
-	_tpl$2.innerHTML = "<div></div>asdad<!---->asdasd";
-
-	let _tpl$3 = document.createElement("template");
-	_tpl$3.innerHTML = "<div>iff2</div>";
-
-	let _tpl$4 = document.createElement("template");
-	_tpl$4.innerHTML = "1<!---->2<!---->3";
-
-	let _tpl$5 = document.createElement("template");
-	_tpl$5.innerHTML = "asd";
-
-	function getNode(template, node, render)
-	{
-		if(render) {
+	function getNode(template, node, render) {
+		if (render) {
 			return template.content.cloneNode(true);
 		}
 
 		return node;
 	}
 
-	function each(node, ...args)
-	{
-		console.log(node, args);
+	function slot(context, name, node, callback) {
+		if (context.$slots[name] === undefined) {
+			callback(node);
+			return;
+		}
+
+		node.innerHTML = context.$slots[name];
+
 		return node;
 	}
 
-	function statement(node, ...args)
-	{
+	function each(node, items, fn) {
+		let body = document.createDocumentFragment();
+
+		for (var i = 0; i < items.length; i++) {
+			let node = fn(node, items[i], i);
+			body.appendChild(node);
+		}
+
+		node.replaceWith(body);
+
+		return body;
+	}
+
+	function statement(node, ...args) {
 		let returnNode = false;
 
 		for (var i = 0; i < args.length; i += 2) {
-			if(args[i]) {
+			if (args[i]) {
 				returnNode = args[i + 1](node);
 				break;
 			}
 		}
 
-		if(returnNode === false) {
+		if (returnNode === false) {
 			return node;
 		}
 
@@ -58,68 +59,57 @@ function test() {
 		return returnNode;
 	}
 
+	let { render, templates } = gett();
+
+	// console.log(render);
+	// console.log(templates);
+	// return;
+
+	/**
+	 * GENERATED CODE
+	 */
+	let _tpl$1 = document.createElement("template");
+	_tpl$1.innerHTML = "<div><!----></div>";
+
+	let _tpl$2 = document.createElement("template");
+	_tpl$2.innerHTML = "<div class=\"button\"><span>Default button text</span></div>";
+
 	function makeComponent(context, node = false) {
 		let render = node === false;
+		/**
+		 * GENERATED CODE
+		 */
 		let _el$1 = getNode(_tpl$1, node, render);
 
 		let _el$2 = render ? _el$1.firstChild : _el$1;
 
-		let _el$3 = _el$2.nextSibling;
 
-		let _el$25 = statement(_el$3, 1, node => {
+		let _el$3 = _el$2.firstChild;
+
+		console.log(_el$3, _el$2);
+		let _el$8 = each(_el$3, [1], (node, item, key) => {
 			let _el$4 = getNode(_tpl$2, node, render);
 
 			let _el$5 = render ? _el$4.firstChild : _el$4;
 
-			let _el$6 = _el$5.nextSibling;
-			let _el$7 = _el$6.nextSibling;
-
-			let _el$11 = statement(_el$7, 2, node => {
-				let _el$8 = getNode(_tpl$3, node, render);
-
-				let _el$9 = render ? _el$8.firstChild : _el$8;
-
-				let _el$10 = _el$9.nextSibling;
-				return render ? _el$8 : _el$10;
+			let _el$6 = _el$5.firstChild;
+			makeAttrs(_el$6, render, {
+				"class": "button"
 			});
-
-			let _el$12 = _el$11.nextSibling;
-			return render ? _el$4 : _el$12;
-		}, test, node => {
-			let _el$13 = getNode(_tpl$4, node, render);
-
-			let _el$14 = render ? _el$13.firstChild : _el$13;
-
-			let _el$15 = _el$14.nextSibling;
-
-			let _el$16 = getComponent("nativ", _el$15, render);
-
-			makeAttrs(_el$16, render, {
-				"data-p": "1"
+			slot(context, "default", _el$6, node => {
+				let _el$7 = _el$6.firstChild;
 			});
-			let _el$17 = _el$16.nextSibling;
-			let _el$18 = _el$17.nextSibling;
-
-			let _el$20 = each(_el$18, 1, () => {
-				let _el$19 = _el$18.nextSibling;
-			}, () => {});
-
-			let _el$21 = _el$20.nextSibling;
-			return render ? _el$13 : _el$21;
-		}, true, node => {
-			let _el$22 = getNode(_tpl$5, node, render);
-
-			let _el$23 = render ? _el$22.firstChild : _el$22;
-
-			let _el$24 = _el$23.nextSibling;
-			return render ? _el$22 : _el$24;
+			return render ? _el$4 : _el$7;
 		});
 
-		let _el$26 = _el$25.nextSibling;
-		return render ? _el$1 : _el$26;
+		return render ? _el$1 : _el$8;
 	}
 
-	let d = makeComponent();
+	let d = makeComponent({
+		$slots: {
+			default: '1',
+		}
+	});
 
 	let layout = document.getElementById('layout');
 	layout.innerHTML = '';
@@ -143,11 +133,10 @@ function gett() {
 	asdasd
 	@elseif(test)
 	1
-		<Nativ data-p="1">asd</Nativ>
 		2
 		@each(1)
 		asdasd
-		<slot>default text for slot</slot>
+		<slot>default text for slot<b class="d">1</b></slot>
 		@endeach
 		3
 		@else 
@@ -156,8 +145,17 @@ function gett() {
 	end
 	`;
 
+	html = `
+	<div>
+	@each(1)
+	<div class="button">
+		<slot>Default button text</slot>
+	</div>
+	@endeach
+	</div>
+	`
 	let template = parse(html);
 
-	compile(template);
-	console.log(html);
+	return compile(template);
+	// console.log(html);
 }

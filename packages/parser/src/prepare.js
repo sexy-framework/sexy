@@ -12,8 +12,8 @@ export function prepare(html)
 		.replace(/@else/g, '</expr><expr type="program" value="true">')
 		.replace(/@endif/g, '</expr></expr>')
 		// each
-		.replace(/@each\((.*)\)/g, '<expr type="each" value="$1">')
-		.replace(/@endeach/g, '</expr>')
+		.replace(/@each\((.*)\)/g, '<expr type="each" value="$1"><expr type="program">')
+		.replace(/@endeach/g, '</expr></expr>')
 
 	return prepareHTML(html);
 }

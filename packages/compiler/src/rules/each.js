@@ -19,9 +19,12 @@ export default function each(context, options)
 
 		this.children[i].handle(body, options);
 
-		
 		params.push(
-			new arrowFunctionExpression([], new blockStatement(body))
+			new arrowFunctionExpression([
+				id('node'),
+				id('item'), // replace with expression parse
+				id('key') // replace with expression parse
+			], new blockStatement(body))
 		);
 	}
 

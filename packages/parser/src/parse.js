@@ -65,6 +65,6 @@ export function parse(html)
 	
 	parse.write(html);
 	parse.end();
-
+	console.log(stack)
 	return stack[0];
 }

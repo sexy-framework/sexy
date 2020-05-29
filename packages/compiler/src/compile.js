@@ -116,6 +116,8 @@ export function compile(entity)
 		quotes: "double",
 	});
 
-	console.log(code.code);
-	console.log(getTemplates())
+	return {
+		render: code.code,
+		templates: getTemplates(),
+	}
 }
