@@ -1,0 +1,22 @@
+/* eslint-env node */
+module.exports = {
+	presets: [
+        [
+            '@babel/preset-env',
+            {
+                modules: false,
+                loose: true,
+                targets: {
+                    browsers: ['ie >= 9']
+                }
+            }
+        ]
+    ],
+    plugins: [
+        ['@babel/plugin-transform-object-assign'],
+        ['@babel/plugin-transform-modules-commonjs', {
+	    	"allowTopLevelThis": true
+	    }],
+        ['@babel/plugin-proposal-object-rest-spread', { 'loose': true }]
+    ],
+}

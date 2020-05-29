@@ -1,0 +1,25 @@
+{
+  "name": "@hawa/parser",
+  "version": "0.0.23",
+  "description": "Support assets list input file type",
+  "main": "dist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Compiler\"",
+    "start": "babel --root-mode upward src --watch --out-dir dist --source-maps inline --copy-files --ignore spec.js,spec.jsx",
+    "build": "babel --root-mode upward src --out-dir dist --source-maps inline --copy-files --ignore spec.js,spec.jsx"
+  },
+  "author": "Kir Burkhanov",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/generator": "^7.9.6",
+    "@babel/parser": "^7.9.6",
+    "@babel/traverse": "^7.9.6",
+    "@babel/types": "^7.9.6",
+    "htmlparser2": "^4.1.0",
+    "prettier": "^2.0.5"
+  },
+  "gitHead": "c96e4b0b26723e73dd0c2f09f62f8bae182c27b8"
+}
