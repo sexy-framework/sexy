@@ -14,7 +14,7 @@ import { children } from './node';
 export default function slot(context, options)
 {
 	let params = [
-		id('context'),
+		id('$slots'),
 		stringLiteral(this.name),
 		options.getLastVariableId(),
 	];

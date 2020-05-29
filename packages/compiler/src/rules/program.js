@@ -6,6 +6,8 @@ import {
 	callExpression,
 } from "@babel/types";
 
+import { children } from './node';
+
 export default function program(context, options)
 {
 	let template = options.createVariable(context, (n, l) => {
@@ -27,7 +29,9 @@ export default function program(context, options)
 	
 	context.push(pointer.value);
 
-	this.map((item) => item.handle(context, options));
+	children(this, context, options);
+	
+	// this.map((item) => item.handle(context, options));
 
 	let returnPointer = new returnStatement(
 		new conditionalExpression(

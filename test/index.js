@@ -1,6 +1,7 @@
 import { parse } from '@hawa/parser';
 import { compile } from '@hawa/compiler';
 
+import time from './time';
 
 
 
@@ -16,13 +17,33 @@ function test() {
 		return node;
 	}
 
-	function slot(context, name, node, callback) {
-		if (context.$slots[name] === undefined) {
+	function parseContext(context)
+	{
+		if(context === undefined || context === null) {
+			context = {};
+		}
+
+		let $props = context.$props || {};
+		let $slots = context.$slots || {};
+
+		return {
+			$props,
+			$slots,
+		}
+	}
+
+
+	function makeAttrs() {
+
+	}
+
+	function slot($slots, name, node, callback) {
+		if ($slots[name] === undefined) {
 			callback(node);
 			return;
 		}
 
-		node.innerHTML = context.$slots[name];
+		node.innerHTML = $slots[name];
 
 		return node;
 	}
@@ -59,7 +80,7 @@ function test() {
 		return returnNode;
 	}
 
-	let { render, templates } = gett();
+	// let { render, templates } = gett();
 
 	// console.log(render);
 	// console.log(templates);
@@ -76,6 +97,8 @@ function test() {
 
 	function makeComponent(context, node = false) {
 		let render = node === false;
+
+		let { $props, $slots } = parseContext(context);
 		/**
 		 * GENERATED CODE
 		 */
@@ -83,11 +106,9 @@ function test() {
 
 		let _el$2 = render ? _el$1.firstChild : _el$1;
 
-
 		let _el$3 = _el$2.firstChild;
 
-		console.log(_el$3, _el$2);
-		let _el$8 = each(_el$3, [1], (node, item, key) => {
+		let _el$8 = each(_el$3, Array.from({ length: 10 }, (_, i) => i), (node, item, key) => {
 			let _el$4 = getNode(_tpl$2, node, render);
 
 			let _el$5 = render ? _el$4.firstChild : _el$4;
@@ -96,7 +117,7 @@ function test() {
 			makeAttrs(_el$6, render, {
 				"class": "button"
 			});
-			slot(context, "default", _el$6, node => {
+			slot($slots, "default", _el$6, node => {
 				let _el$7 = _el$6.firstChild;
 			});
 			return render ? _el$4 : _el$7;
@@ -105,16 +126,15 @@ function test() {
 		return render ? _el$1 : _el$8;
 	}
 
-	let d = makeComponent({
-		$slots: {
-			default: '1',
-		}
-	});
-
 	let layout = document.getElementById('layout');
 	layout.innerHTML = '';
 
+	time('render');
+	let d = makeComponent();
+
 	layout.appendChild(d);
+
+	time('render');
 }
 
 test();
