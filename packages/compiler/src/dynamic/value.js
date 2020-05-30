@@ -34,6 +34,9 @@ export function makeValue(context, value, fn)
 	return fn(ast, context);
 }
 
+/**
+ * Compile expression to DOM expression and make in function
+ */
 export function makeFunction(ast, context)
 {
 	traverse(ast, {
@@ -60,6 +63,43 @@ export function makeFunction(ast, context)
 	]));
 }
 
+/**
+ * Compile string to DOM expression
+ */
+export function makeString(ast, context)
+{
+	let deps = [];
+
+	traverse(ast, {
+		Identifier: {
+			enter(path)
+			{
+				let id = path.node;
+
+				if(context.observables.includes(id.name)) {
+					deps.push(id.name);
+					id.name = `${ id.name }()`;
+				}
+			},
+			exit(path) {
+
+			},
+		}
+	});
+
+	let result = ast.program.body[0];
+
+	result = result.expression.right;
+
+	return {
+		content: result,
+		deps: deps,
+	}
+}
+
+/**
+ * Compile expression to DOM expression and make it computed
+ */
 export function makeComputed(ast, context)
 {
 	let deps = [];
