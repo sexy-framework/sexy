@@ -31,7 +31,7 @@ export default function statement(context, options)
 
 
 	let expression = options.createVariable(context, (n, l) => {
-		return new callExpression(id('statement'), params);
+		return new callExpression(id('_statement$'), params);
 	});
 
 

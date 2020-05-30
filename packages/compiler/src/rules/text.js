@@ -3,15 +3,24 @@ import {
 	identifier as id,
 } from "@babel/types";
 
-export default function node(context, options)
+export default function text(context, options)
 {
-	let template = options.createVariable(context, (n, l) => {
-		return new memberExpression(
-			l, id(options.firstChild ? 'firstChild' : 'nextSibling')
-		);
-	});
+	// let template = false;
 
-	context.push(template.value);
+	// if(options.customDefine !== null) {
+	// 	template = options.customDefine(context, options.firstChild);
+	// 	delete options.customDefine;
+	// }
+
+	// if(template === false) {
+	// 	template = options.createVariable(context, (n, l) => {
+	// 		return new memberExpression(
+	// 			l, id(options.firstChild ? 'firstChild' : 'nextSibling')
+	// 		);
+	// 	});
+
+	// 	context.push(template.value);
+	// }
 
 	// let template = createVariable(context, (n, l) => {
 	// 	return id('createTeamplate');

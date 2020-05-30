@@ -1,6 +1,7 @@
 import { parse } from '@hawa/parser';
 import { compile } from '@hawa/compiler';
 
+
 import time from './time';
 
 
@@ -17,9 +18,8 @@ function test() {
 		return node;
 	}
 
-	function parseContext(context)
-	{
-		if(context === undefined || context === null) {
+	function parseContext(context) {
+		if (context === undefined || context === null) {
 			context = {};
 		}
 
@@ -33,11 +33,11 @@ function test() {
 	}
 
 
-	function makeAttrs() {
+	function _makeAttrs$() {
 
 	}
 
-	function slot($slots, name, node, callback) {
+	function _slot$($slots, name, node, callback) {
 		if ($slots[name] === undefined) {
 			callback(node);
 			return;
@@ -48,7 +48,7 @@ function test() {
 		return node;
 	}
 
-	function each(node, items, fn) {
+	function _each$(node, items, fn) {
 		let body = document.createDocumentFragment();
 
 		for (var i = 0; i < items.length; i++) {
@@ -61,7 +61,7 @@ function test() {
 		return body;
 	}
 
-	function statement(node, ...args) {
+	function _statement$(node, ...args) {
 		let returnNode = false;
 
 		for (var i = 0; i < args.length; i += 2) {
@@ -80,7 +80,7 @@ function test() {
 		return returnNode;
 	}
 
-	// let { render, templates } = gett();
+	let { render, templates } = gett();
 
 	// console.log(render);
 	// console.log(templates);
@@ -93,7 +93,7 @@ function test() {
 	_tpl$1.innerHTML = "<div><!----></div>";
 
 	let _tpl$2 = document.createElement("template");
-	_tpl$2.innerHTML = "<div class=\"button\"><span>Default button text</span></div>";
+	_tpl$2.innerHTML = "<div>1</div><div class=\"button\"><span>Default <b class=\"d\">button</b> text</span></div>";
 
 	function makeComponent(context, node = false) {
 		let render = node === false;
@@ -108,22 +108,36 @@ function test() {
 
 		let _el$3 = _el$2.firstChild;
 
-		let _el$8 = each(_el$3, Array.from({ length: 10 }, (_, i) => i), (node, item, key) => {
-			let _el$4 = getNode(_tpl$2, node, render);
+		let _el$13 = _each$(_el$3, [1], (item, key) => {
+			let _el$4 = getNode(_tpl$2, null, true);
 
 			let _el$5 = render ? _el$4.firstChild : _el$4;
 
 			let _el$6 = _el$5.firstChild;
-			makeAttrs(_el$6, render, {
+			let _el$7 = _el$5.nextSibling;
+
+			_makeAttrs$(_el$7, render, {
 				"class": "button"
 			});
-			slot($slots, "default", _el$6, node => {
-				let _el$7 = _el$6.firstChild;
+
+			let _el$8 = _el$7.firstChild;
+
+			_slot$($slots, "default", _el$8, node => {
+				let _el$9 = _el$8.firstChild;
+				let _el$10 = _el$9.nextSibling;
+
+				_makeAttrs$(_el$10, render, {
+					"class": "d"
+				});
+
+				let _el$11 = _el$10.firstChild;
+				let _el$12 = _el$10.nextSibling;
 			});
+
 			return render ? _el$4 : _el$7;
 		});
 
-		return render ? _el$1 : _el$8;
+		return render ? _el$1 : _el$2;
 	}
 
 	let layout = document.getElementById('layout');
@@ -134,6 +148,7 @@ function test() {
 
 	layout.appendChild(d);
 
+	console.log(layout.innerHTML);
 	time('render');
 }
 
@@ -168,14 +183,34 @@ function gett() {
 	html = `
 	<div>
 	@each(1)
+	<div>1</div>
 	<div class="button">
-		<slot>Default button text</slot>
+		<slot>Default <b class="d">button</b> text</slot>
 	</div>
 	@endeach
-	</div>
-	`
-	let template = parse(html);
+	
 
-	return compile(template);
+	<script>
+	let text1 = $o(1);
+	let text2 = $o(1);
+	let text3 = $o(1);
+	let time = 1235;
+
+	let c = () => {
+		return time + text1;
+	}
+
+	function method1() {
+		let d = text2();
+
+		let text1 = 'some';
+
+		text1;
+	}
+	</script>
+	`
+	let blocks = parse(html);
+
+	return compile(blocks);
 	// console.log(html);
 }

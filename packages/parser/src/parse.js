@@ -1,3 +1,5 @@
+import { analyse } from '@hawa/analyser';
+
 import { prepare } from './prepare';
 import { isComponent } from './utils';
 
@@ -5,10 +7,36 @@ import { Expression, Text, Node, Slot, Component } from './types';
 
 import { Parser as HTMLParser } from 'htmlparser2';
 
+export function parseBlocks(blocks, html)
+{
+	for(let key in blocks) {
+		let regexp = new RegExp(`<${key}.*>((.|\\s)*)<\\/${key}>`, 'g');
+		let matches = regexp.exec(html);
+		if(matches) {
+			blocks[key] = matches[1];
+		}
+	}
+
+	return blocks;
+}
+
 export function parse(html)
 {
-	html = prepare(html);
+	// get additional blocks e.g. script, style, doc
+	let blocks = parseBlocks({
+		script: null,
+		style: null,
+	}, html);
 
+	// clean up html and replace expression with tag-expression
+	html = prepare(blocks, html);
+
+	// Analyse javascript. Get stateful vars and deps
+	if(blocks.script) {
+		analyse(blocks.script);
+	}
+
+	// Parse TAGs
 	let stack = [
 		new Expression({ type: 'program' })
 	];
@@ -16,6 +44,11 @@ export function parse(html)
 	function currentStackNode()
 	{
 		return stack[stack.length - 1];
+	}
+
+	function isBlockTag(name)
+	{
+		return stack.length === 1 && ['script', 'style'].includes(name);
 	}
 
 	const parse = new HTMLParser({
@@ -58,13 +91,15 @@ export function parse(html)
 
 		onclosetag(name)
 		{
-			stack.pop();
+			let removed = stack.pop();
 	    }
 
 	}, { decodeEntities: true })
 	
 	parse.write(html);
 	parse.end();
-	console.log(stack)
-	return stack[0];
+
+	blocks.template = stack[0];
+	// console.log(stack, blocks)
+	return blocks;
 }

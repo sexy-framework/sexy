@@ -25,8 +25,14 @@ export default class Type
 		return rules[this.type].call(this, context, options);
 	}
 
+	skipInit()
+	{
+		return false;//this.type === 'program' || this.type === 'slot';
+	}
+
 	makeTemplate(onlyChildren = true)
 	{
+		// console.log(this, onlyChildren)
 		let template = `<${this.tag}`;
 		
 		for(let key in this.attrs) {
@@ -41,7 +47,7 @@ export default class Type
 		
 		template += `</${this.tag}>`;
 
-		if(['statement', 'each', 'component'].includes(this.type)) {
+		if(['statement', 'each', 'component'].includes(this.type) && !onlyChildren) {
 			return '<!---->';
 		}
 

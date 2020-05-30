@@ -23,87 +23,127 @@ import generate from "@babel/generator";
 
 
 
-let VariableCounter = 0;
-let LastVariableId = null;
-let Templates = new Set();
 
-function cleanup()
-{
-	VariableCounter = 0;
-	LastVariableId = id('hydrate');
-	Templates = new Set();
-}
 
-function createTemplate(program)
-{
-	let template = program.makeTemplate();
 
-	Templates.add(template);
 
-	return id(`_tpl$${ Templates.size }`);
-}
-
-function getTemplates()
-{
-	let code = '';
-	let i = 0;
-
-	for(let tpl of Templates) {
-		let index = ++i;
-		code += `let _tpl$${ index } = document.createElement("template");\n`;
-		code += `_tpl$${ index }.innerHTML = "${ tpl }";\n\n`;
-	}
-
-	return code;
-}
-
-function getLastVariableId()
-{
-	return LastVariableId;
-}
-
-function createVariable(context = null, Action = (n, l) => l)
-{
-	let name = id(`_el$${ ++VariableCounter }`);
-
-	let delcarationValue = Action(name, LastVariableId);
-
-	let value = new variableDeclaration('let', [
-		new variableDeclarator(
-			name,
-			delcarationValue
-		)
-	]);
-
-	LastVariableId = name;
-
-	return {
-		name,
-		value,
-	};
-}
 
 // nextSibling
 
-export function compile(entity)
+export function compile(blocks)
 {
-	cleanup();
+	let VariableCounter = 0;
+	let contextStack = [];
 
-	let tpl = entity.makeTemplate(true);
+	/**
+	 * Template management
+	 * @type {Set}
+	 */
+	let Templates = new Set();
+
+	function createTemplate(program)
+	{
+		let template = program.makeTemplate(true);
+
+		Templates.add(template);
+
+		return id(`_tpl$${ Templates.size }`);
+	}
+
+	function getTemplates()
+	{
+		let code = '';
+		let i = 0;
+
+		for(let tpl of Templates) {
+			let index = ++i;
+			code += `let _tpl$${ index } = document.createElement("template");\n`;
+			code += `_tpl$${ index }.innerHTML = "${ tpl }";\n\n`;
+		}
+
+		return code;
+	}
+
+	/**
+	 * Context management
+	 * @param  {[type]} LastVariableId [description]
+	 * @return {[type]}                [description]
+	 */
+	function createContext(init = false)
+	{
+		return contextStack.push({
+			LastVariableId: init ? id('node') : getLastVariableId(),
+		});
+	}
+
+	function getCurrentContext()
+	{
+		return contextStack[contextStack.length - 1];
+	}
+
+	function removeContext()
+	{
+		contextStack.pop();
+	}
+
+	function getLastVariableId()
+	{
+		return getCurrentContext().LastVariableId;
+	}
+
+	function setLastVariableId(value)
+	{
+		getCurrentContext().LastVariableId = value;
+	}
+
+	function createVariable(context = null, Action = (n, l) => l)
+	{
+		let name = id(`_el$${ ++VariableCounter }`);
+
+		let delcarationValue = Action(name, getLastVariableId());
+
+		let value = new variableDeclaration('let', [
+			new variableDeclarator(
+				name,
+				delcarationValue
+			)
+		]);
+
+		setLastVariableId(name);
+
+		return {
+			name,
+			value,
+		};
+	}
+
+	/**
+	 * Compile templates
+	 * @type {[type]}
+	 */
+	let entity = blocks.template;
 	let body = [];
 
-	let programContext = body;
+	let options = {
+		createContext,
+		removeContext,
+		createVariable,
+		getLastVariableId,
+		createTemplate,
+	}
 
 	function handle(entity)
 	{
-		entity.handle(programContext, { createVariable, getLastVariableId, createTemplate });
+		entity.handle(body, options);
 	}
 
+	createContext(true);
 	[entity].map((item) => handle(item));
 
-	// console.log(tpl);
-	// console.log(Templates);
-
+	/**
+	 * Generate code
+	 * @type {[type]}
+	 */
 	let code = generate(program(
 		body, 
 		[],

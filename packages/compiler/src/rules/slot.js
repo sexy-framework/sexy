@@ -9,7 +9,7 @@ import {
 	assignmentExpression,
 } from "@babel/types";
 
-import { children } from './node';
+import { children } from './utils';
 
 export default function slot(context, options)
 {
@@ -20,7 +20,7 @@ export default function slot(context, options)
 	];
 
 	let expression = new expressionStatement(
-		new callExpression(id('slot'), params)
+		new callExpression(id('_slot$'), params)
 	);
 
 	let body = [];
