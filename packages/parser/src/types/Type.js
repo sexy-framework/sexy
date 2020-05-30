@@ -25,6 +25,24 @@ export default class Type
 		return rules[this.type].call(this, context, options);
 	}
 
+	isTemplate()
+	{
+		return (this.type === 'node' && this.tag === 'template');
+	}
+
+	hasAloneTemplate()
+	{
+		let alone = true;
+
+		for(let child of this.children) {
+			if(!child.isTemplate()) {
+				alone = false;
+			}
+		}
+
+		return alone;
+	}
+
 	skipInit()
 	{
 		return false;//this.type === 'program' || this.type === 'slot';
@@ -52,7 +70,7 @@ export default class Type
 			return '<!---->';
 		}
 
-		if(!this.tag) {
+		if(!this.tag || this.isTemplate()) {
 			return childTemplate;
 		}
 

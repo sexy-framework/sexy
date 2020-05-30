@@ -11,9 +11,9 @@ import {
 import { children, getFirstTemplateNode } from './utils';
 
 
-export function parseEachCondition(value)
+export function parseEachCondition(entity)
 {
-	let statement = value.matchAll(/\((?<item>[A-z0-9]+)\s?(\,\s?(?<key>[A-z0-9]+)\s?)?\)\s?in\s(?<condition>.*)/g);
+	let statement = entity.value.matchAll(/\((?<item>[A-z0-9]+)\s?(\,\s?(?<key>[A-z0-9]+)\s?)?\)\s?in\s(?<condition>.*)/g);
 
 	let condition = null;
 	let args = [];
@@ -36,9 +36,28 @@ export function parseEachCondition(value)
 	}
 
 	return {
+		key: findKey(entity),
 		condition,
 		args,
 	}
+}
+
+export function findKey(entity)
+{
+	let key = null;
+	for(let child of entity.children)
+	{
+		if(child.option.key !== undefined) {
+			key = child.option.key;
+			break;
+		}
+	}
+
+	if(key === null) {
+		throw new Error('Key is required for Each loop (for hydration)');
+	}
+
+	return key;
 }
 
 export default function each(context, options)
@@ -48,15 +67,31 @@ export default function each(context, options)
 
 	params.push(options.getLastVariableId())
 
-	let loop = parseEachCondition(this.value);
+	/**
+	 * Loop preparation
+	 * 1. Key generation function
+	 * 2. Condition expression
+	 * 3. Item and key idintifiers
+	 * @type {[type]}
+	 */
+	let loop = parseEachCondition(this);
 
 	let value = options.dynamic.expression(loop.condition, options.getLastVariableId(), context, options);
-	params.push(value);
+	let key = options.dynamic.arrowFunction({
+		value: loop.key,
+		args: loop.args
+	}, options.getLastVariableId(), context, options);
 
+	params.push(value);
+	params.push(key);
+
+	/**
+	 * Get loop template
+	 */
 	let template = options.createVariable(body, (n, l) => {
 		let index = options.createTemplate(this);
 		return new callExpression(
-			id('getNode'), [index, options.getLastVariableId(), id('render')]
+			id('getNode'), [index, id('node'), id('render')]
 		);
 	});
 
@@ -74,12 +109,12 @@ export default function each(context, options)
 
 	params.push(
 		new arrowFunctionExpression(
-			loop.args.map(item => id(item)),
-			new blockStatement(body)
+			[ id('node'), id('render'), id('_keyExpr$') ].concat(loop.args.map(item => id(item))),
+			new blockStatement(body),
 		)
 	);
 
-
+	params.push(id('render'));
 
 	let expression = options.createVariable(context, (n, l) => {
 		return new callExpression(id('_each$'), params);

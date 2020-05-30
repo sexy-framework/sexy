@@ -9,7 +9,7 @@ const HTMLTags = [
 	"object", "ol", "optgroup", "option", "output", "p", "param", "pre", "progress", "q", "rp", "rt",
 	"ruby", "s", "samp", "script", "section", "select", "small", "source", "span", "strike", "strong",
 	"style", "sub", "sup", "table", "tbody", "td", "textarea", "tfoot", "th", "thead", "time", "title",
-	"tr", "track", "tt", "u", "ul", "var", "video", "wbr"
+	"tr", "track", "tt", "u", "ul", "var", "video", "wbr", "template"
 ];
 
 export function isComponent(name)

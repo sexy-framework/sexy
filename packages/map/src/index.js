@@ -1,6 +1,6 @@
 import { diff } from './diff.js';
-import { add } from './utils.js';
-
+import { add, persistent, diffable } from './utils.js';
+import { observable, computed, subscribe, value } from '@hawa/observable';
 /**
  * Map over a list of unique items that create DOM nodes.
  *
@@ -12,52 +12,76 @@ import { add } from './utils.js';
  * @param {boolean} [cleaning]
  * @return {DocumentFragment}
  */
-export function map(items, keyExpr, expr, beforeInit = null, parent = null) {
-	const { root, subscribe, sample, cleanup } = api;
+
+export function map(bindNode, items, keyExpr, expr, render) 
+{
+	// const { root, subscribe, sample, cleanup } = api;
 
 	// Disable cleaning for templates by default.
 	let cleaning = true;//!expr.$t;
 
-	if(parent === null) {
-		parent = document.createDocumentFragment();
-	}
-	
-	const endMark = add(parent, '');
+	let parent = bindNode;
+
+	// if(render) {
+		parent = bindNode.parentNode;//document.createDocumentFragment();
+	// }?
+
+	let endMarkNode = bindNode;//add(parent, '');
 
 	const disposers = new Map();
 	const nodes = new Map();
 	const toRemove = new Set();
 	const defaultA = [];
+	// console.log(render);
+	if(!render) {
 
-	if(beforeInit) {
-		beforeInit((item, key, n) => {
-			defaultA[key] = item;
-			node(item, key, 1, n);
-		})
+		let _items = value(items);
+		let node = bindNode;
+
+		for (let key in _items) {
+			let item = _items[key];
+			let itemKey = keyExpr(item, key);
+			
+			if(node) {
+				if(node.getAttribute('data-key') == itemKey) {
+					node = expr(node, false, keyExpr, item, itemKey)
+					node = node.nextSibling;
+				}
+			}
+
+			defaultA[itemKey] = item;
+			addNode(item, itemKey, 1, node);
+		}
+
+		endMarkNode = node;
+		console.log(endMarkNode)
+	
+	} else {
+		// bindNode.remove();
 	}
 
-	const unsubscribe = subscribe(a => {
-		const b = items();
-		return sample(() => {
-			toRemove.clear();
+	const endMark = endMarkNode;
 
-			// Array.from to make a copy of the current list.
-			const content = Array.from(
-				diff(endMark.parentNode, a || defaultA, b, keyExpr, node, endMark)
-			);
+	const unsubscribe = subscribe(items, a => {
+		let b = value(items);
+		// return computed(() => {
+		toRemove.clear();
 
-			// for (var i = 0; i < context._children.length; i++) {
-			// 	console.log(i, context._children[i].hid, context._children[i]._state.s1(), context._children[i]._props.pt)
-			// }
-			toRemove.forEach(dispose);
-			return content;
-		});
+		// Array.from to make a copy of the current list.
+		const content = Array.from(
+			diff(endMark.parentNode, a || defaultA, b, keyExpr, addNode, endMark)
+		);
+
+		// for (var i = 0; i < context._children.length; i++) {
+		// 	console.log(i, context._children[i].hid, context._children[i]._state.s1(), context._children[i]._props.pt)
+		// }
+		// console.log(toRemove);
+		// toRemove.forEach(dispose);
+		return content;
+		// });
 	});
 
-	cleanup(unsubscribe);
-	cleanup(disposeAll);
-
-	function node(item, key, i, el = null) {
+	function addNode(item, key, i, el = null) {
 		if (item == null) return;
 
 		let nodeKey = keyExpr(item, key);
@@ -67,51 +91,32 @@ export function map(items, keyExpr, expr, beforeInit = null, parent = null) {
 			toRemove.delete(item);
 
 			if (!n) {
-				n = cleaning ?
-					root(dispose => {
-						disposers.set(nodeKey, dispose);
-						return el ? el : expr(item, key);
-					}) :
-					(el ? el : expr(item, key));
-
-				if (n.nodeType === 11) n = n.firstChild;
-
+				n = (el ? el : expr(bindNode, render, keyExpr, item, key));
+				if (n.nodeType === 11) n = persistent(n) || n;
 				nodes.set(nodeKey, n);
-
-				// console.warn(`[create (${nodeKey})]`, n);
-				if(n.$s) {
-					n.$s.hook('mounted');
-				}
-				// context._children[key].hook('mounted');
 			}
 		} else if (i === -1) {
-			// console.warn(`[remove (${nodeKey})]`, n, n.parentNode);
-			if(n.$s) {
-				n.$s.hook('unmounted');
-			}
-
 			toRemove.add(nodeKey);
-			// context.removeChild(key);
 		}
 
-		return n;
+		return diffable(n, i);
 	}
 
-	function disposeAll() {
-		disposers.forEach(d => d());
-		disposers.clear();
-		nodes.clear();
-		toRemove.clear();
-	}
+	// function disposeAll() {
+	// 	disposers.forEach(d => d());
+	// 	disposers.clear();
+	// 	nodes.clear();
+	// 	toRemove.clear();
+	// }
 
-	function dispose(item) {
-		let disposer = disposers.get(item);
-		if (disposer) {
-			disposer();
-			disposers.delete(item);
-		}
-		nodes.delete(item);
-	}
+	// function dispose(item) {
+	// 	let disposer = disposers.get(item);
+	// 	if (disposer) {
+	// 		disposer();
+	// 		disposers.delete(item);
+	// 	}
+	// 	nodes.delete(item);
+	// }
 
 	return parent;
 }

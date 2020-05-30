@@ -33,6 +33,11 @@ export default function node(context, options)
 
 	// 	context.push(template.makeValue);
 	// }	
+	
+	options.dynamic.setAttr({
+		Type: this,
+		name: 'key',
+	}, options.getLastVariableId(), context, options);
 
 	options.dynamic.attrs(this, options.getLastVariableId(), context, options);
 	options.dynamic.events(this, options.getLastVariableId(), context, options);

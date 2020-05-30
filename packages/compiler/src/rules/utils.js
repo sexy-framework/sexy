@@ -33,7 +33,13 @@ export function nextNode(context, options, type)
 
 export function children(entity, context, options, customDefiner = false)
 {
-	options.createContext();
+	if(entity.isTemplate()) {
+		customDefiner = () => {};
+	}
+	// console.log(entity, entity.hasAloneTemplate());
+	if(!entity.hasAloneTemplate() && !entity.isTemplate()) {
+		options.createContext();
+	}
 
 	for (var i = 0; i < entity.children.length; i++) {
 		childHandle(entity.children[i], context, options, i, customDefiner);
@@ -41,7 +47,9 @@ export function children(entity, context, options, customDefiner = false)
 
 	let lastChild = options.getLastVariableId();
 
-	options.removeContext();
+	if(!entity.hasAloneTemplate() && !entity.isTemplate()) {
+		options.removeContext();
+	}
 
 	return lastChild;
 }

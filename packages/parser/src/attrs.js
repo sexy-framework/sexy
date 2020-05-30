@@ -24,6 +24,10 @@ var isDomAttr = (name) => {
 	return isAttr(name) || name.match(/^data\-/g);
 }
 
+var isRootAttr = makeMap(
+	'key,ref'
+);
+
 function makeValue(value, isExpression = false)
 {
 	return {
@@ -34,37 +38,38 @@ function makeValue(value, isExpression = false)
 
 export function attrs(obj)
 {
-	let events = {};
-	let props = {};
-	let attributes = {};
-	let staticAttrs = {};
+	let result = {
+		events: {},
+		props: {},
+		attributes: {},
+		staticAttrs: {},
+	}
 
 	for(let name in obj)
 	{
 		let value = obj[name];
 
 		if(isDomAttr(name)) {
-			staticAttrs[name] = value;
+			result.staticAttrs[name] = value;
 		} else if(name.match(/^@/g)) {
 			name = name.replace(/^@/g, '');
-			events[name] = makeValue(value, true);
+			result.events[name] = makeValue(value, true);
 		} else if(name.match(/^\:/g)) {
 			name = name.replace(/^\:/g, '');
-			if(isDomAttr(name)) {
-				attributes[name] = makeValue(value, true);
+			value = makeValue(value, true);
+			
+			if(isRootAttr(name)) {
+				result[name] = value;
+			} else if(isDomAttr(name)) {
+				result.attributes[name] = value;
 			} else {
-				props[name] = makeValue(value, true);
+				result.props[name] = value;
 			}
 		} else {
-			props[name] = makeValue(value);
+			result.props[name] = makeValue(value);
 			// console.error(`Attr ${name} doesnt registered. Cant understand type.`)
 		}
 	}
 
-	return {
-		staticAttrs: staticAttrs,
-		events,
-		props,
-		attributes,
-	};
+	return result;
 }

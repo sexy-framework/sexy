@@ -182,3 +182,84 @@ export function makeComputed(ast, context)
 		[deps, body]
 	)
 }
+
+
+
+/**
+ * Compile expression to DOM expression and make it computed
+ */
+export function makeSubscribe(ast, context)
+{
+	let deps = [];
+	let statefulCounter = 0;
+	let identifiersCounter = 0;
+	let shouldWrap = true;
+
+	traverse(ast, {
+		Identifier: {
+			enter(path)
+			{
+				let id = path.node;
+
+				if(['label', 'key'].includes(path.key) || path.node.name === TMP_IDENTIFIER) {
+					return;
+				}
+
+				identifiersCounter++;
+
+				if(context.observables.includes(id.name)) {
+					statefulCounter++;
+				}
+			}
+		}
+	});
+
+	
+	if(identifiersCounter <= 1 || statefulCounter == 0) {
+		shouldWrap = false;
+	}
+
+	// console.log(identifiersCounter, statefulCounter, shouldWrap)
+
+	traverse(ast, {
+		Identifier: {
+			enter(path)
+			{
+				let id = path.node;
+
+				if(['label', 'key'].includes(path.key)) {
+					return;
+				}
+
+				if(context.observables.includes(id.name)) {
+					deps.push(id.name);
+					if(shouldWrap) {
+						id.name = `${ id.name }()`;
+					}
+				}
+			},
+			exit(path) {
+
+			},
+		}
+	});
+
+	let result = ast.program.body[0];
+
+	result = result.expression.right;
+	
+	// if(deps.length === 0 || shouldWrap === false) {
+	// 	return result;
+	// }
+	
+	deps = new arrayExpression(deps.map((item) => {
+		return id(item);
+	}));
+
+	return {
+		shouldWrap,
+		deps,
+		expr: result,
+	}
+	
+}

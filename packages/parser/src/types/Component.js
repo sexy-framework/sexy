@@ -7,7 +7,7 @@ export default class Component extends Type
 	{
 		super();
 		this.name = name;
-		this.options = parseAttrs(attrs);
+		this.option = parseAttrs(attrs);
 		this.children = [];	
 		this.type = 'component';
 	}

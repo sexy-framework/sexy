@@ -1,3 +1,12 @@
+export function value(value)
+{
+	if(value.$o) {
+		return value();
+	} else {
+		return value;
+	}
+}
+
 export function observable(value)
 {
 	function data(nextValue)

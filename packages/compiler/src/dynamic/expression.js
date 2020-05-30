@@ -17,10 +17,14 @@ import { makeValue, makeComputed } from './value';
 
 export function expression(value, point, context, options)
 {
-	let result = makeValue(this.context, {
-		isExpression: true,
-		value: value,
-	}, makeComputed);
+	if(typeof value !== 'object') {
+		value = {
+			isExpression: true,
+			value: value,
+		};
+	}
+
+	let result = makeValue(this.context, value, makeComputed);
 
 	// console.warn(result);
 	return result;
