@@ -35,6 +35,7 @@ export default function node(context, options)
 	// }	
 
 	options.dynamic.attrs(this, options.getLastVariableId(), context, options);
+	options.dynamic.events(this, options.getLastVariableId(), context, options);
 
 	children(this, context, options);
 }

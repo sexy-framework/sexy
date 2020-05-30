@@ -46,6 +46,7 @@ export function attrs(obj)
 		if(isDomAttr(name)) {
 			staticAttrs[name] = value;
 		} else if(name.match(/^@/g)) {
+			name = name.replace(/^@/g, '');
 			events[name] = makeValue(value, true);
 		} else if(name.match(/^\:/g)) {
 			name = name.replace(/^\:/g, '');

@@ -31,7 +31,7 @@ export function context(ast)
 	{
 		return contextStack[contextStack.length - 1];
 	}
-
+	
 	traverse(ast, {
 		
 		VariableDeclarator: {
@@ -68,6 +68,7 @@ export function context(ast)
 		FunctionDeclaration: {
 			enter(path)
 			{
+				data.methods.push(path.node.id.name);
 				createContext(path.node.id.name);
 		    },
 		    exit(path)

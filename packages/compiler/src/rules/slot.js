@@ -35,6 +35,5 @@ export default function slot(context, options)
 		)
 	)
 
-
 	context.push(expression);
 }

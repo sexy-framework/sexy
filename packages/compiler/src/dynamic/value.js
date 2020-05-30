@@ -10,6 +10,7 @@ import {
 	objectProperty,
 	arrayExpression,
 	arrowFunctionExpression,
+	functionExpression,
 
 } from "@babel/types";
 
@@ -17,7 +18,7 @@ import * as parser from "@babel/parser";
 
 import traverse from "@babel/traverse";
 
-export function makeValue(context, value)
+export function makeValue(context, value, fn)
 {
 	if(!value.isExpression) {
 		return stringLiteral(value.value);
@@ -30,6 +31,37 @@ export function makeValue(context, value)
 		strictMode: false,
 	});
 
+	return fn(ast, context);
+}
+
+export function makeFunction(ast, context)
+{
+	traverse(ast, {
+		Identifier: {
+			enter(path)
+			{
+				let id = path.node;
+				if(context.methods.includes(id.name)) {
+					if(path.parent.type !== 'CallExpression') {
+						id.name = `${id.name}()`;
+					}
+				}
+				
+			},
+		}
+	});
+
+	let result = ast.program.body[0];
+
+	result = result.expression.right;
+
+	return new functionExpression(null, [id('event')], new blockStatement([
+		new returnStatement(result)
+	]));
+}
+
+export function makeComputed(ast, context)
+{
 	let deps = [];
 
 	traverse(ast, {

@@ -10,30 +10,34 @@ import {
 
 } from "@babel/types";
 
-export function events(point, context, options)
+import { makeValue, makeFunction } from './value';
+
+export function events(entity, point, context, options)
 {
-	if(this.option.events === undefined) {
+	if(entity.option === undefined) {
 		return;
 	}
 
-	console.warn(this.option.events)
-
-	return;
-	
 	let props = [];
 
-	for(let key in this.attrs) {
+	for(let name in entity.option.events) {
+		let value = makeValue(this.context, entity.option.events[name], makeFunction);
+
 		props.push(
 			new objectProperty(
-				stringLiteral(key),
-				stringLiteral(this.attrs[key]),
+				stringLiteral(name),
+				value,
 			)
 		)
 	}
 
+	if(props.length === 0) {
+		return;
+	}
+
 	let expression = new expressionStatement(
 		new callExpression(
-			id('_makeAttrs$'), [
+			id('_makeEvents$'), [
 				point,
 				id('render'),
 				new objectExpression(props),

@@ -1,11 +1,9 @@
 import { parse } from '@hawa/parser';
 import { compile } from '@hawa/compiler';
+import { observable, computed, subscribe } from '@hawa/observable';
 
 
 import time from './time';
-
-
-
 
 
 function test() {
@@ -183,8 +181,10 @@ function gett() {
 	html = `
 	<div class="2" :style="1" :data-1="{ test: text1 }" :data-2="text1" :class="[text1, { some: text2 === 2 }, time]" :prop1="123">
 	@each(1)
-	<div>1</div>
-	<div class="button">
+	<div @click="method1" @mousedown="method1(event)">
+		Some test text \${ text1 } after
+	</div>
+	<div class="button" @mousedown="alert(2)">
 		<slot>Default <b class="d">button</b> text</slot>
 	</div>
 	@endeach

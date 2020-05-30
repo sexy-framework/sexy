@@ -10,7 +10,7 @@ import {
 
 } from "@babel/types";
 
-import { makeValue } from './value';
+import { makeValue, makeComputed } from './value';
 
 export function attrs(entity, point, context, options)
 {
@@ -21,7 +21,7 @@ export function attrs(entity, point, context, options)
 	let props = [];
 
 	for(let name in entity.option.attributes) {
-		let value = makeValue(this.context, entity.option.attributes[name]);
+		let value = makeValue(this.context, entity.option.attributes[name], makeComputed);
 
 		props.push(
 			new objectProperty(
