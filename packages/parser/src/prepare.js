@@ -20,6 +20,5 @@ export function prepare(blocks, html)
 		.replace(/@each\((.*)\)/g, '<expr type="each" value="$1">')
 		.replace(/@endeach/g, '</expr>')
 
-		console.log(html);
 	return prepareHTML(html);
 }

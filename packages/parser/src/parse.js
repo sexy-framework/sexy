@@ -100,6 +100,6 @@ export function parse(html)
 	parse.end();
 
 	blocks.template = stack[0];
-	// console.log(stack, blocks)
+	// console.log(blocks.template.children[0])
 	return blocks;
 }

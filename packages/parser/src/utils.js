@@ -12,6 +12,21 @@ const HTMLTags = [
 	"tr", "track", "tt", "u", "ul", "var", "video", "wbr"
 ];
 
-export function isComponent(name) {
+export function isComponent(name)
+{
 	return !HTMLTags.includes(name);
+}
+
+export function makeMap(str, expectsLowerCase)
+{
+	var map = Object.create(null);
+	var list = str.split(',');
+
+	for (var i = 0; i < list.length; i++) {
+		map[list[i]] = true;
+	}
+
+	return expectsLowerCase ?
+		function(val) { return map[val.toLowerCase()]; } :
+		function(val) { return map[val]; }
 }

@@ -35,8 +35,10 @@ export default class Type
 		// console.log(this, onlyChildren)
 		let template = `<${this.tag}`;
 		
-		for(let key in this.attrs) {
-			template += ` ${key}="${this.attrs[key]}"`;
+		let attrs = this.option ? this.option.staticAttrs : {};
+
+		for(let key in attrs) {
+			template += ` ${key}="${attrs[key]}"`;
 		}
 
 		template += '>';

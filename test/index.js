@@ -82,9 +82,9 @@ function test() {
 
 	let { render, templates } = gett();
 
-	// console.log(render);
-	// console.log(templates);
-	// return;
+	console.log(render);
+	console.log(templates);
+	return;
 
 	/**
 	 * GENERATED CODE
@@ -181,7 +181,7 @@ function gett() {
 	`;
 
 	html = `
-	<div>
+	<div class="2" :style="1" :prop1="123">
 	@each(1)
 	<div>1</div>
 	<div class="button">

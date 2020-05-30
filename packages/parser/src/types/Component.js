@@ -1,4 +1,5 @@
 import Type from './Type';
+import { attrs as parseAttrs } from '../attrs';
 
 export default class Component extends Type
 {
@@ -6,13 +7,13 @@ export default class Component extends Type
 	{
 		super();
 		this.name = name;
-		this.attrs = attrs;
+		this.options = parseAttrs(attrs);
 		this.children = [];	
 		this.type = 'component';
 	}
 	
 	hasAttributes()
 	{
-		return Object.keys(this.attrs).length > 0
+		return Object.keys(this.option.attributes).length > 0
 	}
 }

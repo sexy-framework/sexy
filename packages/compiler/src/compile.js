@@ -19,6 +19,7 @@ import {
 	identifier as id,
 	program,
 } from "@babel/types";
+
 import generate from "@babel/generator";
 
 
@@ -58,7 +59,7 @@ export function compile(blocks)
 		for(let tpl of Templates) {
 			let index = ++i;
 			code += `let _tpl$${ index } = document.createElement("template");\n`;
-			code += `_tpl$${ index }.innerHTML = "${ tpl }";\n\n`;
+			code += `_tpl$${ index }.innerHTML = '${ tpl }';\n\n`;
 		}
 
 		return code;
