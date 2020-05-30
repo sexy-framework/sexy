@@ -5,6 +5,7 @@ export function dependencies(ast, observables = [])
 	let deps = {};
 
 	let contextStack = [];
+	let isVariableDeclaration = false;
 
 	function isSubContext() {
 		return contextStack.length > 0;
@@ -51,6 +52,8 @@ export function dependencies(ast, observables = [])
 		VariableDeclarator: {
 			enter(path)
 			{
+				isVariableDeclaration = true;
+
 				let id = path.node.id;
 				let value = path.node.init;
 				let context = getContext();
@@ -60,24 +63,31 @@ export function dependencies(ast, observables = [])
 					return;
 				}
 		    },
+		    exit() {
+		    	isVariableDeclaration = false;
+		    }
 		},
 		ArrowFunctionExpression: {
 			enter(path)
 			{
+				if(isVariableDeclaration) return;
 				createContext(path.container.id.name);
 			},
 		    exit(path)
 		    {
+				if(isVariableDeclaration) return;
 		    	closeContext();
 		    }
 		},
 		FunctionDeclaration: {
 			enter(path)
 			{
+				if(isVariableDeclaration) return;
 				createContext(path.node.id.name);
 		    },
 		    exit(path)
 		    {
+		    	if(isVariableDeclaration) return;
 		    	closeContext();
 		    }
 		}

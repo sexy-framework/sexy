@@ -18,13 +18,15 @@ import * as parser from "@babel/parser";
 
 import traverse from "@babel/traverse";
 
+const TMP_IDENTIFIER = '_tmp$ast';
+
 export function makeValue(context, value, fn)
 {
 	if(!value.isExpression) {
 		return stringLiteral(value.value);
 	}
 
-	let code = `tmp = ${value.value}`;
+	let code = `${TMP_IDENTIFIER} = ${value.value}`;
 
 	const ast = parser.parse(code, {
 		sourceType: "unambiguous",
@@ -103,6 +105,35 @@ export function makeString(ast, context)
 export function makeComputed(ast, context)
 {
 	let deps = [];
+	let statefulCounter = 0;
+	let identifiersCounter = 0;
+	let shouldWrap = true;
+
+	traverse(ast, {
+		Identifier: {
+			enter(path)
+			{
+				let id = path.node;
+
+				if(['label', 'key'].includes(path.key) || path.node.name === TMP_IDENTIFIER) {
+					return;
+				}
+
+				identifiersCounter++;
+
+				if(context.observables.includes(id.name)) {
+					statefulCounter++;
+				}
+			}
+		}
+	});
+
+	
+	if(identifiersCounter <= 1 || statefulCounter == 0) {
+		shouldWrap = false;
+	}
+
+	// console.log(identifiersCounter, statefulCounter, shouldWrap)
 
 	traverse(ast, {
 		Identifier: {
@@ -116,7 +147,9 @@ export function makeComputed(ast, context)
 
 				if(context.observables.includes(id.name)) {
 					deps.push(id.name);
-					id.name = `${ id.name }()`;
+					if(shouldWrap) {
+						id.name = `${ id.name }()`;
+					}
 				}
 			},
 			exit(path) {
@@ -129,7 +162,7 @@ export function makeComputed(ast, context)
 
 	result = result.expression.right;
 	
-	if(deps.length === 0) {
+	if(deps.length === 0 || shouldWrap === false) {
 		return result;
 	}
 	

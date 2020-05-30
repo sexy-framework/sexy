@@ -230,7 +230,7 @@ function gett() {
 
 	html = `
 	<div class="2" :style="1" :data-1="{ test: text1 }" :data-2="text1" :class="[text1, { some: text2 === 2 }, time]" :prop1="123">
-	@each(Array.from({ length: 1 }, (_, i) => i))
+	@each((item1, key1) in items)
 	<div @click="method1" @mousedown="method1(event)">
 		Some test text \${ text1 } after
 	</div>
@@ -244,6 +244,7 @@ function gett() {
 	let text1 = $o(1);
 	let text2 = $o(1);
 	let text3 = $o(1);
+	let items = Array.from({ length: 1 }, (_, i) => i);
 	let time = 1235;
 
 	let c = () => {
