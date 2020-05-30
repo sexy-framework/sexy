@@ -149,7 +149,7 @@ function test() {
 		});
 
 		let _el$3 = _el$2.firstChild;
-		console.error(_el$3);
+
 		let _el$13 = _each$(_el$3, items, (item1, key1) => {
 			return 'text-' + item1 + text1();
 		}, (node, render, keyExpr, item1, key1) => {
@@ -175,7 +175,7 @@ function test() {
 				_el$6.nodeValue = `Some test text ${text1()} after`;
 			});
 			let _el$7 = _el$5.nextSibling;
-			console.log(node, _el$7);
+
 			_makeEvents$(_el$7, render, {
 				"mousedown": function(event) {
 					return alert(2);

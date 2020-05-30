@@ -107,14 +107,13 @@ export function map(bindNode, items, keyExpr, expr, render)
 			toRemove.delete(item);
 
 			if (!n) {
-				n = (el ? el : expr(bindNode, true, keyExpr, item, key));
-				console.log(el, item, key, n.childNodes);
+				n = (el ? el : expr(null, true, keyExpr, item, key));
+				
 				if (n.nodeType === 11) n = persistent(n) || n;
+				
 				nodes.set(nodeKey, n);
-				// console.log('create', n, nodeKey);
 			}
 		} else if (i === -1) {
-			// console.log('remove', nodeKey);
 			toRemove.add(nodeKey);
 		}
 
