@@ -32,7 +32,6 @@ export default class Type
 
 	makeTemplate(onlyChildren = true)
 	{
-		// console.log(this, onlyChildren)
 		let template = `<${this.tag}`;
 		
 		let attrs = this.option ? this.option.staticAttrs : {};

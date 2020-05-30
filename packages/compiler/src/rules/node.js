@@ -12,61 +12,8 @@ import {
 
 import { children } from './utils';
 
-export function attrs(point, context, options)
-{
-	if(this.hasAttributes()) {
-		let props = [];
+import { attrs } from '../dynamic';
 
-		for(let key in this.attrs) {
-			props.push(
-				new objectProperty(
-					stringLiteral(key),
-					stringLiteral(this.attrs[key]),
-				)
-			)
-		}
-
-		let expression = new expressionStatement(
-			new callExpression(
-				id('_makeAttrs$'), [
-					point,
-					id('render'),
-					new objectExpression(props),
-				]
-			)
-		);
-
-		context.push(expression);
-	}
-}
-
-export function events(point, context, options)
-{
-	if(this.hasAttributes()) {
-		let props = [];
-
-		for(let key in this.attrs) {
-			props.push(
-				new objectProperty(
-					stringLiteral(key),
-					stringLiteral(this.attrs[key]),
-				)
-			)
-		}
-
-		let expression = new expressionStatement(
-			new callExpression(
-				id('makeAttrs'), [
-					point,
-					id('render'),
-					new objectExpression(props),
-				]
-			)
-		);
-
-		context.push(expression);
-	}
-}
 
 export default function node(context, options)
 {
@@ -84,10 +31,10 @@ export default function node(context, options)
 	// 		);
 	// 	});
 
-	// 	context.push(template.value);
+	// 	context.push(template.makeValue);
 	// }	
 
-	attrs.call(this, options.getLastVariableId(), context, options);
+	options.dynamic.attrs(this, options.getLastVariableId(), context, options);
 
 	children(this, context, options);
 }

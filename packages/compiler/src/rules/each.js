@@ -12,8 +12,6 @@ import { children, getFirstTemplateNode } from './utils';
 
 export default function each(context, options)
 {
-	// nextNode(context, options);
-
 	let params = [];
 	let body = [];
 
@@ -38,7 +36,6 @@ export default function each(context, options)
 	);
 
 	body.push(returnPointer);
-
 
 	params.push(
 		new arrowFunctionExpression([

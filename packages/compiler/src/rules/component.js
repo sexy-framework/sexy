@@ -10,7 +10,7 @@ import {
 	objectProperty,
 } from "@babel/types";
 
-import { attrs, } from './node';
+import { attrs } from '../dynamic';
 
 // TO DO NEXT NODES
 export default function component(context, options)
@@ -28,7 +28,7 @@ export default function component(context, options)
 
 	context.push(init.value);
 
-	attrs.call(this, init, context, options);
+	options.dynamic.attrs(this, init, context, options);
 
 	let template = options.createVariable(context, (n, l) => {
 		return new memberExpression(

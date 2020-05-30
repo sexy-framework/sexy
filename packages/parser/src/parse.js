@@ -1,5 +1,3 @@
-import { analyse } from '@hawa/analyser';
-
 import { prepare } from './prepare';
 import { isComponent } from './utils';
 
@@ -30,11 +28,6 @@ export function parse(html)
 
 	// clean up html and replace expression with tag-expression
 	html = prepare(blocks, html);
-
-	// Analyse javascript. Get stateful vars and deps
-	if(blocks.script) {
-		analyse(blocks.script);
-	}
 
 	// Parse TAGs
 	let stack = [

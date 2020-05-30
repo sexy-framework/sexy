@@ -181,7 +181,7 @@ function gett() {
 	`;
 
 	html = `
-	<div class="2" :style="1" :prop1="123">
+	<div class="2" :style="1" :data-1="{ test: text1 }" :data-2="text1" :class="[text1, { some: text2 === 2 }, time]" :prop1="123">
 	@each(1)
 	<div>1</div>
 	<div class="button">

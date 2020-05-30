@@ -1,4 +1,6 @@
 import { Expression } from '@hawa/parser';
+import { analyse } from '@hawa/analyser';
+import dynamic from './dynamic';
 
 import {
 	variableDeclaration,
@@ -22,15 +24,9 @@ import {
 
 import generate from "@babel/generator";
 
-
-
-
-
-
-
-
-// nextSibling
-
+/**
+ * Compile template to DOM expressions
+ */
 export function compile(blocks)
 {
 	let VariableCounter = 0;
@@ -41,6 +37,10 @@ export function compile(blocks)
 	 * @type {Set}
 	 */
 	let Templates = new Set();
+
+	let codeAnalyse = analyse(blocks.script);
+	let dynamicExpressions = dynamic(codeAnalyse);
+	// console.warn(codeAnalyse);
 
 	function createTemplate(program)
 	{
@@ -131,6 +131,7 @@ export function compile(blocks)
 		createVariable,
 		getLastVariableId,
 		createTemplate,
+		dynamic: dynamicExpressions,
 	}
 
 	function handle(entity)

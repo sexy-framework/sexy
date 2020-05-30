@@ -20,6 +20,9 @@ var isAttr = makeMap(
 	'target,title,type,usemap,value,width,wrap'
 );
 
+var isDomAttr = (name) => {
+	return isAttr(name) || name.match(/^data\-/g);
+}
 
 function makeValue(value, isExpression = false)
 {
@@ -40,13 +43,13 @@ export function attrs(obj)
 	{
 		let value = obj[name];
 
-		if(isAttr(name)) {
+		if(isDomAttr(name)) {
 			staticAttrs[name] = value;
 		} else if(name.match(/^@/g)) {
 			events[name] = makeValue(value, true);
 		} else if(name.match(/^\:/g)) {
 			name = name.replace(/^\:/g, '');
-			if(isAttr(name)) {
+			if(isDomAttr(name)) {
 				attributes[name] = makeValue(value, true);
 			} else {
 				props[name] = makeValue(value, true);
