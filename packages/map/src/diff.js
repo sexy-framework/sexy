@@ -17,8 +17,6 @@ export function diff(parent, a, b, keyExpr, get, before)
 		bIdx.set(key, i);
 	}
 
-	// console.warn(aIdx, bIdx);
-
 	for (i = j = 0; i !== a.length || j !== b.length;) {
 		var aElm = a[i],
 			bElm = b[j];

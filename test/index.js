@@ -122,9 +122,12 @@ function test() {
 			console.log('test')
 		}
 
-		time = setTimeout(() => {
-			items(Array.from({ length: 1 }, (_, i) => i));
-		}, 1000)
+		if(!render) {
+			time = setTimeout(() => {
+				console.log('----')
+				items(Array.from({ length: 10 }, (_, i) => i));
+			}, 2000)
+		}
 		/**
 		 * GENERATED CODE
 		 */
@@ -146,7 +149,7 @@ function test() {
 		});
 
 		let _el$3 = _el$2.firstChild;
-
+		console.error(_el$3);
 		let _el$13 = _each$(_el$3, items, (item1, key1) => {
 			return 'text-' + item1 + text1();
 		}, (node, render, keyExpr, item1, key1) => {
@@ -172,7 +175,7 @@ function test() {
 				_el$6.nodeValue = `Some test text ${text1()} after`;
 			});
 			let _el$7 = _el$5.nextSibling;
-
+			console.log(node, _el$7);
 			_makeEvents$(_el$7, render, {
 				"mousedown": function(event) {
 					return alert(2);
@@ -190,8 +193,6 @@ function test() {
 			return render ? _el$4 : _el$7;
 		}, render);
 
-		console.log(_el$13.childNodes);
-
 		return render ? _el$1 : _el$2;
 	}
 
@@ -204,7 +205,7 @@ function test() {
 	layout.appendChild(makeComponent());
 	time('render');
 
-	return;
+	// return;
 
 	let tmp = layout.innerHTML;
 	layout.innerHTML = tmp;

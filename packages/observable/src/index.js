@@ -66,21 +66,32 @@ export function computed(obs, value)
 
 export function subscribe(obs, value, skip = false)
 {
+	let lastValue = null;
+
 	obs = [].concat(obs);
+
+	let fn = () => {
+		lastValue = value(lastValue);
+	}
 
 	for(let ob of obs) {
 		if(ob._observers) {
-			ob._observers.add(value);
+			ob._observers.add(fn);
 		}
 
 		if(ob._deps) {
 			for(let dep of ob._deps) {
-				dep.add(value);
+				dep.add(fn);
 			}
 		}
 	}
 
 	if(!skip) {
-		value();
+		fn();
 	}
+}
+
+export function cleanup(fn)
+{
+
 }

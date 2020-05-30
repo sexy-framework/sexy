@@ -1,6 +1,6 @@
 import { diff } from './diff.js';
 import { add, persistent, diffable } from './utils.js';
-import { observable, computed, subscribe, value } from '@hawa/observable';
+import { observable, computed, subscribe, value, cleanup } from '@hawa/observable';
 /**
  * Map over a list of unique items that create DOM nodes.
  *
@@ -27,7 +27,8 @@ export function map(bindNode, items, keyExpr, expr, render)
 	const nodes = new Map();
 	const toRemove = new Set();
 	const defaultA = [];
-	// console.log(render);
+
+	// hydration prepare 
 	if(!render) {
 		let _items = value(items);
 		let node = bindNode;
@@ -35,47 +36,66 @@ export function map(bindNode, items, keyExpr, expr, render)
 		for (let key in _items) {
 			let item = _items[key];
 			let itemKey = keyExpr(item, key);
-			
+			let lastHydratedNode = null;
+
 			if(node && node.getAttribute) {
 				if(node.getAttribute('data-key') == itemKey) {
-					node = expr(node, false, keyExpr, item, itemKey);
-					node = node.nextSibling;
+					lastHydratedNode = expr(node, false, keyExpr, item, itemKey);
+					node = lastHydratedNode.nextSibling;
 				}
 			}
 
-			defaultA[itemKey] = item;
-			addNode(item, itemKey, 1, node);
-		}
+			if(lastHydratedNode) {
+				if(!lastHydratedNode.hasAttribute('data-key')) {
+					let hydratedNodes = [];
+					let startNodeSearch = lastHydratedNode;
+					while(startNodeSearch) {
+						hydratedNodes.unshift(startNodeSearch);
+						if(startNodeSearch.hasAttribute('data-key')) {
+							break;
+						}
+						
+						startNodeSearch = startNodeSearch.previousSibling;
+					}
+					
+					defaultA[key] = item;
 
+					let n = lastHydratedNode;
+
+					if(hydratedNodes.length > 0) {
+						n = persistent({
+							childNodes: hydratedNodes
+						})
+					}
+
+					nodes.set(itemKey, n);
+					diffable(n, 1);
+				}
+			}
+		}
 	} 
 	
-	let rendered = false;
-
 	const unsubscribe = subscribe(items, a => {
-		let b = value(items);
-		console.warn(b);
-		// return computed(() => {
-		toRemove.clear();
 
+		let b = value(items);
+			
+		toRemove.clear();
 		// Array.from to make a copy of the current list.
 		const content = Array.from(
 			diff(endMark.parentNode, a || defaultA, b, keyExpr, addNode, endMark)
 		);
 
-		// console.log(bindNode, parent.childNodes)
-		if(!rendered) {
-			rendered = true;
-			bindNode.replaceWith(parent);
-		}
-		// console.log(parent.childNodes.length, content)
-		// for (var i = 0; i < context._children.length; i++) {
-		// 	console.log(i, context._children[i].hid, context._children[i]._state.s1(), context._children[i]._props.pt)
-		// }
-		// console.log(toRemove);
-		// toRemove.forEach(dispose);
+		toRemove.forEach(dispose);
+
 		return content;
 		// });
 	}, !render);
+
+	if(render) {
+		bindNode.replaceWith(parent);
+	}
+
+	// disposeAll();
 
 	function addNode(item, key, i, el = null) {
 		if (item == null) return;
@@ -87,32 +107,37 @@ export function map(bindNode, items, keyExpr, expr, render)
 			toRemove.delete(item);
 
 			if (!n) {
-				n = (el ? el : expr(bindNode, render, keyExpr, item, key));
+				n = (el ? el : expr(bindNode, true, keyExpr, item, key));
+				console.log(el, item, key, n.childNodes);
 				if (n.nodeType === 11) n = persistent(n) || n;
 				nodes.set(nodeKey, n);
+				// console.log('create', n, nodeKey);
 			}
 		} else if (i === -1) {
+			// console.log('remove', nodeKey);
 			toRemove.add(nodeKey);
 		}
 
 		return diffable(n, i);
 	}
 
-	// function disposeAll() {
-	// 	disposers.forEach(d => d());
-	// 	disposers.clear();
-	// 	nodes.clear();
-	// 	toRemove.clear();
-	// }
+	// cleanup(disposeAll);
 
-	// function dispose(item) {
-	// 	let disposer = disposers.get(item);
-	// 	if (disposer) {
-	// 		disposer();
-	// 		disposers.delete(item);
-	// 	}
-	// 	nodes.delete(item);
-	// }
+	function disposeAll() {
+		disposers.forEach(d => d());
+		disposers.clear();
+		nodes.clear();
+		toRemove.clear();
+	}
+
+	function dispose(item) {
+		let disposer = disposers.get(item);
+		if (disposer) {
+			disposer();
+			disposers.delete(item);
+		}
+		nodes.delete(item);
+	}
 
 	return parent;
 }
