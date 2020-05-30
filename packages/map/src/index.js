@@ -40,7 +40,7 @@ export function map(bindNode, items, keyExpr, expr, render)
 
 			if(node && node.getAttribute) {
 				if(node.getAttribute('data-key') == itemKey) {
-					lastHydratedNode = expr(node, false, keyExpr, item, itemKey);
+					lastHydratedNode = expr(node, false, keyExpr, item, key);
 					node = lastHydratedNode.nextSibling;
 				}
 			}
