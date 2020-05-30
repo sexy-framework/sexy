@@ -35,6 +35,12 @@ function test() {
 
 	}
 
+	function _makeEvents$(node, render, options) {
+		for (let key in options) {
+			node.addEventListener(key, options[key])
+		}
+	}
+
 	function _slot$($slots, name, node, callback) {
 		if ($slots[name] === undefined) {
 			callback(node);
@@ -79,7 +85,6 @@ function test() {
 	}
 
 	let { render, templates } = gett();
-
 	console.log(render);
 	console.log(templates);
 	return;
@@ -88,15 +93,30 @@ function test() {
 	 * GENERATED CODE
 	 */
 	let _tpl$1 = document.createElement("template");
-	_tpl$1.innerHTML = "<div><!----></div>";
+	_tpl$1.innerHTML = '<div class="2"><!----></div>';
 
 	let _tpl$2 = document.createElement("template");
-	_tpl$2.innerHTML = "<div>1</div><div class=\"button\"><span>Default <b class=\"d\">button</b> text</span></div>";
+	_tpl$2.innerHTML = '<div>Some test text ${ text1 } after</div><div class="button"><span>Default<b class="d">button</b>text</span></div>';
 
 	function makeComponent(context, node = false) {
 		let render = node === false;
 
 		let { $props, $slots } = parseContext(context);
+		/**
+		 * Script tag
+		 */
+		let text1 = observable(1);
+		let text2 = observable(1);
+		let text3 = observable(1);
+		let time = 1235;
+
+		let c = computed(text1, () => {
+			return time + text1;
+		});
+
+		function method1() {
+			console.log('test')
+		}
 		/**
 		 * GENERATED CODE
 		 */
@@ -104,18 +124,49 @@ function test() {
 
 		let _el$2 = render ? _el$1.firstChild : _el$1;
 
+		_makeAttrs$(_el$2, render, {
+			"style": 1,
+			"data-1": computed([text1], () => {
+				return {
+					test: text1()
+				};
+			}),
+			"data-2": computed([text1], () => {
+				return text1();
+			}),
+			"class": computed([text1, text2], () => {
+				return [text1(), {
+					some: text2() === 2
+				}, time];
+			})
+		});
+
 		let _el$3 = _el$2.firstChild;
 
-		let _el$13 = _each$(_el$3, [1], (item, key) => {
+		let _el$13 = _each$(_el$3, Array.from({ length: 1 }, (_, i) => i), (item, key) => {
 			let _el$4 = getNode(_tpl$2, null, true);
 
-			let _el$5 = render ? _el$4.firstChild : _el$4;
+			let _el$5 = _el$4.firstChild;
+
+			_makeEvents$(_el$5, render, {
+				"click": function(event) {
+					return method1();
+				},
+				"mousedown": function(event) {
+					return method1(event);
+				}
+			});
 
 			let _el$6 = _el$5.firstChild;
+			subscribe([text1], () => {
+				_el$6.nodeValue = `Some test text ${text1()} after`;
+			});
 			let _el$7 = _el$5.nextSibling;
 
-			_makeAttrs$(_el$7, render, {
-				"class": "button"
+			_makeEvents$(_el$7, render, {
+				"mousedown": function(event) {
+					return alert(2);
+				}
 			});
 
 			let _el$8 = _el$7.firstChild;
@@ -123,11 +174,6 @@ function test() {
 			_slot$($slots, "default", _el$8, node => {
 				let _el$9 = _el$8.firstChild;
 				let _el$10 = _el$9.nextSibling;
-
-				_makeAttrs$(_el$10, render, {
-					"class": "d"
-				});
-
 				let _el$11 = _el$10.firstChild;
 				let _el$12 = _el$10.nextSibling;
 			});
@@ -142,12 +188,16 @@ function test() {
 	layout.innerHTML = '';
 
 	time('render');
-	let d = makeComponent();
-
-	layout.appendChild(d);
-
-	console.log(layout.innerHTML);
+	layout.appendChild(makeComponent());
 	time('render');
+
+	let tmp = layout.innerHTML;
+	layout.innerHTML = tmp;
+
+	time('hydrate');
+	makeComponent(null, layout.firstChild)
+	time('hydrate');
+	// console.log(layout.innerHTML);
 }
 
 test();
@@ -180,7 +230,7 @@ function gett() {
 
 	html = `
 	<div class="2" :style="1" :data-1="{ test: text1 }" :data-2="text1" :class="[text1, { some: text2 === 2 }, time]" :prop1="123">
-	@each(1)
+	@each(Array.from({ length: 1 }, (_, i) => i))
 	<div @click="method1" @mousedown="method1(event)">
 		Some test text \${ text1 } after
 	</div>

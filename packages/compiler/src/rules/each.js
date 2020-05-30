@@ -27,7 +27,7 @@ export default function each(context, options)
 
 	body.push(template.value);
 
-	let lastChild = children(this, body, options, getFirstTemplateNode);
+	let lastChild = children(this, body, options);
 
 	let returnPointer = new returnStatement(
 		new conditionalExpression(
