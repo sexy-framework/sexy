@@ -20,13 +20,8 @@ export function map(bindNode, items, keyExpr, expr, render)
 	// Disable cleaning for templates by default.
 	let cleaning = true;//!expr.$t;
 
-	let parent = bindNode;
-
-	// if(render) {
-		parent = bindNode.parentNode;//document.createDocumentFragment();
-	// }?
-
-	let endMarkNode = bindNode;//add(parent, '');
+	let parent = document.createDocumentFragment();
+	const endMark = add(parent, '');
 
 	const disposers = new Map();
 	const nodes = new Map();
@@ -34,7 +29,6 @@ export function map(bindNode, items, keyExpr, expr, render)
 	const defaultA = [];
 	// console.log(render);
 	if(!render) {
-
 		let _items = value(items);
 		let node = bindNode;
 
@@ -42,9 +36,9 @@ export function map(bindNode, items, keyExpr, expr, render)
 			let item = _items[key];
 			let itemKey = keyExpr(item, key);
 			
-			if(node) {
+			if(node && node.getAttribute) {
 				if(node.getAttribute('data-key') == itemKey) {
-					node = expr(node, false, keyExpr, item, itemKey)
+					node = expr(node, false, keyExpr, item, itemKey);
 					node = node.nextSibling;
 				}
 			}
@@ -53,17 +47,13 @@ export function map(bindNode, items, keyExpr, expr, render)
 			addNode(item, itemKey, 1, node);
 		}
 
-		endMarkNode = node;
-		console.log(endMarkNode)
+	} 
 	
-	} else {
-		// bindNode.remove();
-	}
-
-	const endMark = endMarkNode;
+	let rendered = false;
 
 	const unsubscribe = subscribe(items, a => {
 		let b = value(items);
+		console.warn(b);
 		// return computed(() => {
 		toRemove.clear();
 
@@ -72,6 +62,12 @@ export function map(bindNode, items, keyExpr, expr, render)
 			diff(endMark.parentNode, a || defaultA, b, keyExpr, addNode, endMark)
 		);
 
+		// console.log(bindNode, parent.childNodes)
+		if(!rendered) {
+			rendered = true;
+			bindNode.replaceWith(parent);
+		}
+		// console.log(parent.childNodes.length, content)
 		// for (var i = 0; i < context._children.length; i++) {
 		// 	console.log(i, context._children[i].hid, context._children[i]._state.s1(), context._children[i]._props.pt)
 		// }
@@ -79,7 +75,7 @@ export function map(bindNode, items, keyExpr, expr, render)
 		// toRemove.forEach(dispose);
 		return content;
 		// });
-	});
+	}, !render);
 
 	function addNode(item, key, i, el = null) {
 		if (item == null) return;

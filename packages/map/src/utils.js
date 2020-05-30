@@ -20,7 +20,6 @@ export function add(parent, value, endMark = null) {
 
 	const fragOrNode = frag(value) || value;
 
-	console.log(parent, value);
 	// If endMark is `null`, value will be added to the end of the list.
 	parent.insertBefore(value, endMark && endMark.parentNode && endMark);
 

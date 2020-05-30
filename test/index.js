@@ -111,7 +111,7 @@ function test() {
 		let text1 = observable(1);
 		let text2 = observable(1);
 		let text3 = observable(1);
-		let items = Array.from({ length: 3 }, (_, i) => i);
+		let items = observable(Array.from({ length: 3 }, (_, i) => i));
 		let time = 1235;
 
 		let c = computed(text1, () => {
@@ -121,6 +121,10 @@ function test() {
 		function method1() {
 			console.log('test')
 		}
+
+		time = setTimeout(() => {
+			items(Array.from({ length: 1 }, (_, i) => i));
+		}, 1000)
 		/**
 		 * GENERATED CODE
 		 */
@@ -186,8 +190,12 @@ function test() {
 			return render ? _el$4 : _el$7;
 		}, render);
 
+		console.log(_el$13.childNodes);
+
 		return render ? _el$1 : _el$2;
 	}
+
+
 
 	let layout = document.getElementById('layout');
 	layout.innerHTML = '';
@@ -196,7 +204,7 @@ function test() {
 	layout.appendChild(makeComponent());
 	time('render');
 
-	// return;
+	return;
 
 	let tmp = layout.innerHTML;
 	layout.innerHTML = tmp;
