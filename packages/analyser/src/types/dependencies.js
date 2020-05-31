@@ -70,13 +70,15 @@ export function dependencies(ast, observables = [])
 		ArrowFunctionExpression: {
 			enter(path)
 			{
-				if(isVariableDeclaration) return;
-				createContext(path.container.id.name);
+				if(path.parent.type === 'VariableDeclarator') {
+					createContext(path.container.id.name);
+				}
 			},
 		    exit(path)
 		    {
-				if(isVariableDeclaration) return;
-		    	closeContext();
+				if(path.parent.type === 'VariableDeclarator') {
+		    		closeContext();
+		    	}
 		    }
 		},
 		FunctionDeclaration: {

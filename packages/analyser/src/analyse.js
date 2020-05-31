@@ -4,6 +4,8 @@ import { context, dependencies } from './types';
 
 export function analyse(source)
 {
+	source = source || '';
+	
 	const ast = parser.parse(source, {
 		sourceType: "unambiguous",
 		strictMode: false,

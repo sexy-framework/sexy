@@ -1,0 +1,14 @@
+@each(item, key in Array.from({ length: 10 }, (_, i) => i))
+<div :key="item" @click="alert(item)">
+test ${ v }
+</div>
+@endeach
+
+<script>
+let v = o(1);
+
+function alert(d)
+{
+	v(v() + 1);
+}
+</script>

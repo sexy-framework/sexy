@@ -31,7 +31,7 @@ module.exports = {
     mode: 'development',
 
     entry: [
-        './test/index.js'
+        './test/components.js'
     ],
 
     output: {
@@ -76,10 +76,10 @@ module.exports = {
            
 
             {
-                test: /\.sin/,
+                test: /\.hawa/,
                 use: [
                     {
-                    	loader: '@siph/loader',
+                    	loader: '@hawa/loader',
                     	options: {
                     		parseName(file) {
                     			file = camelize(file);
@@ -88,7 +88,7 @@ module.exports = {
 								let componentPath = file
 									.split(rootPath)
 									.join('')
-									.replace(/\.sin/i, '')
+									.replace(/\.hawa/i, '')
 									.replace(/Components/, '')
 									.replace(/(\s|\/)/g, '');
 

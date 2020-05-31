@@ -1,5 +1,6 @@
 import { Expression } from '@hawa/parser';
 import { analyse } from '@hawa/analyser';
+import { script } from './script';
 import dynamic from './dynamic';
 
 import {
@@ -161,5 +162,6 @@ export function compile(blocks)
 	return {
 		render: code.code,
 		templates: getTemplates(),
+		script: script(codeAnalyse, blocks.script)
 	}
 }

@@ -28,10 +28,11 @@ function test() {
 
 
 
-	// let { render, templates } = gett();
+	let { render, templates, script } = gett();
 	// console.log(render);
 	// console.log(templates);
-	// return;
+	console.log(script);
+	return;
 
 	/**
 	 * GENERATED CODE
@@ -226,7 +227,7 @@ function gett() {
 
 	html = `
 	<div class="2" :data-1="{ test: text1 }" :data-2="text1" :class="[text1, { some: text2 === 2 }]" :prop1="123">
-		@each((item1, key1) in items)
+		@each(item1, key1 in items)
 			@if(item1 % 2 === 0 && text2 % 2 === 0)
 			<template :key="'text-' + item1 + text1">
 				<div @click="method1" @mousedown="method1(event)">
@@ -242,9 +243,9 @@ function gett() {
 	</div>
 
 	<script>
-	let text1 = $o(1);
-	let text2 = $o(1);
-	let text3 = $o(1);
+	let text1 = o(1);
+	let text2 = o(1);
+	let text3 = o(1);
 	let items = Array.from({ length: 1 }, (_, i) => i);
 	let time = 1235;
 

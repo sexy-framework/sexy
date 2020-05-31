@@ -49,7 +49,7 @@ export function context(ast)
 					return;
 				}
 
-				if(value.type === 'CallExpression' && value.callee.name === '$o') {
+				if(value.type === 'CallExpression' && value.callee.name === 'o') {
 					data.observables.push(id.name);
 				} else if(['ArrowFunctionExpression', 'FunctionExpression'].includes(value.type)) {
 					data.observables.push(id.name);

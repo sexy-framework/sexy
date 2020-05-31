@@ -14,7 +14,7 @@ import { Expression } from '@hawa/parser';
 
 export function parseEachCondition(entity)
 {
-	let statement = entity.value.matchAll(/\((?<item>[A-z0-9]+)\s?(\,\s?(?<key>[A-z0-9]+)\s?)?\)\s?in\s(?<condition>.*)/g);
+	let statement = entity.value.matchAll(/(?<item>[A-z0-9]+)\s?(\,\s?(?<key>[A-z0-9]+)\s?)?\s?in\s(?<condition>.*)/g);
 
 	let condition = null;
 	let args = [];
