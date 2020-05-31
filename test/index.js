@@ -96,10 +96,12 @@ function test() {
 	 * GENERATED CODE
 	 */
 	let _tpl$1 = document.createElement("template");
-	_tpl$1.innerHTML = '<div class="2"><!----></div>';
+	_tpl$1.innerHTML = '<div class="2"><!----><div class="Test">${ text2 }</div></div>';
 
 	let _tpl$2 = document.createElement("template");
 	_tpl$2.innerHTML = '<div>Some test text ${ text1 } after</div><div class="button"><span>Default<b class="d">button</b>text</span></div>';
+
+	let timer = null;
 
 	function makeComponent(context, node = false) {
 		let render = node === false;
@@ -111,23 +113,26 @@ function test() {
 		let text1 = observable(1);
 		let text2 = observable(1);
 		let text3 = observable(1);
-		let items = observable(Array.from({ length: 3 }, (_, i) => i));
-		let time = 1235;
+		let items = observable(Array.from({ length: 1 }, (_, i) => i));
 
 		let c = computed(text1, () => {
 			return time + text1;
 		});
 
 		function method1() {
-			console.log('test')
+			text1(text1() + 1);
 		}
 
-		if(!render) {
-			time = setTimeout(() => {
-				console.log('----')
-				items(Array.from({ length: 10 }, (_, i) => i));
-			}, 2000)
-		}
+		clearInterval(timer);
+		timer = setInterval(() => {
+			text2(text2() + 1);
+		}, 500);
+
+		// if(!render) {
+		// 	time = setTimeout(() => {
+		// 		items(Array.from({ length: 100 }, (_, i) => i));
+		// 	}, 1000)
+		// }
 		/**
 		 * GENERATED CODE
 		 */
@@ -152,14 +157,14 @@ function test() {
 
 		let _el$13 = _each$(_el$3, items, (item1, key1) => {
 			return 'text-' + item1 + text1();
-		}, (node, render, keyExpr, item1, key1) => {
+		}, (node, render, _keyExpr$, item1, key1) => {
 			let _el$4 = getNode(_tpl$2, node, render);
 
 			let _el$5 = render ? _el$4.firstChild : _el$4;
 
 			subscribe([text1], () => {
 				_el$5.setAttribute("data-key", 'text-' + item1 + text1());
-			}, !render);
+			});
 
 			_makeEvents$(_el$5, render, {
 				"click": function(event) {
@@ -183,6 +188,7 @@ function test() {
 			});
 
 			let _el$8 = _el$7.firstChild;
+
 			_slot$($slots, "default", _el$8, node => {
 				let _el$9 = _el$8.firstChild;
 				let _el$10 = _el$9.nextSibling;
@@ -193,6 +199,11 @@ function test() {
 			return render ? _el$4 : _el$7;
 		}, render);
 
+		let _el$14 = _el$13.nextSibling;
+		let _el$15 = _el$14.firstChild;
+		subscribe([text2], () => {
+			_el$15.nodeValue = `${text2()}`;
+		});
 		return render ? _el$1 : _el$2;
 	}
 
@@ -205,14 +216,18 @@ function test() {
 	layout.appendChild(makeComponent());
 	time('render');
 
-	// return;
+	return;
 
-	let tmp = layout.innerHTML;
-	layout.innerHTML = tmp;
 
-	time('hydrate');
-	makeComponent(null, layout.firstChild)
-	time('hydrate');
+
+	setTimeout(() => {
+		let tmp = layout.innerHTML;
+		layout.innerHTML = tmp;
+
+		time('hydrate');
+		makeComponent(null, layout.firstChild)
+		time('hydrate');
+	}, 2000)
 	// console.log(layout.innerHTML);
 }
 
@@ -246,17 +261,18 @@ function gett() {
 
 	html = `
 	<div class="2" :style="1" :data-1="{ test: text1 }" :data-2="text1" :class="[text1, { some: text2 === 2 }, time]" :prop1="123">
-	@each((item1, key1) in items)
-	<template :key="'text-' + item1 + text1">
-		<div @click="method1" @mousedown="method1(event)">
-			Some test text \${ text1 } after
-		</div>
-		<div class="button" @mousedown="alert(2)">
-			<slot>Default <b class="d">button</b> text</slot>
-		</div>
-	</template>
-	@endeach
-	
+		@each((item1, key1) in items)
+		<template :key="'text-' + item1 + text1">
+			<div @click="method1" @mousedown="method1(event)">
+				Some test text \${ text1 } after
+			</div>
+			<div class="button" @mousedown="alert(2)">
+				<slot>Default <b class="d">button</b> text</slot>
+			</div>
+		</template>
+		@endeach
+		<div class="Test">\${ text2 }</div>
+	</div>
 
 	<script>
 	let text1 = $o(1);

@@ -17,9 +17,12 @@ export function diff(parent, a, b, keyExpr, get, before)
 		bIdx.set(key, i);
 	}
 
+	// console.log(aIdx, bIdx);
+
 	for (i = j = 0; i !== a.length || j !== b.length;) {
 		var aElm = a[i],
 			bElm = b[j];
+
 		if (aElm === null) {
 			// This is a element that has been moved to earlier in the list
 			i++;

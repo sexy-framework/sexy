@@ -21,7 +21,7 @@ export function map(bindNode, items, keyExpr, expr, render)
 	let cleaning = true;//!expr.$t;
 
 	let parent = document.createDocumentFragment();
-	const endMark = add(parent, '');
+	let endMark = add(parent, '');
 
 	const disposers = new Map();
 	const nodes = new Map();
@@ -32,6 +32,7 @@ export function map(bindNode, items, keyExpr, expr, render)
 	if(!render) {
 		let _items = value(items);
 		let node = bindNode;
+		let lastNode = null;
 
 		for (let key in _items) {
 			let item = _items[key];
@@ -42,6 +43,7 @@ export function map(bindNode, items, keyExpr, expr, render)
 				if(node.getAttribute('data-key') == itemKey) {
 					lastHydratedNode = expr(node, false, keyExpr, item, key);
 					node = lastHydratedNode.nextSibling;
+					lastNode = lastHydratedNode;
 				}
 			}
 
@@ -73,6 +75,11 @@ export function map(bindNode, items, keyExpr, expr, render)
 				}
 			}
 		}
+
+		endMark = document.createTextNode('');
+		lastNode.after(endMark);
+		// console.log(lastNode);
+		// endMark = add(lastNode, '');
 	} 
 	
 	const unsubscribe = subscribe(items, a => {
@@ -138,5 +145,5 @@ export function map(bindNode, items, keyExpr, expr, render)
 		nodes.delete(item);
 	}
 
-	return parent;
+	return endMark;
 }
