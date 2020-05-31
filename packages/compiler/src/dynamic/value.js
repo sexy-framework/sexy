@@ -115,9 +115,9 @@ export function makeComputed(ast, context)
 			{
 				let id = path.node;
 
-				if(['label', 'key'].includes(path.key) || path.node.name === TMP_IDENTIFIER) {
-					return;
-				}
+				// if(['label', 'key'].includes(path.key) || path.node.name === TMP_IDENTIFIER) {
+				// 	return;
+				// }
 
 				identifiersCounter++;
 

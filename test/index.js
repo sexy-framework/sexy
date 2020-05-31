@@ -3,89 +3,30 @@ import { compile } from '@hawa/compiler';
 import { observable, computed, subscribe } from '@hawa/observable';
 import { map as _each$ } from '@hawa/map';
 
-
+import {
+	attrs as _makeAttrs$,
+	events as _makeEvents$,
+	slot as _slot$,
+	statement as _statement$,
+	getNode,
+	parseContext,
+} from '@hawa/render';
 
 import time from './time';
 
 
+/**
+ * Frameworks methods
+ */
+
+
+/**
+ * Execute
+ * @return {[type]} [description]
+ */
 function test() {
 
-	function getNode(template, node, render) {
-		if (render) {
-			return template.content.cloneNode(true);
-		}
 
-		return node;
-	}
-
-	function parseContext(context) {
-		if (context === undefined || context === null) {
-			context = {};
-		}
-
-		let $props = context.$props || {};
-		let $slots = context.$slots || {};
-
-		return {
-			$props,
-			$slots,
-		}
-	}
-
-
-	function _makeAttrs$() {
-
-	}
-
-	function _makeEvents$(node, render, options) {
-		for (let key in options) {
-			node.addEventListener(key, options[key])
-		}
-	}
-
-	function _slot$($slots, name, node, callback) {
-		if ($slots[name] === undefined) {
-			callback(node);
-			return;
-		}
-
-		node.innerHTML = $slots[name];
-
-		return node;
-	}
-
-	// function valueSubscribe(render, prop, fn)
-	// {
-	// 	if(!isObservable(prop)) {
-	// 		if(hydrate) {
-	// 			fn(prop);
-	// 		}
-	// 		return;
-	// 	}
-
-	// 	subscribe(prop, () => {
-	// 		fn(prop());
-	// 	}, !render);
-	// }
-
-	function _statement$(node, ...args) {
-		let returnNode = false;
-
-		for (var i = 0; i < args.length; i += 2) {
-			if (args[i]) {
-				returnNode = args[i + 1](node);
-				break;
-			}
-		}
-
-		if (returnNode === false) {
-			return node;
-		}
-
-		node.replaceWith(returnNode);
-
-		return returnNode;
-	}
 
 	// let { render, templates } = gett();
 	// console.log(render);
@@ -110,10 +51,10 @@ function test() {
 		/**
 		 * Script tag
 		 */
-		let text1 = observable(1);
+		let text1 = observable(12);
 		let text2 = observable(1);
 		let text3 = observable(1);
-		let items = observable(Array.from({ length: 1 }, (_, i) => i));
+		let items = observable(Array.from({ length: 5 }, (_, i) => i));
 
 		let c = computed(text1, () => {
 			return time + text1;
@@ -126,7 +67,7 @@ function test() {
 		clearInterval(timer);
 		timer = setInterval(() => {
 			text2(text2() + 1);
-		}, 500);
+		}, 1000);
 
 		// if(!render) {
 		// 	time = setTimeout(() => {
@@ -141,15 +82,23 @@ function test() {
 		let _el$2 = render ? _el$1.firstChild : _el$1;
 
 		_makeAttrs$(_el$2, render, {
-			"style": 1,
-			"data-1": {
-				test: text1
-			},
+			"style": computed([text1, text2], () => {
+				return [{
+					fontSize: text1() + 'px',
+				}, {
+					color: text2() % 2 === 0 ? 'red' : 'green',
+				}];
+			}), 
+			"data-1": computed([text1], () => {
+				return {
+					test: text1()
+				};
+			}),
 			"data-2": text1,
 			"class": computed([text1, text2], () => {
 				return [text1(), {
-					some: text2() === 2
-				}, time];
+					some: text2() % 2 === 0
+				}];
 			})
 		});
 

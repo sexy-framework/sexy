@@ -91,6 +91,31 @@ export function subscribe(obs, value, skip = false)
 	}
 }
 
+// Is property observable 
+export function isObservable(prop)
+{
+	return prop.$o !== undefined || typeof prop === 'function';
+}
+
+/**
+ * Watch property
+ */
+export function watch(prop, fn, render = true)
+{
+	if(!isObservable(prop)) {
+		if(render) {
+			fn(prop);
+		}
+		return;
+	}
+
+
+	subscribe(prop, () => {
+		fn(prop());
+	}, !render);
+}
+
+
 export function cleanup(fn)
 {
 
