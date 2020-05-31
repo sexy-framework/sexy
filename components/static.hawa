@@ -1,11 +1,27 @@
-@each(item, key in Array.from({ length: 10 }, (_, i) => i))
-<div :key="item" @click="alert(item)">
-test ${ v }
-</div>
+@each(item, key in items)
+<template :key="item">
+	<button @click="visible(!visible())">
+		${ buttonText }
+	</button>
+	<div :class="activeClass">
+		test 
+	</div>
+</template>
 @endeach
 
 <script>
-let v = o(1);
+let visible = o(false);
+let items = Array.from({ length: 10 }, (_, i) => i);
+
+let activeClass = () => {
+	return {
+		red: visible()
+	}
+}
+
+let buttonText = () => {
+	return visible() ? 'hide' : 'show';
+}
 
 function alert(d)
 {

@@ -19,20 +19,23 @@ export function attrArgToObj(args)
 
 export function attrArgToString(args)
 {
-	let result = '';
+	let result = new Set();
 	// args = args.concat([]);
 	if(Array.isArray(args)) {
 		for (var i = 0; i < args.length; i++) {
-			result += attrArgToString(args[i]);
+			result = new Set([
+				...result,
+				...attrArgToString(args[i]),
+			]);
 		}
 	} else if(typeof args === 'object') {
 		for(let key in args) {
 			if(args[key]) {
-				result += ' ' + key;
+				result.add(key);
 			}
 		}
 	} else {
-		result += ' ' + args;
+		result.add(args);
 	}
 
 	return result;
@@ -45,7 +48,7 @@ export function makeClass(node, value, render)
 	watch(value, (v) => {
 		let tmp = node.classList;
 
-		let toSet = attrArgToString(v).substring(1).split(' ');
+		let toSet = Array.from(attrArgToString(v));
 		let toRemove = lastClassAdopted.filter(x => !toSet.includes(x));
 
 		for(let name of toSet) {
@@ -55,7 +58,6 @@ export function makeClass(node, value, render)
 		for(let name of toRemove) {
 			node.classList.remove(name);
 		}
-		// console.log(node);
 
 		lastClassAdopted = toSet;
 	}, render);
