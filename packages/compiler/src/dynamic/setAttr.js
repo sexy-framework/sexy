@@ -47,7 +47,8 @@ export function setAttr({ name = 'key', Type }, point, context, options)
 						new blockStatement([
 							expression
 						])
-					)
+					),
+					id('!render')
 				]
 			)
 		);

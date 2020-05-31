@@ -52,7 +52,7 @@ export function string(entity, point, context, options)
 	let expression = new expressionStatement(
 		new callExpression(
 			id('subscribe'),
-			[deps, body]
+			[deps, body, id('!render')],
 		)
 	);
 

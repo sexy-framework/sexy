@@ -1,6 +1,6 @@
 import { parse } from '@hawa/parser';
 import { compile } from '@hawa/compiler';
-import { observable, computed, subscribe } from '@hawa/observable';
+import { observable, computed, subscribe, watch } from '@hawa/observable';
 import { map as _each$ } from '@hawa/map';
 
 import {
@@ -55,9 +55,9 @@ function test() {
 		 * Script tag
 		 */
 		let text1 = observable(12);
-		let text2 = observable(1);
+		let text2 = observable(2);
 		let text3 = observable(1);
-		let items = observable(Array.from({ length: 1 }, (_, i) => i));
+		let items = observable(Array.from({ length: 5 }, (_, i) => i));
 
 		let c = computed(text1, () => {
 			return time + text1;
@@ -67,10 +67,10 @@ function test() {
 			text1(text1() + 1);
 		}
 
-		clearInterval(timer);
-		timer = setInterval(() => {
-			text2(text2() + 1);
-		}, 1000);
+		// clearInterval(timer);
+		// timer = setInterval(() => {
+		// 	text2(text2() + 1);
+		// }, 1000);
 
 		// if(!render) {
 		// 	time = setTimeout(() => {
@@ -109,16 +109,16 @@ function test() {
 
 			let _el$5 = render ? _el$4.firstChild : _el$4;
 
-			let _el$15 = _statement$(_el$5, [text2], () => {
+			let _el$15 = _statement$(_el$5, render, [text2], () => {
 				return item1 % 2 === 0 && text2() % 2 === 0;
 			}, (node, render) => {
-				let _el$6 = getNode(_tpl$3, node, render);
-				
+				let _el$6 = getNode(_tpl$3, _el$5, render);
+
 				let _el$7 = render ? _el$6.firstChild : _el$6;
-				// console.warn(_el$6, _el$7, node, render);
+
 				subscribe([text1], () => {
 					_el$7.setAttribute("data-key", 'text-' + item1 + text1());
-				});
+				}, !render);
 
 				_makeEvents$(_el$7, render, {
 					"click": function(event) {
@@ -132,7 +132,7 @@ function test() {
 				let _el$8 = _el$7.firstChild;
 				subscribe([text1], () => {
 					_el$8.nodeValue = `Some test text ${text1()} after`;
-				});
+				}, !render);
 				let _el$9 = _el$7.nextSibling;
 
 				_makeEvents$(_el$9, render, {
@@ -152,7 +152,7 @@ function test() {
 
 				return render ? _el$6 : _el$9;
 			});
-			// console.warn(_el$15);
+
 			return render ? _el$4 : _el$15;
 		}, render);
 
@@ -160,15 +160,22 @@ function test() {
 		let _el$18 = _el$17.firstChild;
 		subscribe([text2], () => {
 			_el$18.nodeValue = `${text2()}`;
-		});
+		}, !render);
 		return render ? _el$1 : _el$2;
 	}
 
 
 
 	let layout = document.getElementById('layout');
-	layout.innerHTML = '';
 
+
+	// time('hydrate');
+	// makeComponent(null, layout.firstChild)
+	// time('hydrate');
+	// return;
+
+	console.log('start render');
+	layout.innerHTML = '';
 	time('render');
 	layout.appendChild(makeComponent());
 	time('render');
@@ -181,10 +188,11 @@ function test() {
 		let tmp = layout.innerHTML;
 		layout.innerHTML = tmp;
 
+		console.log('start hydration');
 		time('hydrate');
 		makeComponent(null, layout.firstChild)
 		time('hydrate');
-	}, 2000)
+	}, 300)
 	// console.log(layout.innerHTML);
 }
 

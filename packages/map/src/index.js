@@ -43,11 +43,12 @@ export function map(bindNode, items, keyExpr, expr, render)
 				if(node.getAttribute('data-key') == itemKey) {
 					lastHydratedNode = expr(node, false, keyExpr, item, key);
 					node = lastHydratedNode.nextSibling;
+					// console.warn('lastHydratedNode', lastHydratedNode, node)
 					lastNode = lastHydratedNode;
 				}
 			}
 
-			if(lastHydratedNode) {
+			if(lastHydratedNode && lastHydratedNode.hasAttribute) {
 				if(!lastHydratedNode.hasAttribute('data-key')) {
 					let hydratedNodes = [];
 					let startNodeSearch = lastHydratedNode;
@@ -77,7 +78,13 @@ export function map(bindNode, items, keyExpr, expr, render)
 		}
 
 		endMark = document.createTextNode('');
-		lastNode.after(endMark);
+
+		if(lastNode === null) {
+			render = true;
+			bindNode.after(endMark);
+		} else {
+			lastNode.after(endMark);
+		}
 		// console.log(lastNode);
 		// endMark = add(lastNode, '');
 	} 
