@@ -10,6 +10,7 @@ import {
 
 import { children, getFirstTemplateNode } from './utils';
 
+import { Expression } from '@hawa/parser';
 
 export function parseEachCondition(entity)
 {
@@ -45,9 +46,13 @@ export function parseEachCondition(entity)
 export function findKey(entity)
 {
 	let key = null;
+
 	for(let child of entity.children)
 	{
-		if(child.option.key !== undefined) {
+		if(child instanceof Expression) {
+			key = findKey(child);
+			break;
+		} else if(child.option.key !== undefined) {
 			key = child.option.key;
 			break;
 		}
@@ -80,7 +85,7 @@ export default function each(context, options)
 	let key = options.dynamic.arrowFunction({
 		value: loop.key,
 		args: loop.args
-	}, options.getLastVariableId(), context, options);
+	}, options.getLastVariableId(), context, options).value;
 
 	params.push(value);
 	params.push(key);

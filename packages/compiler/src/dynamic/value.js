@@ -133,7 +133,7 @@ export function makeComputed(ast, context)
 		shouldWrap = false;
 	}
 
-	// console.log(identifiersCounter, statefulCounter, shouldWrap)
+	// console.log(context, identifiersCounter, statefulCounter, shouldWrap)
 
 	traverse(ast, {
 		Identifier: {
