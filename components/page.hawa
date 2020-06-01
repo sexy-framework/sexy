@@ -17,7 +17,7 @@
 </div> -->
 
 <script>
-let items = Array.from({ length: 2 }, (_, i) => i);
+// let items = Array.from({ length: 1000 }, (_, i) => i);
 
 function mounted(key)
 {
@@ -26,8 +26,7 @@ function mounted(key)
 </script>
 
 <style>
-.test-class {
-	background-color: red;
-	color: #fff;
+body {
+  color: red; /* $body-color; */
 }
 </style>

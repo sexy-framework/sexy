@@ -6,6 +6,7 @@ import { parseName } from './name';
 import { parse } from '@hawa/parser';
 import { compile } from '@hawa/compiler';
 
+import VirtualModules from './virtual'
 
 function hexEncode(str) {
 	var hex, i;
@@ -19,7 +20,24 @@ function hexEncode(str) {
 	return result
 }
 
+const virtualModuleInstances = new Map();
+
 export default function(source) {
+
+	/**
+	 * Virtual
+	 * @type {[type]}
+	 */
+	if (this._compiler && !virtualModuleInstances.has(this._compiler)) {
+		virtualModuleInstances.set(this._compiler, new VirtualModules(this._compiler));
+	}
+
+	const virtualModules = virtualModuleInstances.get(this._compiler);
+
+	/**
+	 * Prepare
+	 * @type {[type]}
+	 */
 	const loaderContext = this;
 
 	const stringifyRequest = r => loaderUtils.stringifyRequest(loaderContext, r)
@@ -52,9 +70,14 @@ export default function(source) {
 	let importStyle = '';
 
 	if (styles) {
-		// importStyle = `import styles$$ from ; console.log(styles$$);`;
-		const virtual = require(`virtual-file-loader?src=${ hexEncode(styles.source) }&file=style.${ styles.options.lang }`)
-		console.log(virtual)
+		let cssFileName = `${ resourcePath }.${ styles.options.lang }`;
+		importStyle = `import '${cssFileName}'`;
+
+		// const virtual = require(`virtual-file-loader?src=${ hexEncode(styles.source) }&file=style.${ styles.options.lang }`)
+		// console.log(virtual)
+		if (virtualModules) {
+			virtualModules.writeModule(cssFileName, styles.source);
+		}
 		// importStyle = `import css from '../test/page.css'`;
 	}
 
