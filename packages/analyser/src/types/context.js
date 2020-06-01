@@ -33,6 +33,15 @@ export function context(ast)
 		return contextStack[contextStack.length - 1];
 	}
 
+	function canCreateContext()
+	{
+		if(isSubContext() || isVariableDeclaration) {
+			return false;
+		}
+
+		return true;
+	}
+
 	traverse(ast, {
 		
 		VariableDeclarator: {
@@ -64,26 +73,30 @@ export function context(ast)
 		ArrowFunctionExpression: {
 			enter(path)
 			{
-				if(isVariableDeclaration) return;
-				createContext(path.container.id.name);
+				if(canCreateContext()) {
+					createContext(path.container.id.name);
+				}
 			},
 		    exit(path)
 		    {
-		    	if(isVariableDeclaration) return;
-		    	closeContext();
+		    	if(canCreateContext()) {
+		    		closeContext();
+		    	}
 		    }
 		},
 		FunctionDeclaration: {
 			enter(path)
 			{
-				if(isVariableDeclaration) return;
-				data.methods.push(path.node.id.name);
-				createContext(path.node.id.name);
+				if(canCreateContext()) {
+					data.methods.push(path.node.id.name);
+					createContext(path.node.id.name);
+				}
 		    },
 		    exit(path)
 		    {
-		    	if(isVariableDeclaration) return;
-		    	closeContext();
+		    	if(canCreateContext()) {
+		    		closeContext();
+		    	}
 		    }
 		}
 	});

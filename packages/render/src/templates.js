@@ -8,6 +8,19 @@ export function getNode(template, node, render) {
 	return node;
 }
 
+export function setRef($refs, node, name)
+{
+	if($refs[name] === undefined) {
+		$refs[name] = node;
+	} else {
+		if(Array.isArray($refs[name])) {
+			$refs[name].push(node);
+		} else {
+			$refs[name] = [$refs[name]].concat(node);
+		}
+	}
+}
+
 export function getProp($props, name, seed)
 {
 	if($props[name] === undefined) {
@@ -37,5 +50,6 @@ export function parseContext(context) {
 	return {
 		$props,
 		$slots,
+		$refs: {},
 	}
 }

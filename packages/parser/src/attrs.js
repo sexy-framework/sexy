@@ -21,7 +21,7 @@ var isAttr = makeMap(
 );
 
 var isDomAttr = (name, isComponent) => {
-	return (!isComponent && isAttr(name)) || name.match(/^data\-/g);
+	return (!isComponent && isAttr(name) && !isRootAttr(name)) || name.match(/^data\-/g);
 }
 
 var isRootAttr = makeMap(
@@ -66,7 +66,11 @@ export function attrs(obj, isComponent = false)
 				result.props[name] = value;
 			}
 		} else {
-			result.props[name] = makeValue(value);
+			if(isRootAttr(name)) {
+				result[name] = value;
+			} else {
+				result.props[name] = makeValue(value);
+			}
 			// console.error(`Attr ${name} doesnt registered. Cant understand type.`)
 		}
 	}

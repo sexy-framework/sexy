@@ -2,9 +2,13 @@ import * as parser from "@babel/parser";
 
 import { context, dependencies } from './types';
 
-export function analyse(source)
+export function analyse(script)
 {
-	source = source || '';
+	let source = '';
+
+	if(script) {
+		source = script.source
+	}
 	
 	const ast = parser.parse(source, {
 		sourceType: "unambiguous",

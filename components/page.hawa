@@ -1,4 +1,12 @@
 <div>
+	<!-- @each(item, key in items) -->
+	<nav.container ref="test">
+		test
+	</nav.container>
+	<!-- @endeach -->
+</div>
+
+<!-- <div>
 	@each(item, key in items)
 	<div :key="item">
 		<static :size="d">
@@ -6,16 +14,20 @@
 		</static>
 	</div>
 	@endeach
-</div>
+</div> -->
 
 <script>
-let items = Array.from({ length: 1000 }, (_, i) => i);
-let d = false;
+let items = Array.from({ length: 2 }, (_, i) => i);
 
-// function mounted()
-// {
-// 	setTimeout(() => {
-// 	d(true);
-// }, 1000)
-// }
+function mounted(key)
+{
+	
+}
 </script>
+
+<style>
+.test-class {
+	background-color: red;
+	color: #fff;
+}
+</style>

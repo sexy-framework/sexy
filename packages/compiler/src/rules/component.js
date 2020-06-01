@@ -94,6 +94,8 @@ export default function component(context, options)
 		);
 	});
 
+	
+
 	context.push(init.value);
 
 	// options.dynamic.setAttr({
@@ -104,10 +106,10 @@ export default function component(context, options)
 	// console.log(init, context)
 
 	// options.dynamic.attrs(this.option.attrs, init, context, options);
-
+	options.dynamic.ref(this, init, context, options);
 	options.dynamic.attrs(this.option.attributes, init, context, options);
 	options.dynamic.events(this, init, context, options);
-	
+
 	// let template = options.createVariable(context, (n, l) => {
 	// 	return new memberExpression(
 	// 		l, id('nextSibling')

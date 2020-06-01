@@ -27,8 +27,8 @@ export default class Component extends Type {
 
 	getImport(path, delimeter)
 	{
-		let name = this.name.replace(/[^0-9a-z]/gi, delimeter);
-
+		let name = this.name.replace(/[^0-9a-z]/gi, '/');
+		// console.log(this.name, name)
 		return `import ${ this.getName() } from "${path}/${ name }.hawa";`
 		
 	}

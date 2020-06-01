@@ -42,7 +42,6 @@ export function compile(loaderOptions, blocks)
 
 	let codeAnalyse = analyse(blocks.script);
 	let dynamicExpressions = dynamic(codeAnalyse);
-	// console.warn(codeAnalyse);
 
 	function createTemplate(program)
 	{
@@ -165,6 +164,7 @@ export function compile(loaderOptions, blocks)
 		render: code.code,
 		templates: getTemplates(),
 		script: script(codeAnalyse, blocks.script),
+		styles: blocks.style,
 		components: components(entity)(loaderOptions.path, loaderOptions.delimeter),
 	}
 }

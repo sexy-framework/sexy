@@ -5,25 +5,49 @@ import { Expression, Text, Node, Slot, Component } from './types';
 
 import { Parser as HTMLParser } from 'htmlparser2';
 
+export function parseAttrs(str)
+{
+	let attrs = {};
+
+	str.trim().replace(/([^\s]*)=["'](.*?)["']|([\w\-]+)/g, function(src2, name, value) {
+        if (!src2) return;
+        name = name || src2;
+        value = value;
+        attrs[name] = value;
+    });
+
+	return attrs;
+}
+
 export function parseBlocks(blocks, html)
 {
+	let res = {};
+
 	for(let key in blocks) {
-		let regexp = new RegExp(`<${key}.*>((.|\\s)*)<\\/${key}>`, 'g');
+		res[key] = null;
+		
+		let regexp = new RegExp(`<${key}(.*)>((.|\\s)*)<\\/${key}>`, 'g');
 		let matches = regexp.exec(html);
 		if(matches) {
-			blocks[key] = matches[1];
+
+			res[key] = {
+				options: Object.assign(blocks[key], parseAttrs(matches[1])),
+				source: matches[2],
+			}
 		}
 	}
 
-	return blocks;
+	return res;
 }
 
 export function parse(html)
 {
 	// get additional blocks e.g. script, style, doc
 	let blocks = parseBlocks({
-		script: null,
-		style: null,
+		script: {},
+		style: {
+			lang: 'css',
+		},
 	}, html);
 
 	// clean up html and replace expression with tag-expression
@@ -37,11 +61,6 @@ export function parse(html)
 	function currentStackNode()
 	{
 		return stack[stack.length - 1];
-	}
-
-	function isBlockTag(name)
-	{
-		return stack.length === 1 && ['script', 'style'].includes(name);
 	}
 
 	const parse = new HTMLParser({

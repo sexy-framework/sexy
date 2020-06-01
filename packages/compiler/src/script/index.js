@@ -20,9 +20,13 @@ import {
 	variableDeclaration,
 } from "@babel/types";
 
-export function script(analyse, source)
+export function script(analyse, script)
 {
-	source = source || '';
+	let source = '';
+
+	if(script) {
+		source = script.source
+	}
 	
 	const ast = parser.parse(source, {
 		sourceType: "unambiguous",
