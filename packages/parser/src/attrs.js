@@ -20,8 +20,8 @@ var isAttr = makeMap(
 	'target,title,type,usemap,value,width,wrap'
 );
 
-var isDomAttr = (name) => {
-	return isAttr(name) || name.match(/^data\-/g);
+var isDomAttr = (name, isComponent) => {
+	return (!isComponent && isAttr(name)) || name.match(/^data\-/g);
 }
 
 var isRootAttr = makeMap(
@@ -36,7 +36,7 @@ function makeValue(value, isExpression = false)
 	}
 }
 
-export function attrs(obj)
+export function attrs(obj, isComponent = false)
 {
 	let result = {
 		events: {},
@@ -49,7 +49,7 @@ export function attrs(obj)
 	{
 		let value = obj[name];
 
-		if(isDomAttr(name)) {
+		if(isDomAttr(name, isComponent)) {
 			result.staticAttrs[name] = value;
 		} else if(name.match(/^@/g)) {
 			name = name.replace(/^@/g, '');
@@ -60,7 +60,7 @@ export function attrs(obj)
 			
 			if(isRootAttr(name)) {
 				result[name] = value;
-			} else if(isDomAttr(name)) {
+			} else if(isDomAttr(name, isComponent)) {
 				result.attributes[name] = value;
 			} else {
 				result.props[name] = value;

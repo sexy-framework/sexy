@@ -1,30 +1,30 @@
-@each(item, key in items)
-<template :key="item">
-	<button @click="visible(!visible())">
-		${ buttonText }
-	</button>
-	<div :class="activeClass">
-		test 
-	</div>
-</template>
-@endeach
+<div class="button" >
+	<slot>
+		Default button text
+	</slot>
+</div>
 
 <script>
-let visible = o(false);
-let items = Array.from({ length: 10 }, (_, i) => i);
 
-let activeClass = () => {
-	return {
-		red: visible()
-	}
-}
+// let d = o(12);
+// let size = p('medium');
 
-let buttonText = () => {
-	return visible() ? 'hide' : 'show';
-}
+// let someClass = () => {
+// 	return {
+// 		active: size() === true,
+// 	}
+// }
 
-function alert(d)
-{
-	v(v() + 1);
-}
+// let styles = () => {
+// 	return {
+// 		color: d() % 2 === 0 ? 'red' : 'green',
+// 		fontSize: d() + 'px'
+// 	}
+// }
+
+// function debug(v)
+// {
+// 	console.log(v, size());
+// }
+
 </script>

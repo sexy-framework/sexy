@@ -5,7 +5,7 @@ import {
 
 export default function text(context, options)
 {
-
+	
 	options.dynamic.string(this, options.getLastVariableId(), context, options);
 
 	// let template = false;

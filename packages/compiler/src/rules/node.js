@@ -39,7 +39,7 @@ export default function node(context, options)
 		name: 'key',
 	}, options.getLastVariableId(), context, options);
 
-	options.dynamic.attrs(this, options.getLastVariableId(), context, options);
+	options.dynamic.attrs(this.option.attributes, options.getLastVariableId(), context, options);
 	options.dynamic.events(this, options.getLastVariableId(), context, options);
 
 	children(this, context, options);

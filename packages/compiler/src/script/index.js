@@ -13,8 +13,11 @@ import {
 	objectExpression,
 	objectProperty,
 	arrayExpression,
+	logicalExpression,
 	arrowFunctionExpression,
 	functionExpression,
+	variableDeclarator,
+	variableDeclaration,
 } from "@babel/types";
 
 export function script(analyse, source)
@@ -26,16 +29,60 @@ export function script(analyse, source)
 		strictMode: false,
 	});
 
+	let replaceVariableWith = null;
 	traverse(ast, {
 
+		VariableDeclaration: {
+			exit(path) {
+				if(replaceVariableWith !== null) {
+					path.replaceWith(replaceVariableWith)
+				}
+			}
+		},
 		VariableDeclarator: {
 			enter(path)
 			{
-				let id = path.node.id;
+				replaceVariableWith = null;
+
+				let name = path.node.id;
 				let value = path.node.init;
 
 				if(value.type === 'CallExpression' && value.callee.name === 'o') {
 					value.callee.name = 'observable';
+				}
+
+				if(value.type === 'CallExpression' && value.callee.name === 'p') {
+
+					let propVariable = memberExpression(id('$props'), name);
+
+					replaceVariableWith = variableDeclaration(
+						'let',
+						[variableDeclarator(
+							name,
+							new callExpression(
+								id('_getProp$'),
+								[
+									id('$props'),
+									stringLiteral(name.name),
+									value.arguments[0],
+									// arrayExpression(
+									// 	[propVariable]
+									// ), 
+									// arrowFunctionExpression([],
+									// 	blockStatement([
+									// 		returnStatement(
+									// 			logicalExpression(
+									// 				'||',
+									// 				propVariable,
+									// 				value.arguments[0],
+									// 			)
+									// 		)
+									// 	])
+									// )
+								]
+							)
+						)]
+					)
 				}
 		    },
 		    exit() {

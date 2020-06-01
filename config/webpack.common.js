@@ -31,7 +31,7 @@ module.exports = {
     mode: 'development',
 
     entry: [
-        './test/components.js'
+        './test/c.js'
     ],
 
     output: {
@@ -46,7 +46,7 @@ module.exports = {
 	    splitChunks: {
 	        cacheGroups: {
 	            vendor: {
-	                test: /[\\/]node_modules[\\/]/,
+	                test: /[\\/]packages[\\/]/,
 	                name: 'vendors',
 	                enforce: true,
 	                chunks: 'all'
@@ -81,19 +81,8 @@ module.exports = {
                     {
                     	loader: '@hawa/loader',
                     	options: {
-                    		parseName(file) {
-                    			file = camelize(file);
-                    			let rootPath = camelize(path.resolve(__dirname, '../'));
-
-								let componentPath = file
-									.split(rootPath)
-									.join('')
-									.replace(/\.hawa/i, '')
-									.replace(/Components/, '')
-									.replace(/(\s|\/)/g, '');
-
-								return componentPath;
-							}
+                    		path: '../components',
+                    		delimeter: '-',
                     	}
                     }
                 ]

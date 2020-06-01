@@ -43,6 +43,12 @@ export function dependencies(ast, observables = [])
 					return;
 				}
 
+				if(path.container.type === 'MemberExpression' && path.key === 'object') {
+					if(path.node.name === '$props') {
+						context.deps.push(`${ path.container.object.name }.${ path.container.property.name }`);
+					}
+				}
+
 				if(!context.vars.includes(name) && observables.includes(name)) {
 					context.deps.push(name);
 				}

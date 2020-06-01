@@ -33,7 +33,7 @@ export function map(bindNode, items, keyExpr, expr, render)
 		let _items = value(items);
 		let node = bindNode;
 		let lastNode = null;
-
+		// return;
 		for (let key in _items) {
 			let item = _items[key];
 			let itemKey = keyExpr(item, key);
@@ -49,8 +49,9 @@ export function map(bindNode, items, keyExpr, expr, render)
 			}
 
 			if(lastHydratedNode && lastHydratedNode.hasAttribute) {
+				let hydratedNodes = [];
+
 				if(!lastHydratedNode.hasAttribute('data-key')) {
-					let hydratedNodes = [];
 					let startNodeSearch = lastHydratedNode;
 					while(startNodeSearch) {
 						hydratedNodes.unshift(startNodeSearch);
@@ -60,22 +61,24 @@ export function map(bindNode, items, keyExpr, expr, render)
 						
 						startNodeSearch = startNodeSearch.previousSibling;
 					}
-					
-					defaultA[key] = item;
-
-					let n = lastHydratedNode;
-
-					if(hydratedNodes.length > 0) {
-						n = persistent({
-							childNodes: hydratedNodes
-						})
-					}
-
-					nodes.set(itemKey, n);
-					diffable(n, 1);
 				}
+
+				defaultA[key] = item;
+
+				let n = lastHydratedNode;
+
+				if(hydratedNodes.length > 0) {
+					n = persistent({
+						childNodes: hydratedNodes
+					})
+				}
+
+				nodes.set(itemKey, n);
+				diffable(n, 1);
 			}
 		}
+
+		// console.log(defaultA);
 
 		endMark = document.createTextNode('');
 

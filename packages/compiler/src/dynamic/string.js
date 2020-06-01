@@ -21,7 +21,9 @@ export function string(entity, point, context, options)
 		return;
 	}
 
-	let isExpression = entity.value.match(/\$\{.*\}/g) !== null;
+	let value = entity.value.replace(/{{(.*)}}/g, '${ $1 }');
+
+	let isExpression = value.match(/\$\{.*\}/g) !== null;
 
 	if(!isExpression) {
 		return;
@@ -29,7 +31,7 @@ export function string(entity, point, context, options)
 
 	let { deps, content } = makeValue(this.context, {
 		isExpression,
-		value: `\`${ entity.value }\``,
+		value: `\`${ value }\``,
 	}, makeString);
 
 	deps = new arrayExpression(deps.map((item) => {

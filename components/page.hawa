@@ -1,0 +1,21 @@
+<div>
+	@each(item, key in items)
+	<div :key="item">
+		<static :size="d">
+			{{ `button ${ item }`  }}
+		</static>
+	</div>
+	@endeach
+</div>
+
+<script>
+let items = Array.from({ length: 1000 }, (_, i) => i);
+let d = false;
+
+// function mounted()
+// {
+// 	setTimeout(() => {
+// 	d(true);
+// }, 1000)
+// }
+</script>

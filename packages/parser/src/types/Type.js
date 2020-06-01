@@ -25,6 +25,19 @@ export default class Type
 		return rules[this.type].call(this, context, options);
 	}
 
+	skipFirstChildInit()
+	{
+		if(this.isTemplate()) {
+			if(this.attrs) {
+				return this.attrs.slot === undefined;
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
 	isTemplate()
 	{
 		return (this.type === 'node' && this.tag === 'template');

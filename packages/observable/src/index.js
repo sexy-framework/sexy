@@ -35,7 +35,9 @@ export function computed(obs, value)
 	obs = [].concat(obs);
 
 	for(let ob of obs) {
-		ob._observers.add(update);
+		if(ob.$o !== undefined) {
+			ob._observers.add(update);
+		}
 	}
 
 	function data()
@@ -94,6 +96,10 @@ export function subscribe(obs, value, skip = false)
 // Is property observable 
 export function isObservable(prop)
 {
+	if(prop === undefined) {
+		return false;
+	}
+
 	return prop.$o !== undefined || typeof prop === 'function';
 }
 

@@ -1,6 +1,7 @@
 import { Expression } from '@hawa/parser';
 import { analyse } from '@hawa/analyser';
 import { script } from './script';
+import { components } from './components';
 import dynamic from './dynamic';
 
 import {
@@ -28,7 +29,7 @@ import generate from "@babel/generator";
 /**
  * Compile template to DOM expressions
  */
-export function compile(blocks)
+export function compile(loaderOptions, blocks)
 {
 	let VariableCounter = 0;
 	let contextStack = [];
@@ -143,6 +144,7 @@ export function compile(blocks)
 	createContext(true);
 	[entity].map((item) => handle(item));
 
+
 	/**
 	 * Generate code
 	 * @type {[type]}
@@ -162,6 +164,7 @@ export function compile(blocks)
 	return {
 		render: code.code,
 		templates: getTemplates(),
-		script: script(codeAnalyse, blocks.script)
+		script: script(codeAnalyse, blocks.script),
+		components: components(entity)(loaderOptions.path, loaderOptions.delimeter),
 	}
 }

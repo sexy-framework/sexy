@@ -33,7 +33,7 @@ export function nextNode(context, options, type)
 
 export function children(entity, context, options, customDefiner = false)
 {
-	if(entity.isTemplate()) {
+	if(entity.skipFirstChildInit()) {
 		customDefiner = () => {};
 	}
 	// console.log(entity, entity.hasAloneTemplate());

@@ -8,6 +8,7 @@ export default class Node extends Type
 		super();
 
 		this.tag = tag;
+		this.attrs = attrs;
 		this.option = parseAttrs(attrs);
 		this.children = [];	
 		this.type = 'node';

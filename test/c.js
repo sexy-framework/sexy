@@ -1,4 +1,5 @@
-import StaticComponent from '../components/static.hawa'
+// import StaticComponent from '../components/static.hawa'
+import PageComponent from '../components/page.hawa'
 import time from './time';
 
 
@@ -7,7 +8,7 @@ let layout = document.getElementById('layout');
 console.log('start render');
 layout.innerHTML = '';
 time('render');
-layout.appendChild(StaticComponent());
+layout.appendChild(PageComponent());
 time('render');
 
 
@@ -19,6 +20,6 @@ setTimeout(() => {
 
 	console.log('start hydration');
 	time('hydrate');
-	StaticComponent(null, layout.firstChild)
+	PageComponent(null, layout.firstChild)
 	time('hydrate');
 }, 300)

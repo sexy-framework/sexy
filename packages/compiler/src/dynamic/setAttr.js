@@ -37,7 +37,7 @@ export function setAttr({ name = 'key', Type }, point, context, options)
 		)
 	);
 
-	if(result.shouldWrap) {
+	// if(result.shouldWrap) {
 		expression = new expressionStatement(
 			new callExpression(
 				id('subscribe'),
@@ -52,7 +52,7 @@ export function setAttr({ name = 'key', Type }, point, context, options)
 				]
 			)
 		);
-	}
+	// }
 
 	context.push(expression);
 	

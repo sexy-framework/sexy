@@ -226,21 +226,7 @@ function gett() {
 	`;
 
 	html = `
-	<div class="2" :data-1="{ test: text1 }" :data-2="text1" :class="[text1, { some: text2 === 2 }]" :prop1="123">
-		@each(item1, key1 in items)
-			@if(item1 % 2 === 0 && text2 % 2 === 0)
-			<template :key="'text-' + item1 + text1">
-				<div @click="method1" @mousedown="method1(event)">
-					Some test text \${ text1 } after
-				</div>
-				<div class="button" @mousedown="alert(2)">
-					<slot>Default <b class="d">button</b> text</slot>
-				</div>
-			</template>
-			@endif
-		@endeach
-		<div class="Test">\${ text2 }</div>
-	</div>
+	<staticName-as.wq-asd/asd></staticName-as.wq-asd/asd>
 
 	<script>
 	let text1 = o(1);
@@ -264,6 +250,9 @@ function gett() {
 	`
 	let blocks = parse(html);
 
-	return compile(blocks);
+	return compile({
+		path: '../components',
+        delimeter: '-',
+	}, blocks);
 	// console.log(html);
 }

@@ -1,7 +1,5 @@
 import { watch } from '@hawa/observable';
 
-attrArgToObj
-
 export function attrArgToObj(args)
 {
 	let result = {};
@@ -19,23 +17,20 @@ export function attrArgToObj(args)
 
 export function attrArgToString(args)
 {
-	let result = new Set();
+	let result = [];
 	// args = args.concat([]);
 	if(Array.isArray(args)) {
 		for (var i = 0; i < args.length; i++) {
-			result = new Set([
-				...result,
-				...attrArgToString(args[i]),
-			]);
+			result = result.concat(attrArgToString(args[i]));
 		}
 	} else if(typeof args === 'object') {
 		for(let key in args) {
 			if(args[key]) {
-				result.add(key);
+				result.push(key);
 			}
 		}
 	} else {
-		result.add(args);
+		result.push(args);
 	}
 
 	return result;
@@ -48,7 +43,9 @@ export function makeClass(node, value, render)
 	watch(value, (v) => {
 		let tmp = node.classList;
 
-		let toSet = Array.from(attrArgToString(v));
+		let toSet = Array.from(
+			new Set(attrArgToString(v))
+		);
 		let toRemove = lastClassAdopted.filter(x => !toSet.includes(x));
 
 		for(let name of toSet) {

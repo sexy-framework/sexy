@@ -10,7 +10,7 @@ import { compile } from '@hawa/compiler';
 export default function(source) {
     const loaderContext = this;
 
-    const stringifyRequest = r => loaderUtils.stringifyRequest(loaderContext, r)
+    // const stringifyRequest = r => loaderUtils.stringifyRequest(loaderContext, r)
 
     const {
         target,
@@ -23,26 +23,24 @@ export default function(source) {
     } = loaderContext
 
     // parse query
-    const rawQuery = resourceQuery.slice(1)
-    const inheritQuery = `&${rawQuery}`
-    const incomingQuery = qs.parse(rawQuery)
-
+    // const rawQuery = resourceQuery.slice(1)
+    // const inheritQuery = `&${rawQuery}`
+    // const incomingQuery = qs.parse(rawQuery)
     // parse options
     const options = loaderUtils.getOptions(loaderContext) || {};
-
-    let name = parseName(resourcePath, options);
-
+    // options.delimeter
+    // options.path;
     
 
     let blocks = parse(source);
 
-    console.log(name, Object.keys(blocks));
+    let { render, templates, script, components } = compile(options, blocks);
 
-    let { render, templates, script } = compile(blocks);
 
-	return `
+	let code = `
 	import { observable, computed, subscribe, watch } from '@hawa/observable';
 	import { map as _each$ } from '@hawa/map';
+	${ components }
 
 	import {
 		attrs as _makeAttrs$,
@@ -50,7 +48,9 @@ export default function(source) {
 		slot as _slot$,
 		statement as _statement$,
 		getNode,
+		getProp as _getProp$,
 		parseContext,
+		loadComponent,
 	} from '@hawa/render';
 	
 	// templates
@@ -69,5 +69,9 @@ export default function(source) {
 		${ render }
 	}
 	`;
+
+	console.log(code);
+	
+	return code;
     // return block.source || 'export default {}';
 }
