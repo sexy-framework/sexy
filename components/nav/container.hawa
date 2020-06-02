@@ -14,10 +14,6 @@ let classList = () => {
 	}
 }
 
-setTimeout(() => {
-	console.log(1);
-}, 100);
-
 function mounted()
 {
 	console.log('container mounted');

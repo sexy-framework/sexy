@@ -20,10 +20,10 @@ function hexEncode(str) {
 	return result
 }
 
-const virtualModuleInstances = new Map();
+
 
 export default function(source) {
-
+	const virtualModuleInstances = new Map();
 	/**
 	 * Virtual
 	 * @type {[type]}

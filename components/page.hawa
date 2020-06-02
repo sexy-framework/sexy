@@ -8,7 +8,7 @@
 
 <script>
 let d = o(1);
-let items = Array.from({ length: 10 }, (_, i) => i);
+let items = Array.from({ length: 1000 }, (_, i) => i);
 
 function mounted() {
 	console.log('page mounted');
@@ -20,8 +20,3 @@ function unmounted()
 }
 </script>
 
-<style lang="scss">
-.test {
-	color: red;
-}
-</style>

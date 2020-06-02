@@ -18,7 +18,6 @@ export function analyse(script)
 	let data = context(ast);
 	let deps = dependencies(ast, data.observables);
 
-	console.log(deps)
 	return {
 		context: data,
 		deps: deps,
