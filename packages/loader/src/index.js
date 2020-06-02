@@ -63,30 +63,47 @@ export default function(source) {
 	/**
 	 * Compiler
 	 */
+	 // console.log('>---------');
+	 // console.log(source);
+	 
 	let blocks = parse(source);
-
 	let { render, templates, script, components, styles } = compile(options, blocks);
 
+	// console.log('[render]', render);
+	// console.log('[templates]', templates);
+	// console.log('[script]', script);
+	// console.log('[styles]', styles);
+	// console.log('<---------');
+	/**
+	 * Import style block
+	 * @type {String}
+	 */
 	let importStyle = '';
-
 	if (styles) {
-		let cssFileName = `${ resourcePath }.${ styles.options.lang }`;
-		importStyle = `import '${cssFileName}'`;
+		importStyle = `import _component_styles$ from ${ stringifyRequest(resourcePath + '?type=style') }`;
+	}
 
-		// const virtual = require(`virtual-file-loader?src=${ hexEncode(styles.source) }&file=style.${ styles.options.lang }`)
-		// console.log(virtual)
+	/**
+	 * Add virtual module for styles
+	 */
+	if (incomingQuery.type === 'style') {
+		let cssFileName = `${ resourcePath }.${ styles.options.lang }`;
+		// resourcePath.replace(/\.hawa$/g, '.' + styles.options.lang);//
+		console.log(cssFileName);
+
 		if (virtualModules) {
 			virtualModules.writeModule(cssFileName, styles.source);
 		}
-		// importStyle = `import css from '../test/page.css'`;
+		
+		return `import d from '${cssFileName}';`;
+
+		return 'export const d = 1;'
 	}
-
-	let code = '';
-
-	// if (incomingQuery.type === 'style') {
-	// 	code = styles.source;
-	// } else {
-		code = `
+	 
+	/**
+	 * Main component code
+	 */
+	let code = `
 		import { observable, computed, subscribe, watch } from '@hawa/observable';
 		import { map as _each$ } from '@hawa/map';
 		${ importStyle }
@@ -122,7 +139,7 @@ export default function(source) {
 		`;
 	// }
 
-	console.log(code);
+	// console.log(code);
 
 	return code;
 	// return block.source || 'export default {}';

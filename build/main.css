@@ -1,7 +1,11 @@
-
-body {
-  color: red; /* $body-color; */
+.test {
+  color: red;
 }
 
+/*$body-color: red
 
-/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9jb21wb25lbnRzL3BhZ2UuaGF3YS5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUNBO0FBQ0EsYUFBYSxnQkFBZ0I7QUFDN0IiLCJmaWxlIjoibWFpbi5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJcbmJvZHkge1xuICBjb2xvcjogcmVkOyAvKiAkYm9keS1jb2xvcjsgKi9cbn1cbiJdLCJzb3VyY2VSb290IjoiIn0=*/
+.body 
+  color: red*/
+/* $body-color; */
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9jb21wb25lbnRzL3BhZ2UuaGF3YS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0FBQ0E7QUFDQTs7QUFFQTs7QUFFQTtBQUNBO0FBQ0EsZUFBZSxHIiwiZmlsZSI6Im1haW4uY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnRlc3Qge1xuICBjb2xvcjogcmVkO1xufVxuXG4vKiRib2R5LWNvbG9yOiByZWRcblxuLmJvZHkgXG4gIGNvbG9yOiByZWQqL1xuLyogJGJvZHktY29sb3I7ICovIl0sInNvdXJjZVJvb3QiOiIifQ==*/

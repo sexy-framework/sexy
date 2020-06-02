@@ -25,8 +25,13 @@ function mounted(key)
 }
 </script>
 
-<style>
-body {
-  color: red; /* $body-color; */
+<style lang="scss">
+.test {
+	color: red;
 }
+/*$body-color: red
+
+.body 
+  color: red*/ /* $body-color; */
+
 </style>

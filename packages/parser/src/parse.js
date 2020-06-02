@@ -25,7 +25,7 @@ export function parseBlocks(blocks, html)
 
 	for(let key in blocks) {
 		res[key] = null;
-		
+
 		let regexp = new RegExp(`<${key}(.*)>((.|\\s)*)<\\/${key}>`, 'g');
 		let matches = regexp.exec(html);
 		if(matches) {
