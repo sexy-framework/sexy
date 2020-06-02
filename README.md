@@ -1,7 +1,5 @@
 # HAWA
 
-## What?
-
 HAWA - is a Javascript template compiler and code analyser that compile template to DOM expressions and create variable (observable, computed) dependecies on compiler time.
 
 So its like Svelte, but much faster because of
