@@ -31,7 +31,7 @@ function test() {
 	let { render, templates, script } = gett();
 	console.log(render);
 	console.log(templates);
-	// console.log(script);
+	console.log(script);
 	return;
 
 	/**
@@ -226,34 +226,47 @@ function gett() {
 	`;
 
 	html = `
-	<div>
-	@each(item, key in items)
-		<nav.container ref="test" :key="item">
-			test
-		</nav.container>
-	@endeach
+<div @click="alert(1)" :class="[classList, { active: tick === 1 }]" :style="[{ fontSize: tick() + 'px' }]">
+	<slot></slot>
 </div>
 
 <script>
-let d = o(1);
+let tick = o(24);
+let test = p(null);
 let items = Array.from({ length: 10 }, (_, i) => i);
 
-function mounted(key)
+let classList = () => {
+	return {
+		red: tick() % 2 == 0,
+		green: tick() % 3 == 0,
+		some: test() === null,
+	}
+}
+
+let computedTmp = () => {
+	tick;
+	test;
+}
+
+setTimeout(() => {
+	console.log(1);
+}, 100);
+
+function mounted()
 {
-	
+	console.log('container mounted');
+}
+
+let mounted2 = function()
+{
+	console.log('container mounted');
+}
+
+function unmounted()
+{
+	console.log('container unmounted');	
 }
 </script>
-
-<style lang="scss">
-.test {
-	color: red;
-}
-/*$body-color: red
-
-.body 
-  color: red*/ /* $body-color; */
-
-</style>
 	`
 	let blocks = parse(html);
 

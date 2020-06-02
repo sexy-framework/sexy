@@ -10,8 +10,7 @@
 let d = o(1);
 let items = Array.from({ length: 10 }, (_, i) => i);
 
-function mounted()
-{
+function mounted() {
 	console.log('page mounted');
 }
 

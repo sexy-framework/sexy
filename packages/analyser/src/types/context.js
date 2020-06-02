@@ -33,22 +33,31 @@ export function context(ast)
 		return contextStack[contextStack.length - 1];
 	}
 
-	function canCreateContext()
+	function canCreateContext(path, parentType)
 	{
+		
 		if(isSubContext() || isVariableDeclaration) {
 			return false;
 		}
 
-		return true;
+		return (path.parent.type === parentType);
 	}
 
 	traverse(ast, {
 		
-		VariableDeclarator: {
+		VariableDeclaration: {
 			enter(path)
 			{
 				isVariableDeclaration = true;
-
+			},
+			exit(path)
+			{
+				isVariableDeclaration = false;
+			}
+		},
+		VariableDeclarator: {
+			enter(path)
+			{
 				let id = path.node.id;
 				let value = path.node.init;
 				let context = getContext();
@@ -66,20 +75,17 @@ export function context(ast)
 					data.vars.push(id.name);
 				}
 		    },
-		    exit() {
-		    	isVariableDeclaration = false;
-		    }
 		},
 		ArrowFunctionExpression: {
 			enter(path)
 			{
-				if(canCreateContext()) {
+				if(canCreateContext(path, 'VariableDeclarator')) {
 					createContext(path.container.id.name);
 				}
 			},
 		    exit(path)
 		    {
-		    	if(canCreateContext()) {
+		    	if(canCreateContext(path, 'VariableDeclarator')) {
 		    		closeContext();
 		    	}
 		    }
@@ -87,14 +93,14 @@ export function context(ast)
 		FunctionDeclaration: {
 			enter(path)
 			{
-				if(canCreateContext()) {
+				if(canCreateContext(path, 'Program')) {
 					data.methods.push(path.node.id.name);
 					createContext(path.node.id.name);
 				}
 		    },
 		    exit(path)
 		    {
-		    	if(canCreateContext()) {
+		    	if(canCreateContext(path, 'Program')) {
 		    		closeContext();
 		    	}
 		    }
