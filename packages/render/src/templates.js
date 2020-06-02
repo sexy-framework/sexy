@@ -1,4 +1,4 @@
-import { computed, isObservable } from '@hawa/observable';
+import { watch, computed, isObservable } from '@hawa/observable';
 
 export function getNode(template, node, render) {
 	if (render) {
@@ -19,6 +19,17 @@ export function setRef($refs, node, name)
 			$refs[name] = [$refs[name]].concat(node);
 		}
 	}
+}
+
+export function setKey($key, node, render)
+{
+	if($key === null) {
+		return;
+	}
+
+	watch($key, () => {
+		node.setAttribute('data-key', $key);
+	}, render)
 }
 
 export function getProp($props, name, seed)
@@ -46,10 +57,12 @@ export function parseContext(context) {
 
 	let $props = context.$props || {};
 	let $slots = context.$slots || {};
+	let $key = context.$key === undefined ? null : context.$key;
 
 	return {
 		$props,
 		$slots,
+		$key, 
 		$refs: {},
 	}
 }

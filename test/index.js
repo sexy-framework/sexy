@@ -29,9 +29,9 @@ function test() {
 
 
 	let { render, templates, script } = gett();
-	// console.log(render);
-	// console.log(templates);
-	console.log(script);
+	console.log(render);
+	console.log(templates);
+	// console.log(script);
 	return;
 
 	/**
@@ -226,27 +226,34 @@ function gett() {
 	`;
 
 	html = `
-	<staticName-as.wq-asd/asd></staticName-as.wq-asd/asd>
+	<div>
+	@each(item, key in items)
+		<nav.container ref="test" :key="item">
+			test
+		</nav.container>
+	@endeach
+</div>
 
-	<script>
-	let text1 = o(1);
-	let text2 = o(1);
-	let text3 = o(1);
-	let items = Array.from({ length: 1 }, (_, i) => i);
-	let time = 1235;
+<script>
+let d = o(1);
+let items = Array.from({ length: 10 }, (_, i) => i);
 
-	let c = () => {
-		return time + text1;
-	}
+function mounted(key)
+{
+	
+}
+</script>
 
-	function method1() {
-		let d = text2();
+<style lang="scss">
+.test {
+	color: red;
+}
+/*$body-color: red
 
-		let text1 = 'some';
+.body 
+  color: red*/ /* $body-color; */
 
-		text1;
-	}
-	</script>
+</style>
 	`
 	let blocks = parse(html);
 

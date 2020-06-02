@@ -12,6 +12,8 @@ import { children, getFirstTemplateNode } from './utils';
 
 import { Expression } from '@hawa/parser';
 
+export const CUR_EACH_LOOP_KEY = '_eachNodeKey$';
+
 export function parseEachCondition(entity)
 {
 	let statement = entity.value.matchAll(/(?<item>[A-z0-9]+)\s?(\,\s?(?<key>[A-z0-9]+)\s?)?\s?in\s(?<condition>.*)/g);
@@ -114,7 +116,7 @@ export default function each(context, options)
 
 	params.push(
 		new arrowFunctionExpression(
-			[ id('node'), id('render'), id('_keyExpr$') ].concat(loop.args.map(item => id(item))),
+			[ id('node'), id('render'), id(CUR_EACH_LOOP_KEY) ].concat(loop.args.map(item => id(item))),
 			new blockStatement(body),
 		)
 	);

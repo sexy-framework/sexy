@@ -4,12 +4,16 @@ import {
 	returnStatement,
 	conditionalExpression,
 	callExpression,
+	arrowFunctionExpression,
+	blockStatement,
+	expressionStatement,
 } from "@babel/types";
 
 import { children, getFirstTemplateNode } from './utils';
 
 export default function program(context, options)
 {
+	// init template
 	let template = options.createVariable(context, (n, l) => {
 		let index = options.createTemplate(this);
 		return new callExpression(
@@ -18,11 +22,9 @@ export default function program(context, options)
 	});
 
 	context.push(template.value);
-	
 
 	let lastChild = children(this, context, options, getFirstTemplateNode)
 
-	
 
 	let returnPointer = new returnStatement(
 		new conditionalExpression(

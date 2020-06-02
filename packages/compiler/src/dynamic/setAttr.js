@@ -15,13 +15,16 @@ import {
 
 import { makeValue, makeSubscribe } from './value';
 
-export function setAttr({ name = 'key', Type }, point, context, options)
+export function setAttr({ name = 'key', value, Type }, point, context, options)
 {
-	if(Type.option[name] === undefined) {
+	if((Type.option === undefined || Type.option[name] === undefined) && value === undefined) {
 		return;
 	}
 
-	let value = Type.option[name];
+	if(value === undefined) {
+		value = Type.option[name];
+	}
+
 	let result = makeValue(this.context, value, makeSubscribe);
 
 	let expression = new expressionStatement(
@@ -36,6 +39,7 @@ export function setAttr({ name = 'key', Type }, point, context, options)
 			]
 		)
 	);
+
 
 	// if(result.shouldWrap) {
 		expression = new expressionStatement(

@@ -117,6 +117,7 @@ export default function(source) {
 			getNode,
 			getProp as _getProp$,
 			setRef as _setRef$,
+			setKey as _setKey$,
 			parseContext,
 			loadComponent,
 		} from '@hawa/render';
@@ -128,7 +129,7 @@ export default function(source) {
 		export default function render(context, node = false) {
 			let render = node === false;
 
-			let { $props, $slots, $refs } = parseContext(context);
+			let { $props, $slots, $refs, $key } = parseContext(context);
 			
 			// code
 			${ script }

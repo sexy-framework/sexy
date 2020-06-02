@@ -1,23 +1,14 @@
 <div>
-	<!-- @each(item, key in items) -->
-	<nav.container ref="test">
-		test
-	</nav.container>
-	<!-- @endeach -->
+	@each(item, key in items)
+		<nav.container ref="test" :key="item">
+			test
+		</nav.container>
+	@endeach
 </div>
 
-<!-- <div>
-	@each(item, key in items)
-	<div :key="item">
-		<static :size="d">
-			{{ `button ${ item }`  }}
-		</static>
-	</div>
-	@endeach
-</div> -->
-
 <script>
-// let items = Array.from({ length: 1000 }, (_, i) => i);
+let d = o(1);
+let items = Array.from({ length: 10000 }, (_, i) => i);
 
 function mounted(key)
 {

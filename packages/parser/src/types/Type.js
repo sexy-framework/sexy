@@ -25,6 +25,11 @@ export default class Type
 		return rules[this.type].call(this, context, options);
 	}
 
+	isRoot()
+	{
+		return this.parent === null;
+	}
+
 	skipFirstChildInit()
 	{
 		if(this.isTemplate()) {

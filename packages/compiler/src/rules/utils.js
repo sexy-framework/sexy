@@ -5,9 +5,10 @@ import {
 	blockStatement,
 	callExpression,
 	conditionalExpression,
+	expressionStatement,
 } from "@babel/types";
 
-export function getFirstTemplateNode(context, options)
+export function getFirstTemplateNode(entity, context, options)
 {
 	let pointer = options.createVariable(context, (n, l) => {
 		return new conditionalExpression(
@@ -18,6 +19,24 @@ export function getFirstTemplateNode(context, options)
 	});
 
 	context.push(pointer.value);
+
+	// console.log(entity, entity.parent.isRoot())
+	if(entity.parent.isRoot()) {
+		// key for loops
+		context.push(
+			expressionStatement(
+				callExpression(
+					id('_setKey$'),
+					[
+						id('$key'),
+						pointer.name,
+						id('render'),
+					]
+				)
+			)
+		);
+
+	}
 }
 
 export function nextNode(context, options, type)
@@ -59,7 +78,7 @@ export function childHandle(entity, context, options, index, customDefiner)
 	let isFirst = index === 0;
 
 	if(customDefiner && isFirst) {
-		customDefiner(context, options);
+		customDefiner(entity, context, options);
 	} else {
 		if(!entity.skipInit()) {
 			nextNode(context, options, isFirst ? 'firstChild' : 'nextSibling')

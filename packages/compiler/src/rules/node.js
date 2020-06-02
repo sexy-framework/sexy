@@ -17,32 +17,22 @@ import { attrs } from '../dynamic';
 
 export default function node(context, options)
 {
-	// let template = false;
+	// register node reference 
+	options.dynamic.ref(this, options.getLastVariableId(), context, options);
 
-	// if(options.customDefine !== null) {
-	// 	template = options.customDefine(context, options.firstChild);
-	// 	delete options.customDefine;
-	// }
-
-	// if(template === false) {
-	// 	template = options.createVariable(context, (n, l) => {
-	// 		return new memberExpression(
-	// 			l, id(options.firstChild ? 'firstChild' : 'nextSibling')
-	// 		);
-	// 	});
-
-	// 	context.push(template.makeValue);
-	// }	
-	
+	// set data-key for node
 	options.dynamic.setAttr({
 		Type: this,
 		name: 'key',
 	}, options.getLastVariableId(), context, options);
 
+	// add attrs for nodes
 	options.dynamic.attrs(this.option.attributes, options.getLastVariableId(), context, options);
+	
+	// add events for node
 	options.dynamic.events(this, options.getLastVariableId(), context, options);
-	options.dynamic.ref(this, options.getLastVariableId(), context, options);
 
+	// handle children of node
 	children(this, context, options);
 }
 

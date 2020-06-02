@@ -16,6 +16,8 @@ import { attrs } from '../dynamic';
 
 import { children, getFirstTemplateNode } from './utils';
 
+import { CUR_EACH_LOOP_KEY } from './each';
+
 export function getConfig(entity, context, options)
 {
 	let obj = [];
@@ -26,6 +28,16 @@ export function getConfig(entity, context, options)
 			objectProperty(
 				id('$props'),
 				$props
+			)
+		)
+	}
+
+	// create key
+	if(entity.option.key) {
+		obj.push(
+			objectProperty(
+				id('$key'),
+				id(CUR_EACH_LOOP_KEY),
 			)
 		)
 	}

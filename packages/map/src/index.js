@@ -41,7 +41,7 @@ export function map(bindNode, items, keyExpr, expr, render)
 
 			if(node && node.getAttribute) {
 				if(node.getAttribute('data-key') == itemKey) {
-					lastHydratedNode = expr(node, false, keyExpr, item, key);
+					lastHydratedNode = expr(node, false, itemKey, item, key);
 					node = lastHydratedNode.nextSibling;
 					// console.warn('lastHydratedNode', lastHydratedNode, node)
 					lastNode = lastHydratedNode;
@@ -124,7 +124,7 @@ export function map(bindNode, items, keyExpr, expr, render)
 			toRemove.delete(item);
 
 			if (!n) {
-				n = (el ? el : expr(null, true, keyExpr, item, key));
+				n = (el ? el : expr(null, true, nodeKey, item, key));
 				
 				if (n.nodeType === 11) n = persistent(n) || n;
 				
