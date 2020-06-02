@@ -147,7 +147,14 @@ export function makeComputed(ast, context)
 
 				if(context.observables.includes(id.name)) {
 					deps.push(id.name);
-					if(shouldWrap) {
+
+					let isAlreadyCallExpression = path.container.type === 'CallExpression';
+
+					if(isAlreadyCallExpression) {
+						shouldWrap = true;
+					}
+
+					if(shouldWrap && !isAlreadyCallExpression) {
 						id.name = `${ id.name }()`;
 					}
 				}

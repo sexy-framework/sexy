@@ -63,17 +63,9 @@ export default function(source) {
 	/**
 	 * Compiler
 	 */
-	 // console.log('>---------');
-	 // console.log(source);
-	 
 	let blocks = parse(source);
 	let { render, templates, script, components, styles } = compile(options, blocks);
 
-	// console.log('[render]', render);
-	// console.log('[templates]', templates);
-	// console.log('[script]', script);
-	// console.log('[styles]', styles);
-	// console.log('<---------');
 	/**
 	 * Import style block
 	 * @type {String}
@@ -88,16 +80,12 @@ export default function(source) {
 	 */
 	if (incomingQuery.type === 'style') {
 		let cssFileName = `${ resourcePath }.${ styles.options.lang }`;
-		// resourcePath.replace(/\.hawa$/g, '.' + styles.options.lang);//
-		console.log(cssFileName);
 
 		if (virtualModules) {
 			virtualModules.writeModule(cssFileName, styles.source);
 		}
 		
-		return `import d from '${cssFileName}';`;
-
-		return 'export const d = 1;'
+		return `import '${cssFileName}';`;
 	}
 	 
 	/**
@@ -126,7 +114,7 @@ export default function(source) {
 		${ templates }
 		
 		// component function
-		export default function render(context, node = false) {
+		function render(context, node = false) {
 			let render = node === false;
 
 			let { $props, $slots, $refs, $key } = parseContext(context);
@@ -137,6 +125,8 @@ export default function(source) {
 			// render
 			${ render }
 		}
+
+		export default render;
 		`;
 	// }
 

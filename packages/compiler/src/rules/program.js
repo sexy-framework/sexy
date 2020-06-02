@@ -7,6 +7,8 @@ import {
 	arrowFunctionExpression,
 	blockStatement,
 	expressionStatement,
+	objectExpression,
+	objectProperty,
 } from "@babel/types";
 
 import { children, getFirstTemplateNode } from './utils';
@@ -25,12 +27,20 @@ export default function program(context, options)
 
 	let lastChild = children(this, context, options, getFirstTemplateNode)
 
-
-	let returnPointer = new returnStatement(
-		new conditionalExpression(
-			id('render'), template.name, lastChild
-		)
+	let returnedNode = new conditionalExpression(
+		id('render'), template.name, lastChild
 	);
 
-	context.push(returnPointer);
+	if(this.isRoot()) {
+		context.push(returnStatement(objectExpression(
+			[
+				objectProperty(id('$node'), returnedNode),
+				objectProperty(id('$hooks'), id('_hooks$')),
+			]
+		)));
+	} else {
+		context.push(returnStatement(
+			returnedNode
+		));
+	}
 }

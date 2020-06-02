@@ -1,18 +1,23 @@
 <div>
 	@each(item, key in items)
-		<nav.container ref="test" :key="item">
-			test
+		<nav.container ref="test" :key="item" :test="d">
+			test {{ item }}
 		</nav.container>
 	@endeach
 </div>
 
 <script>
 let d = o(1);
-let items = Array.from({ length: 10000 }, (_, i) => i);
+let items = Array.from({ length: 10 }, (_, i) => i);
 
-function mounted(key)
+function mounted()
 {
-	
+	console.log('page mounted');
+}
+
+function unmounted()
+{
+	console.log('page unmounted');	
 }
 </script>
 
@@ -20,9 +25,4 @@ function mounted(key)
 .test {
 	color: red;
 }
-/*$body-color: red
-
-.body 
-  color: red*/ /* $body-color; */
-
 </style>

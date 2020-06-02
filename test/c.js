@@ -8,8 +8,10 @@ let layout = document.getElementById('layout');
 console.log('start render');
 layout.innerHTML = '';
 time('render');
-layout.appendChild(PageComponent());
+let c = new PageComponent();
+layout.appendChild(c.$node);
 time('render');
+c.$hooks.mounted()
 
 
 
@@ -20,6 +22,7 @@ setTimeout(() => {
 
 	console.log('start hydration');
 	time('hydrate');
-	PageComponent(null, layout.firstChild)
+	let c = new PageComponent(null, layout.firstChild)
 	time('hydrate');
+	c.$hooks.mounted()
 }, 300)
