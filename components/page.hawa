@@ -1,17 +1,42 @@
 <div>
 	@each(item, key in items)
-		<nav.container ref="test" :key="item" :test="d">
-			test {{ item }}
+		<nav.container ref="test" :key="item.v" :test="d">
+			test {{ item.v }}
 		</nav.container>
 	@endeach
+	@if(d === 1)
+	<nav.container >
+	test if
+	</nav.container>
+	@endif
 </div>
 
 <script>
 let d = o(1);
-let items = Array.from({ length: 2 }, (_, i) => i);
+let items = o([{
+	v: 'a'
+}, {
+	v: 'b'
+}]);
+
+//Array.from({ length: 2 }, (_, i) => i);
 
 function mounted() {
 	console.log('page mounted');
+	let i = items();
+	let t0 = i[0];
+	let t1 = i[1];
+	setTimeout(() => {
+		items([t1]);
+	}, 1000);
+
+	setTimeout(() => {
+		d(0)
+	}, 1000);
+
+	setTimeout(() => {
+		d(1)
+	}, 2000);
 }
 
 function unmounted()

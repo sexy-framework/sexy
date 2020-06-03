@@ -1,4 +1,5 @@
 import { subscribe } from '@hawa/observable';
+import { findAndDispatchHook } from '@hawa/lifecycle';
 
 export function getFirstCondition(args)
 {
@@ -122,6 +123,8 @@ export function statement(node, render, deps, ...args)
 			for (var i = 0; i < node.length; i++) {
 				let child = node[i];
 				// console.log(child);
+				findAndDispatchHook(child, 'unmounted');
+
 				if(i === 0) {
 					child.replaceWith(returnNode);
 				} else {
@@ -131,14 +134,14 @@ export function statement(node, render, deps, ...args)
 
 			node = returnNode;
 		} else {
-			let tmp = clone(returnNode)
+			let tmp = clone(returnNode);
+
+			findAndDispatchHook(node, 'unmounted');
+
 			node.replaceWith(returnNode);
 			node = tmp;
-			// console.log(returnNode, returnNode.firstChild)
 		}
 	}, false);
-
-	// console.error(endMark, endMark.previousSibling)
 
 	return endMark;
 }

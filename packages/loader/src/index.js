@@ -109,6 +109,11 @@ export default function(source) {
 			parseContext,
 			loadComponent,
 		} from '@hawa/render';
+
+		import {
+			registerHooks as _registerHooks$,
+			dispatchHook as _dispatchHook$,
+		} from '@hawa/lifecycle'
 		
 		// templates
 		${ templates }

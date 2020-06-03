@@ -108,18 +108,12 @@ export default function component(context, options)
 
 	context.push(init.value);
 
-	let hooks = options.createVariable(context, (n, l) => {
-		return memberExpression(init.name, id('$hooks'));
-	});
-
-	context.push(hooks.value);
-
-	let node = options.createVariable(context, (n, l) => {
-		return memberExpression(init.name, id('$node'));
-	});
-	
-	context.push(node.value);
-	
+	context.push(expressionStatement(
+		callExpression(id('_dispatchHook$'), [
+			init.name,
+			stringLiteral('mounted')
+		])
+	));
 
 	// options.dynamic.setAttr({
 	// 	Type: this,
@@ -129,9 +123,9 @@ export default function component(context, options)
 	// console.log(init, context)
 
 	// options.dynamic.attrs(this.option.attrs, init, context, options);
-	options.dynamic.ref(this, node, context, options);
-	options.dynamic.attrs(this.option.attributes, node, context, options);
-	options.dynamic.events(this, node, context, options);
+	options.dynamic.ref(this, init, context, options);
+	options.dynamic.attrs(this.option.attributes, init, context, options);
+	options.dynamic.events(this, init, context, options);
 
 	// let template = options.createVariable(context, (n, l) => {
 	// 	return new memberExpression(

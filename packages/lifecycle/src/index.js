@@ -1,128 +1,56 @@
-export function value(value)
+let LifecycleBindings = new Map();
+
+export const DOM_HOOK_PROP = '__HAWA_hooks__';
+export const DOM_HOOK_ATTR = 'data-hid';
+
+export var HAWA_ID = 0;
+
+export function dispatchHook(node, name)
 {
-	if(value.$o) {
-		return value();
-	} else {
-		return value;
-	}
-}
+	let id = parseInt(node.getAttribute(DOM_HOOK_ATTR));
 
-export function observable(value)
-{
-	function data(nextValue)
-	{
-		if (arguments.length === 0) {
-			return value;
-		}
+	let hooks = LifecycleBindings.get(id)
 
-		value = nextValue;
-
-		data._observers.forEach(observer => { observer._fresh = false; });
-		data._observers.forEach(observer => observer());
-
-		return value;
-	}
-
-	data._observers = new Set();
-	data.$o = true;
-
-	return data;
-}
-
-
-export function computed(obs, value)
-{
-	obs = [].concat(obs);
-
-	for(let ob of obs) {
-		if(ob.$o !== undefined) {
-			ob._observers.add(update);
-		}
-	}
-
-	function data()
-	{
-		if(!update._fresh) {
-			update();
-		}
-
-		return value();
-	}
-
-	function update()
-	{
-		update._fresh = true;
-
-		data._observers.forEach(observer => observer());
-
-		return value;
-	}
-
-	data._observers = new Set();
-	data.$o = true;
-
-	update();
-
-	return data;
-}
-
-export function subscribe(obs, value, skip = false)
-{
-	let lastValue = null;
-
-	obs = [].concat(obs);
-
-	let fn = () => {
-		lastValue = value(lastValue);
-	}
-
-	for(let ob of obs) {
-		if(ob._observers) {
-			ob._observers.add(fn);
-		}
-
-		if(ob._deps) {
-			for(let dep of ob._deps) {
-				dep.add(fn);
-			}
-		}
-	}
-
-	if(!skip) {
-		fn();
-	}
-}
-
-// Is property observable 
-export function isObservable(prop)
-{
-	if(prop === undefined) {
-		return false;
-	}
-
-	return prop.$o !== undefined || typeof prop === 'function';
-}
-
-/**
- * Watch property
- */
-export function watch(prop, fn, render = true)
-{
-	if(!isObservable(prop)) {
-		if(render) {
-			fn(prop);
-		}
+	if(hooks === undefined) {
 		return;
 	}
 
-
-	subscribe(prop, () => {
-		fn(prop());
-	}, !render);
+	if(hooks[name]) {
+		hooks[name]();
+	}
 }
 
-
-export function cleanup(fn)
+export function registerHooks(hooks, node, render)
 {
+	let id;
 
+	if(render) {
+		id = ++HAWA_ID;
+		node.setAttribute(DOM_HOOK_ATTR, id);
+	} else {
+		id = node.getAttribute(DOM_HOOK_ATTR);
+	}
+
+	// console.warn(id, hooks)
+
+	LifecycleBindings.set(id, hooks);
+}
+
+export function findAndDispatchHook(node, name)
+{
+	// disable for comments
+	if(node.nodeType === 8) {
+		return;
+	}
+
+	let nodes = node.querySelectorAll(`[${ DOM_HOOK_ATTR }]`);
+
+	for (var i = 0; i < nodes.length; i++) {
+		dispatchHook(nodes[i], name);
+	}
+
+	if(node.hasAttribute(DOM_HOOK_ATTR)) {
+		dispatchHook(node, name);
+	}
+	// console.log(node, nodes);
 }

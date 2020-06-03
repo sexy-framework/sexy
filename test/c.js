@@ -2,27 +2,35 @@
 import PageComponent from '../components/page.hawa'
 import time from './time';
 
+import {
+	dispatchHook,
+} from '@hawa/lifecycle'
 
 let layout = document.getElementById('layout');
 
 console.log('start render');
 layout.innerHTML = '';
 time('render');
-let c = new PageComponent();
-layout.appendChild(c.$node);
+
+let c = PageComponent();
+dispatchHook(c.firstChild, 'mounted');
+layout.appendChild(c);
+
 time('render');
-c.$hooks.mounted()
 
 
 
 
-setTimeout(() => {
-	let tmp = layout.innerHTML;
-	layout.innerHTML = tmp;
+// setTimeout(() => {
+// 	let tmp = layout.innerHTML;
+// 	layout.innerHTML = tmp;
 
-	console.log('start hydration');
-	time('hydrate');
-	let c = new PageComponent(null, layout.firstChild)
-	time('hydrate');
-	c.$hooks.mounted()
-}, 300)
+// 	console.log('start hydration');
+// 	time('hydrate');
+	
+// 	let c = PageComponent(null, layout.firstChild);
+// 	dispatchHook(c, 'mounted');
+// 	layout.appendChild(c);
+	
+// 	time('hydrate');
+// }, 300)

@@ -1,8 +1,6 @@
 export function loadComponent(component, node, render, options = {})
 {
-	let instance = new component(options, render ? false : node);
-
-	let componentNode = instance.$node;
+	let componentNode = component(options, render ? false : node);
 
 	if(render) {
 
@@ -10,11 +8,8 @@ export function loadComponent(component, node, render, options = {})
 		
 		node.replaceWith(componentNode);
 
-		componentNode = mark;
+		return mark;
 	}
 
-	return {
-		$node: componentNode,
-		$hooks: instance.$hooks,
-	};
+	return componentNode;
 }

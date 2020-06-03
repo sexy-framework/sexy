@@ -40,7 +40,7 @@ export function hooks(ast, { context })
 
 	let hooksDeclaration = variableDeclaration('let', [
 		variableDeclarator(
-			id('_hooks$'),
+			id('$hooks'),
 			objectExpression(hooksLinks)
 		)]
 	)

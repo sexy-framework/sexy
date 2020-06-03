@@ -36,6 +36,18 @@ export function getFirstTemplateNode(entity, context, options)
 			)
 		);
 
+		context.push(
+			expressionStatement(
+				callExpression(
+					id('_registerHooks$'),
+					[
+						id('$hooks'),
+						pointer.name,
+						id('render'),
+					]
+				)
+			)
+		);
 	}
 }
 

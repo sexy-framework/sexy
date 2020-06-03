@@ -35,8 +35,7 @@ export function context(ast)
 
 	function canCreateContext(path, parentType)
 	{
-		
-		if(isSubContext() || isVariableDeclaration) {
+		if(isVariableDeclaration) {
 			return false;
 		}
 

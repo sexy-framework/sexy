@@ -1,3 +1,5 @@
+import { findAndDispatchHook } from '@hawa/lifecycle';
+
 export function diff(parent, a, b, keyExpr, get, before)
 {
 	const aIdx = new Map();
@@ -27,8 +29,10 @@ export function diff(parent, a, b, keyExpr, get, before)
 			// This is a element that has been moved to earlier in the list
 			i++;
 		} else if (b.length <= j) {
+			let n = get(a[i], i, -1);
+			findAndDispatchHook(n, 'unmounted');
 			// No more elements in new, this is a delete
-			parent.removeChild(get(a[i], i, -1));
+			parent.removeChild(n);
 			i++;
 		} else if (a.length <= i) {
 			// No more elements in old, this is an addition
@@ -39,15 +43,19 @@ export function diff(parent, a, b, keyExpr, get, before)
 			i++;
 			j++;
 		} else {
+			let key_aElm = keyExpr(aElm, i);
+			let key_bElm = keyExpr(bElm, j);
 			// Look for the current element at this location in the new list
 			// This gives us the idx of where this element should be
-			var curElmInNew = bIdx.get(aElm);
+			var curElmInNew = bIdx.get(key_aElm);
 			// Look for the the wanted elment at this location in the old list
 			// This gives us the idx of where the wanted element is now
-			var wantedElmInOld = aIdx.get(bElm);
+			var wantedElmInOld = aIdx.get(key_bElm);
 			if (curElmInNew === undefined) {
+				let n = get(a[i], i, -1);
+				findAndDispatchHook(n, 'unmounted');
 				// Current element is not in new list, it has been removed
-				parent.removeChild(get(a[i], i, -1));
+				parent.removeChild(n);
 				i++;
 			} else if (wantedElmInOld === undefined) {
 				// New element is not in old list, it has been added
