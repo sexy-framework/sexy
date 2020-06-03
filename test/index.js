@@ -95,45 +95,65 @@ function gett() {
 	`;
 
 	html = `
-<div @click="alert(1)" :class="[classList, { active: tick === 1 }]" :style="[{ fontSize: tick() + 'px' }]">
-	<slot></slot>
+<div>
+	@each(item, key in items)
+		<nav.container ref="test" :key="item.v" :test="d">
+			test {{ item.v }}
+		</nav.container>
+	@endeach
+	@if(d === 1)
+	<nav.container >
+	test if
+	</nav.container>
+	@endif
 </div>
 
 <script>
-let tick = o(24);
-let test = p(null);
-let items = Array.from({ length: 10 }, (_, i) => i);
+let d = o(1);
+let items = o([{
+	v: 'a'
+}, {
+	v: 'b'
+}]);
 
-let classList = () => {
-	return {
-		red: tick() % 2 == 0,
-		green: tick() % 3 == 0,
-		some: test() === null,
-	}
-}
+let timers = [];
+//Array.from({ length: 2 }, (_, i) => i);
 
-let computedTmp = () => {
-	tick;
-	test;
-}
+function mounted() {
+	console.log('page mounted');
+	let i = items();
+	let t0 = i[0];
+	let t1 = i[1];
 
-setTimeout(() => {
-	console.log(1);
-}, 100);
+	timers.push(
+		setTimeout(() => {
+			items([t1]);
+		}, 1000)
+	);
 
-function mounted()
-{
-	console.log('container mounted');
-}
+	timers.push(
+		setTimeout(() => {
+			d(0)
+			console.log('d=', d());
+		}, 1000)
+	)
 
-let mounted2 = function()
-{
-	console.log('container mounted');
+	timers.push(
+		setTimeout(() => {
+			d(1)
+			console.log('d=', d());
+		}, 2000)
+	)
 }
 
 function unmounted()
 {
-	console.log('container unmounted');	
+	console.log('page unmounted');
+
+	for(let time of timers) {
+		clearTimeout(time);
+		clearInterval(time);
+	}
 }
 </script>
 	`

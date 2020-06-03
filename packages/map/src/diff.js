@@ -31,6 +31,7 @@ export function diff(parent, a, b, keyExpr, get, before)
 		} else if (b.length <= j) {
 			let n = get(a[i], i, -1);
 			findAndDispatchHook(n, 'unmounted');
+
 			// No more elements in new, this is a delete
 			parent.removeChild(n);
 			i++;

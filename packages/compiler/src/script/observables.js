@@ -27,6 +27,10 @@ export function observables(ast)
 				let name = path.node.id;
 				let value = path.node.init;
 
+				if(value === null) {
+					return;
+				}
+				
 				if(value.type === 'CallExpression' && value.callee.name === 'o') {
 					value.callee.name = 'observable';
 				}

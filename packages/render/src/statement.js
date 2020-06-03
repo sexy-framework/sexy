@@ -76,7 +76,7 @@ export function statement(node, render, deps, ...args)
 
 	subscribe(deps, () => {
 		let returnNode = document.createComment('');
-		
+
 		let hasConditionRendered = false;
 		let currentConditionIndex = null;
 
@@ -122,7 +122,6 @@ export function statement(node, render, deps, ...args)
 		if(Array.isArray(node)) {
 			for (var i = 0; i < node.length; i++) {
 				let child = node[i];
-				// console.log(child);
 				findAndDispatchHook(child, 'unmounted');
 
 				if(i === 0) {
@@ -135,7 +134,6 @@ export function statement(node, render, deps, ...args)
 			node = returnNode;
 		} else {
 			let tmp = clone(returnNode);
-
 			findAndDispatchHook(node, 'unmounted');
 
 			node.replaceWith(returnNode);

@@ -20,8 +20,8 @@ export function map(bindNode, items, keyExpr, expr, render)
 	// Disable cleaning for templates by default.
 	let cleaning = true;//!expr.$t;
 
-	let parent = document.createDocumentFragment();
-	let endMark = add(parent, '');
+	let parent;
+	let endMark;
 
 	const disposers = new Map();
 	const nodes = new Map();
@@ -29,7 +29,12 @@ export function map(bindNode, items, keyExpr, expr, render)
 	const defaultA = [];
 
 	// hydration prepare 
-	if(!render) {
+	if(render) {
+		parent = document.createDocumentFragment();
+		endMark = add(parent, '');
+
+		bindNode.replaceWith(parent);
+	} else {
 		let _items = value(items);
 		let node = bindNode;
 		let lastNode = null;
@@ -88,14 +93,14 @@ export function map(bindNode, items, keyExpr, expr, render)
 		} else {
 			lastNode.after(endMark);
 		}
-		// console.log(lastNode);
+		// console.error(bindNode, lastNode, endMark, endMark.parentNode);
 		// endMark = add(lastNode, '');
-	} 
+	}
 	
 	const unsubscribe = subscribe(items, a => {
 
 		let b = value(items);
-			
+
 		toRemove.clear();
 		// Array.from to make a copy of the current list.
 		const content = Array.from(
@@ -108,9 +113,9 @@ export function map(bindNode, items, keyExpr, expr, render)
 		// });
 	}, !render);
 
-	if(render) {
-		bindNode.replaceWith(parent);
-	}
+	// if(render) {
+	// 	bindNode.replaceWith(parent);
+	// }
 
 	// disposeAll();
 

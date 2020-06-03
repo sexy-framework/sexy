@@ -19,6 +19,7 @@ let items = o([{
 	v: 'b'
 }]);
 
+let timers = [];
 //Array.from({ length: 2 }, (_, i) => i);
 
 function mounted() {
@@ -26,22 +27,36 @@ function mounted() {
 	let i = items();
 	let t0 = i[0];
 	let t1 = i[1];
-	setTimeout(() => {
-		items([t1]);
-	}, 1000);
 
-	setTimeout(() => {
-		d(0)
-	}, 1000);
+	timers.push(
+		setTimeout(() => {
+			items([t1]);
+		}, 1000)
+	);
 
-	setTimeout(() => {
-		d(1)
-	}, 2000);
+	timers.push(
+		setTimeout(() => {
+			d(0)
+			console.log('d=', d());
+		}, 1000)
+	)
+
+	timers.push(
+		setTimeout(() => {
+			d(1)
+			console.log('d=', d());
+		}, 2000)
+	)
 }
 
 function unmounted()
 {
-	console.log('page unmounted');	
+	console.log('page unmounted');
+
+	for(let time of timers) {
+		clearTimeout(time);
+		clearInterval(time);
+	}
 }
 </script>
 

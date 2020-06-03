@@ -38,6 +38,10 @@ export function props(ast)
 				let name = path.node.id;
 				let value = path.node.init;
 
+				if(value === null) {
+					return;
+				}
+				// console.log(name, value)
 				if(value.type === 'CallExpression' && value.callee.name === 'p') {
 
 					let propVariable = memberExpression(id('$props'), name);
