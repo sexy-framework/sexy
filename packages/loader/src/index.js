@@ -102,10 +102,12 @@ export default function(source) {
 			events as _makeEvents$,
 			slot as _slot$,
 			statement as _statement$,
+			directives as _directives$,
 			getNode,
 			getProp as _getProp$,
 			setRef as _setRef$,
 			setKey as _setKey$,
+			emit as _emit$,
 			parseContext,
 			loadComponent,
 		} from '@hawa/render';
@@ -122,8 +124,9 @@ export default function(source) {
 		function render(context, node = false) {
 			let render = node === false;
 
-			let { $props, $slots, $refs, $key } = parseContext(context);
+			let { $props, $slots, $refs, $key, $directives } = parseContext(context);
 			
+			let $emit;
 			// code
 			${ script }
 			

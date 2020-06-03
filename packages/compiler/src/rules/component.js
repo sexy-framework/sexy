@@ -32,6 +32,19 @@ export function getConfig(entity, context, options)
 		)
 	}
 
+	// create directives
+	let directives = options.dynamic.directives(entity.option.directives, context, options);
+
+	if(directives) {
+		obj.push(
+			objectProperty(
+				id('$directives'),
+				directives
+			)
+		);
+	}
+	
+
 	// create key
 	if(entity.option.key) {
 		obj.push(

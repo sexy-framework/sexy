@@ -1,10 +1,16 @@
 import { rules } from '@hawa/compiler';
+import { parser } from '@hawa/directives';
 
 export default class Type
 {
 	constructor()
 	{
 		this.parent = null;
+	}
+
+	execDirectives()
+	{
+		parser(this);
 	}
 
 	map(callback)

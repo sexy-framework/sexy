@@ -1,10 +1,11 @@
-<div @click="alert(1)" :class="[classList, { active: tick === 1 }]" :style="[{ fontSize: tick() + 'px' }]">
+<div @click="change" :class="[classList, { active: tick === 1 }]" :style="[{ fontSize: tick() + 'px' }]">
 	<slot></slot>
 </div>
 
 <script>
 let tick = o(24);
 let test = p(null);
+let value = p(null);
 
 let classList = () => {
 	return {
@@ -12,6 +13,11 @@ let classList = () => {
 		green: tick() % 3 == 0,
 		some: test() === null,
 	}
+}
+
+function change()
+{
+	$emit('input', 2);
 }
 
 function mounted()

@@ -3,7 +3,6 @@
 // stringlitteral 
 import { makeMap } from './utils';
 
-
 var isAttr = makeMap(
 	'accept,accept-charset,accesskey,action,align,alt,async,autocomplete,' +
 	'autofocus,autoplay,autosave,bgcolor,border,buffered,challenge,charset,' +
@@ -36,6 +35,26 @@ function makeValue(value, isExpression = false)
 	}
 }
 
+function parseName(name)
+{
+	let options = {};
+
+	let parts = name.split('.');
+	for (var i = 0; i < parts.length; i++) {
+		if(i === 0) {
+			name = parts[i]
+		} else {
+			options[parts[i]] = true;
+		}
+	}
+
+	return {
+		name,
+		options,
+	}
+}
+
+
 export function attrs(obj, isComponent = false)
 {
 	let result = {
@@ -46,15 +65,20 @@ export function attrs(obj, isComponent = false)
 		directives: {},
 	}
 
-	for(let name in obj)
+	for(let prop in obj)
 	{
-		let value = obj[name];
+		let value = obj[prop];
+		let { name, options } = parseName(prop);
 
 		if(isDomAttr(name, isComponent)) {
 			result.staticAttrs[name] = value;
 		} else if(name.match(/^\$/g)) {
 			name = name.replace(/^\$/g, '');
-			result.directives[name] = makeValue(value, true);
+			result.directives[name] = {
+				options,
+				value: makeValue(value, true),
+				rawValue: value,
+			}
 		} if(name.match(/^@/g)) {
 			name = name.replace(/^@/g, '');
 			result.events[name] = makeValue(value, true);

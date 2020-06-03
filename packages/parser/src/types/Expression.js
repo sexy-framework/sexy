@@ -8,6 +8,8 @@ export default class Expression extends Type
 		this.type = type;
 		this.value = value;
 		this.children = [];
+
+		this.execDirectives();
 	}
 
 	

@@ -31,7 +31,7 @@ function test() {
 	let { render, templates, script } = gett();
 	// console.log(render);
 	// console.log(templates);
-	console.log(script);
+	console.log(render);
 	return;
 
 
@@ -97,10 +97,11 @@ function gett() {
 	html = `
 <div>
 	@each(item, key in items)
-		<nav.container ref="test" :key="item.v" :test="d">
+		<nav.container ref="test" :key="item.v" :test="d" $model="v">
 			test {{ item.v }}
 		</nav.container>
 	@endeach
+	<input type="text" $model.static="v" />
 	@if(d === 1)
 	<nav.container >
 	test if

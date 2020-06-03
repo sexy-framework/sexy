@@ -1,5 +1,5 @@
 {
-  "name": "@hawa/lifecycle",
+  "name": "@hawa/store",
   "version": "0.0.23",
   "description": "Support assets list input file type",
   "main": "dist/index.js",

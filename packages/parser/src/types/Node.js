@@ -12,6 +12,8 @@ export default class Node extends Type
 		this.option = parseAttrs(attrs);
 		this.children = [];	
 		this.type = 'node';
+
+		this.execDirectives();
 	}
 
 	hasAttributes()

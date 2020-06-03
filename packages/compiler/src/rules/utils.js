@@ -3,9 +3,12 @@ import {
 	identifier as id,
 	arrowFunctionExpression,
 	blockStatement,
+	assignmentExpression,
 	callExpression,
 	conditionalExpression,
 	expressionStatement,
+	variableDeclaration,
+	variableDeclarator,
 } from "@babel/types";
 
 export function getFirstTemplateNode(entity, context, options)
@@ -23,6 +26,18 @@ export function getFirstTemplateNode(entity, context, options)
 	// console.log(entity, entity.parent.isRoot())
 	if(entity.parent.isRoot()) {
 		// key for loops
+		context.push(expressionStatement(
+			assignmentExpression(
+				'=',
+				id('$emit'),
+				callExpression(
+					id('_emit$'), [
+					pointer.name
+				])
+			)
+		));
+
+		// div key
 		context.push(
 			expressionStatement(
 				callExpression(
@@ -36,6 +51,7 @@ export function getFirstTemplateNode(entity, context, options)
 			)
 		);
 
+		// hooks
 		context.push(
 			expressionStatement(
 				callExpression(
@@ -48,6 +64,17 @@ export function getFirstTemplateNode(entity, context, options)
 				)
 			)
 		);
+
+		// directives
+		context.push(expressionStatement(
+			callExpression(
+				id('_directives$'), [
+				id('$hooks'),
+				pointer.name,
+				id('$directives'),
+				id('render'),
+			])
+		));
 	}
 }
 

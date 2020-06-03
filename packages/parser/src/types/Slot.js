@@ -9,6 +9,8 @@ export default class Slot extends Type
 		this.tag = tag;
 		this.children = [];	
 		this.type = 'slot';
+
+		this.execDirectives();
 	}
 		
 	// makeTemplate(onlyChildren = true)

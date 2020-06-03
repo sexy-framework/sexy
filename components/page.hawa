@@ -1,10 +1,10 @@
 <div>
 	@each(item, key in items)
-		<nav.container ref="test" :key="item.v">
+		<nav.container ref="test" :key="item.v" $model="vv">
 			test {{ item.v }}
 		</nav.container>
 	@endeach
-	<input type="text" $model="vv" ref="input">
+	<!-- <input type="text" $model="vv" ref="input"> -->
 	{{ vv }}
 </div>
 
@@ -19,13 +19,7 @@ let vv = o('test');
 
 function mounted()
 {
-	let value = vv;
-
-	$refs.input.value = value();
-
-	$refs.input.addEventListener('input', function(event) {
-		value($refs.input.value);
-	})
+	
 }
 
 function unmounted()

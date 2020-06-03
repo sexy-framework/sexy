@@ -57,12 +57,14 @@ export function parseContext(context) {
 
 	let $props = context.$props || {};
 	let $slots = context.$slots || {};
+	let $directives = context.$directives || {};
 	let $key = context.$key === undefined ? null : context.$key;
-
+	
 	return {
 		$props,
 		$slots,
-		$key, 
+		$key,
+		$directives,
 		$refs: {},
 	}
 }

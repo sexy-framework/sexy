@@ -7,6 +7,7 @@ import { expression } from './expression';
 import { arrowFunction } from './arrowFunction';
 import { setAttr } from './setAttr';
 import { ref } from './ref';
+import { directives } from './directives';
 
 // export { attrs, events, props }
 
@@ -21,5 +22,6 @@ export default function dynamic(context)
 		arrowFunction: arrowFunction.bind(context),
 		setAttr: setAttr.bind(context),
 		ref: ref.bind(context),
+		directives: directives.bind(context),
 	}
 }

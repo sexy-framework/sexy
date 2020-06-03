@@ -4,12 +4,17 @@ import { attrs as parseAttrs } from '../attrs';
 import { Node } from '../types';
 
 export default class Component extends Type {
-	constructor(name, attrs) {
+
+	constructor(name, attrs)
+	{
 		super();
+		
 		this.name = name;
 		this.option = parseAttrs(attrs, true);
 		this.children = [];
 		this.type = 'component';
+
+		this.execDirectives();
 	}
 
 	hasAttributes() {
