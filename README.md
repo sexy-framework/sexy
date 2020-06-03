@@ -75,3 +75,82 @@ Each with signle nodes
 </div>
 @endeach
 ```
+
+## Examples
+
+Example with Loop, external component, $model (two-way data binding and directive), references and style blocks
+```vue
+<div>
+	@each(item, key in items)
+		<nav.container ref="test" :key="item.v" $model="vv">
+			test {{ item.v }}
+		</nav.container>
+	@endeach
+	<!-- <input type="text" $model="vv" ref="input"> -->
+	{{ vv }}
+</div>
+
+<script>
+let items = o([{
+	v: 'a'
+}, {
+	v: 'b'
+}]);
+
+let vv = o('test');
+
+function mounted()
+{
+	
+}
+
+function unmounted()
+{
+	
+}
+</script>
+
+
+<style>
+.red {
+	color: rgb(0, 0, 0);
+}
+</style>
+```
+
+
+Example with Loop, external component, $model (two-way data binding and directive), references and style blocks
+```vue
+<div @click="change" :class="[classList, { active: tick === 1 }]" :style="[{ fontSize: tick() + 'px' }]">
+	<slot></slot>
+</div>
+
+<script>
+let tick = o(24);
+let test = p(null);
+let value = p(null);
+
+let classList = () => {
+	return {
+		red: tick() % 2 == 0,
+		green: tick() % 3 == 0,
+		some: test() === null,
+	}
+}
+
+function change()
+{
+	$emit('input', 2);
+}
+
+function mounted()
+{
+	console.log('container mounted');
+}
+
+function unmounted()
+{
+	console.log('container unmounted');	
+}
+</script>
+```
