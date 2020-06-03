@@ -7,6 +7,13 @@ So its like Svelte, but much faster because of
 2. No runtime (i mean framework doesnt work in runtime, only on compilation step)
 3. Partial hydration (even for loops and conditional statements)
 
+## Benefits
+- **Small.** hello world at `3.6kB` gzip.
+- **Fast.** No reactivity libs, No runtime work
+- **Partial hydration.** Hydrate only dynamic and statefull parts of application
+- **Truly reactive.** automatically derived from the app state.
+- **Tips & Tricks.** Slots, Loops, Statements and Props as we get used to
+
 ## Performance
 
 Performance is a main key of HAWA.
