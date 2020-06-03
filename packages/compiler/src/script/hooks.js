@@ -27,21 +27,37 @@ export function hooks(ast, { context })
 		return HOOK_NAMES.includes(name)
 	});
 
-	let hooksLinks = [];
+	let hookObject = {
+		mounted: [],
+		unmounted: [],
+	};
 
 	for(let name of hooks) {
-		hooksLinks.push(
+		hookObject[name].push(name);
+	}
+
+	let body = [];
+
+	for(let name in hookObject) {
+		let methods = [];
+
+		for(let m of hookObject[name]) {
+			methods.push(id(m));
+		}
+
+		hookObject[name].push(name);
+		body.push(
 			objectProperty(
 				id(name),
-				id(name),
+				arrayExpression(methods),
 			)
-		);
+		)
 	}
 
 	let hooksDeclaration = variableDeclaration('let', [
 		variableDeclarator(
 			id('$hooks'),
-			objectExpression(hooksLinks)
+			objectExpression(body)
 		)]
 	)
 

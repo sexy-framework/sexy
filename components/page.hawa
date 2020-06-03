@@ -1,62 +1,36 @@
 <div>
 	@each(item, key in items)
-		<nav.container ref="test" :key="item.v" :test="d">
+		<nav.container ref="test" :key="item.v">
 			test {{ item.v }}
 		</nav.container>
 	@endeach
-	@if(d === 1)
-	<nav.container >
-	test if
-	</nav.container>
-	@endif
+	<input type="text" $model="vv" ref="input">
+	{{ vv }}
 </div>
 
 <script>
-let d = o(1);
 let items = o([{
 	v: 'a'
 }, {
 	v: 'b'
 }]);
 
-let timers = [];
-//Array.from({ length: 2 }, (_, i) => i);
+let vv = o('test');
 
-function mounted() {
-	console.log('page mounted');
-	let i = items();
-	let t0 = i[0];
-	let t1 = i[1];
+function mounted()
+{
+	let value = vv;
 
-	timers.push(
-		setTimeout(() => {
-			items([t1]);
-		}, 1000)
-	);
+	$refs.input.value = value();
 
-	timers.push(
-		setTimeout(() => {
-			d(0)
-			console.log('d=', d());
-		}, 1000)
-	)
-
-	timers.push(
-		setTimeout(() => {
-			d(1)
-			console.log('d=', d());
-		}, 2000)
-	)
+	$refs.input.addEventListener('input', function(event) {
+		value($refs.input.value);
+	})
 }
 
 function unmounted()
 {
-	console.log('page unmounted');
-
-	for(let time of timers) {
-		clearTimeout(time);
-		clearInterval(time);
-	}
+	
 }
 </script>
 
@@ -66,3 +40,4 @@ function unmounted()
 	color: rgb(0, 0, 0);
 }
 </style>
+

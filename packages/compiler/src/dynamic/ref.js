@@ -26,7 +26,7 @@ export function ref(entity, point, context, options)
 			id('_setRef$'),
 			[
 				id('$refs'),
-				point.name,
+				point,
 				stringLiteral(entity.option.ref)
 			]
 		)

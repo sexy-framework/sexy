@@ -43,6 +43,7 @@ export function attrs(obj, isComponent = false)
 		props: {},
 		attributes: {},
 		staticAttrs: {},
+		directives: {},
 	}
 
 	for(let name in obj)
@@ -51,7 +52,10 @@ export function attrs(obj, isComponent = false)
 
 		if(isDomAttr(name, isComponent)) {
 			result.staticAttrs[name] = value;
-		} else if(name.match(/^@/g)) {
+		} else if(name.match(/^\$/g)) {
+			name = name.replace(/^\$/g, '');
+			result.directives[name] = makeValue(value, true);
+		} if(name.match(/^@/g)) {
 			name = name.replace(/^@/g, '');
 			result.events[name] = makeValue(value, true);
 		} else if(name.match(/^\:/g)) {

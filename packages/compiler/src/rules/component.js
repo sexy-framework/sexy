@@ -123,7 +123,7 @@ export default function component(context, options)
 	// console.log(init, context)
 
 	// options.dynamic.attrs(this.option.attrs, init, context, options);
-	options.dynamic.ref(this, init, context, options);
+	options.dynamic.ref(this, init.name, context, options);
 	options.dynamic.attrs(this.option.attributes, init, context, options);
 	options.dynamic.events(this, init, context, options);
 

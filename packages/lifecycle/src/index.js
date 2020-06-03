@@ -25,8 +25,8 @@ export function dispatchHook(node, name)
 		return;
 	}
 
-	if(hooks[name]) {
-		hooks[name]();
+	for (var i = 0; i < hooks[name].length; i++) {
+		hooks[name][i]();
 	}
 
 	if(name === HOOK_NAME_CLEAN_TRIGGER) {
