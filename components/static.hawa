@@ -1,30 +1,68 @@
-<div class="button test" >
-	<slot>
-		Default button text
-	</slot>
+<div>
+	@each(item, key in items)
+		<nav.container ref="test" :key="item.v" :test="d">
+			test {{ item.v }}
+		</nav.container>
+	@endeach
+	@if(d === 1)
+	<nav.container >
+	test if
+	</nav.container>
+	@endif
 </div>
 
 <script>
+let d = o(1);
+let items = o([{
+	v: 'a'
+}, {
+	v: 'b'
+}]);
 
-// let d = o(12);
-// let size = p('medium');
+let timers = [];
+//Array.from({ length: 2 }, (_, i) => i);
 
-// let someClass = () => {
-// 	return {
-// 		active: size() === true,
-// 	}
-// }
+function mounted() {
+	console.log('page mounted');
+	let i = items();
+	let t0 = i[0];
+	let t1 = i[1];
 
-// let styles = () => {
-// 	return {
-// 		color: d() % 2 === 0 ? 'red' : 'green',
-// 		fontSize: d() + 'px'
-// 	}
-// }
+	timers.push(
+		setTimeout(() => {
+			items([t1]);
+		}, 1000)
+	);
 
-// function debug(v)
-// {
-// 	console.log(v, size());
-// }
+	timers.push(
+		setTimeout(() => {
+			d(0)
+			console.log('d=', d());
+		}, 1000)
+	)
 
+	timers.push(
+		setTimeout(() => {
+			d(1)
+			console.log('d=', d());
+		}, 2000)
+	)
+}
+
+function unmounted()
+{
+	console.log('page unmounted');
+
+	for(let time of timers) {
+		clearTimeout(time);
+		clearInterval(time);
+	}
+}
 </script>
+
+
+<style>
+.red {
+	color: rgb(0, 0, 0);
+}
+</style>
