@@ -35,7 +35,8 @@ Benchmark was made with 10 000 components with loop function. (Without loop its 
 - [x] Props
 - [x] Hooks (mounted/unmounted)
 - [x] Components auto import/naming
-- [ ] Directives (Plugins)
+- [x] Directives (Plugins)
+- [x] Two-way bindings
 - [ ] Lazy loading
 - [ ] Dependencies (SFC)
 
