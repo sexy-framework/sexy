@@ -26,6 +26,21 @@ Best choice for mobile web apps development.
 
 Benchmark was made with 10 000 components with loop function. (Without loop its much more faster).
 
+## Features
+
+- [x] Single file components
+- [x] Statements
+- [x] Slots
+- [x] Loops
+- [x] Props
+- [x] Hooks (mounted/unmounted)
+- [x] Components auto import/naming
+- [ ] Directives (Plugins)
+- [ ] Lazy loading
+- [ ] Dependencies (SFC)
+
+Expression generation should be fixed and tested more
+
 ## Single file components
 
 Syntax is similar to VueJs but loop and conditional statements has a bit different syntax
