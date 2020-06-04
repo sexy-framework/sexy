@@ -25,7 +25,7 @@ export function getFirstTemplateNode(entity, context, options)
 
 	// console.log(entity, entity.parent.isRoot())
 	if(entity.parent.isRoot()) {
-		// key for loops
+		// create emit function
 		context.push(expressionStatement(
 			assignmentExpression(
 				'=',
@@ -37,13 +37,13 @@ export function getFirstTemplateNode(entity, context, options)
 			)
 		));
 
-		// div key
 		context.push(
 			expressionStatement(
 				callExpression(
-					id('_setKey$'),
+					id('_call$'),
 					[
-						id('$key'),
+						id('$customInit'),
+						id('$hooks'),
 						pointer.name,
 						id('render'),
 					]
@@ -65,16 +65,7 @@ export function getFirstTemplateNode(entity, context, options)
 			)
 		);
 
-		// directives
-		context.push(expressionStatement(
-			callExpression(
-				id('_directives$'), [
-				id('$hooks'),
-				pointer.name,
-				id('$directives'),
-				id('render'),
-			])
-		));
+		
 	}
 }
 

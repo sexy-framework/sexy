@@ -15,20 +15,17 @@ import {
 
 import { makeValue, makeString } from './value';
 
-export function directives(directives, context, options)
+export function directives(directives, pointer, context, options)
 {
 	if(Object.keys(directives).length === 0) {
 		return null;
 	}
 
-	let result = [];
-
 	for(let name in directives) {
 		let directive = directives[name];
 		
-		let config = [];
-
 		let options = [];
+
 		for(let prop in directive.options) {
 			options.push(
 				objectProperty(
@@ -37,36 +34,22 @@ export function directives(directives, context, options)
 				)
 			);
 		}
+
 		options = objectExpression(options);
 
-		config.push(
-			objectProperty(
-				id('value'),
-				id(directive.rawValue),
-			)
-		);
-
-		config.push(
-			objectProperty(
-				id('rawValue'),
-				stringLiteral(directive.rawValue)
-			)
-		);
-
-		config.push(
-			objectProperty(
-				id('options'),
-				options,
-			)
-		);
-
-		result.push(
-			objectProperty(
-				stringLiteral(name),
-				objectExpression(config)
+		context.push(
+			expressionStatement(
+				callExpression(
+					id('_directive$'), [
+						id('$hooks'),
+						id(name),
+						pointer,
+						options,
+						id(directive.value),
+						id('render'),
+					]
+				)
 			)
 		);
 	}
-
-	return objectExpression(result);
 }

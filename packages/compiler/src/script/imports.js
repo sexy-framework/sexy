@@ -21,38 +21,14 @@ import {
 	variableDeclaration,
 } from "@babel/types";
 
-export function script(analyse, script)
+export function imports(ast, script)
 {
-	let source = '';
-
-	if(script) {
-		source = script.source
-	}
-
-	let imports = [];
-	
-	const ast = parser.parse(source, {
-		sourceType: "unambiguous",
-		strictMode: false,
-	});
-
 	traverse(ast, {
 		ImportDeclaration: {
 			enter(path)
 			{
 				path.remove();
-				imports[path.node.source.value] = path.node;
 			}
 		},
 	});
-
-	let code = generate(ast, {
-		retainLines: false,
-		compact: false,
-		minified: false,
-		concise: false,
-		quotes: "double",
-	});
-
-	return code.code;
 }

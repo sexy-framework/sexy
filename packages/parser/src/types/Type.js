@@ -1,5 +1,5 @@
 import { rules } from '@hawa/compiler';
-import { parser } from '@hawa/directives';
+// import { parser } from '@hawa/directives';
 
 export default class Type
 {
@@ -10,7 +10,7 @@ export default class Type
 
 	execDirectives()
 	{
-		parser(this);
+		// parser(this);
 	}
 
 	map(callback)

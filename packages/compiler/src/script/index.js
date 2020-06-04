@@ -6,6 +6,7 @@ import { props } from "./props";
 import { observables } from "./observables";
 import { computeds } from "./computeds";
 import { hooks } from "./hooks";
+import { imports } from "./imports";
 
 import {
 	memberExpression,
@@ -42,6 +43,7 @@ export function script(analyse, script)
 	observables(ast);
 	computeds(ast, analyse);
 	hooks(ast, analyse);
+	imports(ast);
 
 	let code = generate(ast, {
 		retainLines: false,

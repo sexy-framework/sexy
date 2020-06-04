@@ -72,12 +72,11 @@ export function attrs(obj, isComponent = false)
 
 		if(isDomAttr(name, isComponent)) {
 			result.staticAttrs[name] = value;
-		} else if(name.match(/^\$/g)) {
-			name = name.replace(/^\$/g, '');
+		} else if(name.match(/^\(.*\)$/g)) {
+			name = name.replace(/[()]/g, '');
 			result.directives[name] = {
 				options,
-				value: makeValue(value, true),
-				rawValue: value,
+				value,
 			}
 		} if(name.match(/^@/g)) {
 			name = name.replace(/^@/g, '');

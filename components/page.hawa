@@ -1,14 +1,16 @@
 <div>
 	@each(item, key in items)
-		<nav.container ref="test" :key="item.v" $model="vv">
+		<nav.container ref="test" :key="item.v" (bind)="vv">
 			test {{ item.v }}
 		</nav.container>
 	@endeach
-	<!-- <input type="text" $model="vv" ref="input"> -->
+	<input type="text" (bind)="vv" ref="input">
 	{{ vv }}
 </div>
 
 <script>
+import { bind } from '@hawa/directives'
+
 let items = o([{
 	v: 'a'
 }, {

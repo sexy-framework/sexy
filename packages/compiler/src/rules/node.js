@@ -17,19 +17,7 @@ import { attrs } from '../dynamic';
 
 export default function node(context, options)
 {
-	let directives = options.dynamic.directives(this.option.directives, context, options);
-
-	if(directives) {
-		context.push(expressionStatement(
-			callExpression(
-				id('_directives$'), [
-				id('$hooks'),
-				options.getLastVariableId(),
-				directives,
-				id('render'),
-			])
-		));
-	}
+	options.dynamic.directives(this.option.directives, options.getLastVariableId(), context, options);
 
 	// register node reference 
 	options.dynamic.ref(this, options.getLastVariableId(), context, options);

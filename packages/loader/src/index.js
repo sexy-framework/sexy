@@ -64,7 +64,7 @@ export default function(source) {
 	 * Compiler
 	 */
 	let blocks = parse(source);
-	let { render, templates, script, components, styles } = compile(options, blocks);
+	let { render, templates, script, components, styles, imports } = compile(options, blocks);
 
 	/**
 	 * Import style block
@@ -94,6 +94,7 @@ export default function(source) {
 	let code = `
 		import { observable, computed, subscribe, watch } from '@hawa/observable';
 		import { map as _each$ } from '@hawa/map';
+		${ imports }
 		${ importStyle }
 		${ components }
 
@@ -102,12 +103,13 @@ export default function(source) {
 			events as _makeEvents$,
 			slot as _slot$,
 			statement as _statement$,
-			directives as _directives$,
+			directive as _directive$,
 			getNode,
 			getProp as _getProp$,
 			setRef as _setRef$,
 			setKey as _setKey$,
 			emit as _emit$,
+			call as _call$,
 			parseContext,
 			loadComponent,
 		} from '@hawa/render';
@@ -124,7 +126,7 @@ export default function(source) {
 		function render(context, node = false) {
 			let render = node === false;
 
-			let { $props, $slots, $refs, $key, $directives } = parseContext(context);
+			let { $props, $slots, $refs, $customInit } = parseContext(context);
 			
 			let $emit;
 			// code

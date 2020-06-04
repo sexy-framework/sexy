@@ -32,25 +32,35 @@ export function getConfig(entity, context, options)
 		)
 	}
 
-	// create directives
-	let directives = options.dynamic.directives(entity.option.directives, context, options);
+	let callbackContext = [];
 
-	if(directives) {
-		obj.push(
-			objectProperty(
-				id('$directives'),
-				directives
+	// create directives
+	options.dynamic.directives(entity.option.directives, id('node'), callbackContext, options);
+
+	if(entity.option.key) {
+		callbackContext.push(
+			expressionStatement(
+				callExpression(
+					id('_setKey$'),
+					[
+						id(CUR_EACH_LOOP_KEY),
+						id('node'),
+						id('render'),
+					]
+				)
 			)
 		);
 	}
-	
 
-	// create key
-	if(entity.option.key) {
+	if(callbackContext.length > 0) {
 		obj.push(
 			objectProperty(
-				id('$key'),
-				id(CUR_EACH_LOOP_KEY),
+				id('$customInit'),
+				arrowFunctionExpression([
+					id('$hooks'),
+					id('node'),
+					id('render'),
+				], blockStatement(callbackContext))
 			)
 		)
 	}

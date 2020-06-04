@@ -39,7 +39,8 @@ Benchmark was made with 10 000 components with loop function. (Without loop its 
 - [x] Two-way bindings
 - [ ] Animation
 - [ ] Lazy loading
-- [ ] Dependencies (SFC)
+- [x] Dependencies (SFC)
+- [ ] Recursive components
 
 Expression generation should be fixed and tested more
 

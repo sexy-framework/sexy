@@ -160,10 +160,23 @@ export function compile(loaderOptions, blocks)
 		quotes: "double",
 	});
 
+	let imports = generate(program(
+		codeAnalyse.imports, 
+		[],
+		'module'
+	), {
+		retainLines: false,
+		compact: false,
+		minified: false,
+		concise: false,
+		quotes: "double",
+	});
+
 	return {
 		render: code.code,
 		templates: getTemplates(),
 		script: script(codeAnalyse, blocks.script),
+		imports: imports.code,
 		styles: blocks.style,
 		components: components(entity)(loaderOptions.path, loaderOptions.delimeter),
 	}

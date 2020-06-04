@@ -28,10 +28,10 @@ function test() {
 
 
 
-	let { render, templates, script } = gett();
-	// console.log(render);
-	// console.log(templates);
+	let { imports, render, templates, script } = gett();
 	console.log(render);
+	// console.log(templates);
+	// console.log(script);
 	return;
 
 
@@ -97,7 +97,7 @@ function gett() {
 	html = `
 <div>
 	@each(item, key in items)
-		<nav.container ref="test" :key="item.v" :test="d" $model="v">
+		<nav.container ref="test" :key="item.v" :test="d" (model)="v">
 			test {{ item.v }}
 		</nav.container>
 	@endeach
@@ -110,6 +110,8 @@ function gett() {
 </div>
 
 <script>
+import govno from 'govno'
+
 let d = o(1);
 let items = o([{
 	v: 'a'

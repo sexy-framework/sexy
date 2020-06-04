@@ -23,6 +23,7 @@ function change()
 function mounted()
 {
 	console.log('container mounted');
+	console.log('default value: ', value()); 
 }
 
 function unmounted()
