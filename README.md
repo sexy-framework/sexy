@@ -37,6 +37,7 @@ Benchmark was made with 10 000 components with loop function. (Without loop its 
 - [x] Components auto import/naming
 - [x] Directives (Plugins)
 - [x] Two-way bindings
+- [ ] Animation
 - [ ] Lazy loading
 - [ ] Dependencies (SFC)
 
