@@ -131,12 +131,12 @@ export default function component(context, options)
 
 	context.push(init.value);
 
-	context.push(expressionStatement(
-		callExpression(id('_dispatchHook$'), [
-			init.name,
-			stringLiteral('mounted')
-		])
-	));
+	// context.push(expressionStatement(
+	// 	callExpression(id('_dispatchHook$'), [
+	// 		init.name,
+	// 		stringLiteral('mounted')
+	// 	])
+	// ));
 
 	// options.dynamic.setAttr({
 	// 	Type: this,

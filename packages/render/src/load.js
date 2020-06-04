@@ -1,6 +1,12 @@
+import {
+	dispatchHook,
+} from '@hawa/lifecycle'
+
 export function loadComponent(component, node, render, options = {})
 {
-	let componentNode = component(options, render ? false : node);
+	let c = component(options, render ? false : node);
+
+	let componentNode = c.node;
 
 	if(render) {
 
@@ -8,8 +14,10 @@ export function loadComponent(component, node, render, options = {})
 		
 		node.replaceWith(componentNode);
 
-		return mark;
+		componentNode = mark;
 	}
+
+	dispatchHook(c.id, 'mounted');
 
 	return componentNode;
 }

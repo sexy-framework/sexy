@@ -11,7 +11,7 @@
 <script>
 import { bind } from '@hawa/directives'
 
-let items = Array.from({ length: 3 }, (_, i) => i);
+let items = o(Array.from({ length: 3 }, (_, i) => i));
 
 let vv = o('test');
 
@@ -19,15 +19,18 @@ function eventd()
 {
 	alert(1)
 }
-// function mounted()
-// {
-	
-// }
+function mounted()
+{
+	console.log('page mounted');
+	setTimeout(() => {
+		items(Array.from({ length: 2 }, (_, i) => i))
+	}, 1000);
+}
 
-// function unmounted()
-// {
-	
-// }
+function unmounted()
+{
+	console.log('page unmounted');
+}
 </script>
 
 

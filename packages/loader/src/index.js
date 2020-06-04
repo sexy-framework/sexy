@@ -110,12 +110,13 @@ export default function(source) {
 			setKey as _setKey$,
 			emit as _emit$,
 			call as _call$,
+			createComponent as _createComponent$,
 			parseContext,
 			loadComponent,
 		} from '@hawa/render';
 
 		import {
-			registerHooks as _registerHooks$,
+			createHooks as _createHooks$,
 			dispatchHook as _dispatchHook$,
 		} from '@hawa/lifecycle'
 		
@@ -128,7 +129,7 @@ export default function(source) {
 
 			let { $props, $slots, $refs, $customInit } = parseContext(context);
 			
-			let $emit;
+			let $emit, $id;
 			// code
 			${ script }
 			

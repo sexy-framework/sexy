@@ -27,9 +27,26 @@ export default function program(context, options)
 
 	let lastChild = children(this, context, options, getFirstTemplateNode)
 
-	context.push(returnStatement(
-		conditionalExpression(
-			id('render'), template.name, lastChild
-		)
-	));
+	if(this.isRoot()) {
+		context.push(returnStatement(
+			objectExpression([
+				objectProperty(
+					id('node'),
+					conditionalExpression(
+						id('render'), template.name, lastChild
+					)
+				),
+				objectProperty(
+					id('id'),
+					id('$id'),
+				)
+			])
+		));
+	} else {
+		context.push(returnStatement(
+			conditionalExpression(
+				id('render'), template.name, lastChild
+			)
+		));
+	}
 }

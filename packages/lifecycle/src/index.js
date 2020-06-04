@@ -1,23 +1,19 @@
+import { DOM_HOOK_ATTR } from '@hawa/render';
+
 let LifecycleBindings = new Map();
 
-export const DOM_HOOK_PROP = '__HAWA_hooks__';
-export const DOM_HOOK_ATTR = 'data-hid';
 export const HOOK_NAME_CLEAN_TRIGGER = 'unmounted';
-
-export var HAWA_ID = 0;
 
 function isLifecycleNode(node)
 {
 	return node.nodeType !== 8 && node.nodeType !== 3;
 }
 
-export function dispatchHook(node, name)
+export function dispatchHook(id, name)
 {
-	if(!isLifecycleNode(node)) {
+	if(id === null) {
 		return;
 	}
-
-	let id = parseInt(node.getAttribute(DOM_HOOK_ATTR));
 
 	let hooks = LifecycleBindings.get(id)
 
@@ -34,22 +30,19 @@ export function dispatchHook(node, name)
 	}
 }
 
-export function registerHooks(hooks, node, render)
+export function createHooks(hooks, id)
 {
-	if(!isLifecycleNode(node)) {
-		return;
-	}
-
-	let id;
-
-	if(render) {
-		id = ++HAWA_ID;
-		node.setAttribute(DOM_HOOK_ATTR, id);
-	} else {
-		id = parseInt(node.getAttribute(DOM_HOOK_ATTR));
-	}
-
 	LifecycleBindings.set(id, hooks);
+}
+
+export function getHID(node)
+{
+	try {
+		let id = node.getAttribute(DOM_HOOK_ATTR);
+		return parseInt(id);
+	} catch(err) {
+		return null;
+	}
 }
 
 export function findAndDispatchHook(node, name)
@@ -62,11 +55,11 @@ export function findAndDispatchHook(node, name)
 	let nodes = node.querySelectorAll(`[${ DOM_HOOK_ATTR }]`);
 
 	for (var i = 0; i < nodes.length; i++) {
-		dispatchHook(nodes[i], name);
+		dispatchHook(getHID(nodes[i]), name);
 	}
 
-	if(node.hasAttribute(DOM_HOOK_ATTR)) {
-		dispatchHook(node, name);
-	}
+	// if(node.hasAttribute(DOM_HOOK_ATTR)) {
+	dispatchHook(getHID(node), name);
+	// }
 	// console.log(node, nodes);
 }
