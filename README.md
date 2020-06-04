@@ -80,19 +80,21 @@ Each with signle nodes
 
 ## Examples
 
-Example with Loop, external component, $model (two-way data binding and directive), references and style blocks
+Example with Loop, external component, (bind) (two-way data binding and directive), references and style blocks
 ```vue
 <div>
 	@each(item, key in items)
-		<nav.container ref="test" :key="item.v" $model="vv">
+		<nav.container ref="test" :key="item.v" (bind)="vv">
 			test {{ item.v }}
 		</nav.container>
 	@endeach
-	<!-- <input type="text" $model="vv" ref="input"> -->
+	<!-- <input type="text" (bind)="vv" ref="input"> -->
 	{{ vv }}
 </div>
 
 <script>
+import { bind } from '@hawa/directives'
+
 let items = o([{
 	v: 'a'
 }, {
@@ -121,9 +123,9 @@ function unmounted()
 ```
 
 
-Example with Loop, external component, $model (two-way data binding and directive), references and style blocks
+Example events, classes, styles
 ```vue
-<div @click="change" :class="[classList, { active: tick === 1 }]" :style="[{ fontSize: tick() + 'px' }]">
+<div @click="change" :class="[classList, { active: tick === 1 }]" :style="{ fontSize: tick() + 'px' }">
 	<slot></slot>
 </div>
 
