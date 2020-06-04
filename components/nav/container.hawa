@@ -20,16 +20,16 @@ function change()
 	$emit('input', 2);
 }
 
-function mounted()
-{
-	console.log('container mounted');
-	console.log('default value: ', value()); 
-}
+// function mounted()
+// {
+// 	// console.log('container mounted');
+// 	// console.log('default value: ', value()); 
+// }
 
-function unmounted()
-{
-	console.log('container unmounted');	
-}
+// function unmounted()
+// {
+// 	console.log('container unmounted');	
+// }
 </script>
 <!-- 
 let _hookContext$ = enterHookContext({

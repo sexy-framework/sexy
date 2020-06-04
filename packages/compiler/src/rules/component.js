@@ -148,7 +148,7 @@ export default function component(context, options)
 	// options.dynamic.attrs(this.option.attrs, init, context, options);
 	options.dynamic.ref(this, init.name, context, options);
 	options.dynamic.attrs(this.option.attributes, init, context, options);
-	options.dynamic.events(this, init, context, options);
+	options.dynamic.events(this, init.name, context, options);
 
 	// let template = options.createVariable(context, (n, l) => {
 	// 	return new memberExpression(

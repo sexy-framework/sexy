@@ -32,9 +32,9 @@ export function bind(node, options, value, render)
 		}
 	}
 
-	if(render) {
-		node.value = value();
-	}
+	// if(render) {
+	node.value = value();
+	// }
 
 	node.addEventListener('input', updateValue);
 

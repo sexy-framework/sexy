@@ -97,7 +97,7 @@ function gett() {
 	html = `
 <div>
 	@each(item, key in items)
-		<nav.container ref="test" :key="item.v" :test="d" (model)="v">
+		<nav.container ref="test" :key="item.v" :test="d" (model)="v" @input="mounted">
 			test {{ item.v }}
 		</nav.container>
 	@endeach

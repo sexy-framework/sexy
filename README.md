@@ -7,7 +7,7 @@ So its like Svelte, but much faster because of
 2. No runtime (i mean framework doesnt work in runtime, only on compilation step)
 3. Partial hydration (even for loops and conditional statements)
 
-Thanks SolidJS and Sinuous for their work that helped to make max performance.
+Thanks SolidJS (dom expressions) and Sinuous (fast looping) for their work that helped to make max performance.
 
 ## Benefits
 - **Small.** hello world at `3.6kB` gzip.

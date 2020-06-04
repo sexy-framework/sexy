@@ -34,7 +34,7 @@ export function events(entity, point, context, options)
 	if(props.length === 0) {
 		return;
 	}
-
+	// console.log(point)
 	let expression = new expressionStatement(
 		new callExpression(
 			id('_makeEvents$'), [

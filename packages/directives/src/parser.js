@@ -13,6 +13,10 @@ export function parser(entity)
 	}
 
 	for(let name in entityDirectives) {
-		directives[name](entity, entityDirectives[name])
+		if(directives[name]) {
+			directives[name](entity, entityDirectives[name])
+		} else {
+			console.warn(`There is no parser modifier for directive '${ name }' `)
+		}
 	}
 }
