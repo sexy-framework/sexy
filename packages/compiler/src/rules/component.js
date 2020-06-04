@@ -36,6 +36,14 @@ export function getConfig(entity, context, options)
 
 	// create directives
 	options.dynamic.directives(entity.option.directives, id('node'), callbackContext, options);
+	// create refs
+	options.dynamic.ref(entity, id('node'), callbackContext, options);
+	// create attrs
+	options.dynamic.attrs(entity.option.attributes, {
+		name: id('node')
+	}, callbackContext, options);
+	// create events
+	options.dynamic.events(entity, id('node'), callbackContext, options);
 
 	if(entity.option.key) {
 		callbackContext.push(
@@ -146,9 +154,7 @@ export default function component(context, options)
 	// console.log(init, context)
 
 	// options.dynamic.attrs(this.option.attrs, init, context, options);
-	options.dynamic.ref(this, init.name, context, options);
-	options.dynamic.attrs(this.option.attributes, init, context, options);
-	options.dynamic.events(this, init.name, context, options);
+	
 
 	// let template = options.createVariable(context, (n, l) => {
 	// 	return new memberExpression(

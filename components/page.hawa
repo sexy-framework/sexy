@@ -6,6 +6,10 @@
 	@endeach
 	<input type="text" (bind)="vv" ref="input">
 	{{ vv }}
+	@if(vv == 'test')
+	<div>if show test</div>
+	<span>some more</span>
+	@endif
 </div>
 
 <script>
@@ -19,6 +23,7 @@ function eventd()
 {
 	alert(1)
 }
+
 function mounted()
 {
 	console.log('page mounted');

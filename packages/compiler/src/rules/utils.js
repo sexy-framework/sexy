@@ -98,7 +98,7 @@ export function children(entity, context, options, customDefiner = false)
 		customDefiner = () => {};
 	}
 	// console.log(entity, entity.hasAloneTemplate());
-	if(!entity.hasAloneTemplate() && !entity.isTemplate()) {
+	if(!entity.skipContextCreation()) {
 		options.createContext();
 	}
 
@@ -108,7 +108,7 @@ export function children(entity, context, options, customDefiner = false)
 
 	let lastChild = options.getLastVariableId();
 
-	if(!entity.hasAloneTemplate() && !entity.isTemplate()) {
+	if(!entity.skipContextCreation()) {
 		options.removeContext();
 	}
 

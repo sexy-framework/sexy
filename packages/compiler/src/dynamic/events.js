@@ -39,7 +39,6 @@ export function events(entity, point, context, options)
 		new callExpression(
 			id('_makeEvents$'), [
 				point,
-				id('render'),
 				new objectExpression(props),
 			]
 		)

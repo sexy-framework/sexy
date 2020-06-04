@@ -36,6 +36,11 @@ export default class Type
 		return this.parent === null;
 	}
 
+	skipContextCreation()
+	{
+		return this.hasAloneTemplate() && this.isTemplate();
+	}
+
 	skipFirstChildInit()
 	{
 		if(this.isTemplate()) {
