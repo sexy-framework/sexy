@@ -43,6 +43,7 @@ Benchmark was made with 10 000 components with loop function. (Without loop its 
 - [ ] Lazy loading
 - [x] Dependencies (SFC)
 - [ ] Recursive components
+- [ ] Store (Vuex, Mobx...)
 
 Expression generation should be fixed and tested more
 
