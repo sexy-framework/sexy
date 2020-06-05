@@ -18,7 +18,7 @@ export function statement(node, render, deps, ...args)
 	// node = diffable(node, -1);
 	let lastNode = null;
 
-	subscribe(deps, () => {
+	const unsubscribe = subscribe(deps, () => {
 		let parent = endMark.parentNode;
 
 		let n = document.createComment('');

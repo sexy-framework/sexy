@@ -1,3 +1,5 @@
+let tracking;
+
 export function value(value)
 {
 	if(value.$o) {
@@ -68,39 +70,33 @@ export function computed(obs, value)
 
 export function subscribe(obs, value, skip = false)
 {
-	let lastValue = null;
-
 	obs = [].concat(obs);
+
+	// change subscribe function to last value memorize
+	let lastValue = null;
 
 	let fn = () => {
 		lastValue = value(lastValue);
 	}
 
+	// Add subscribe to observers of observables
 	for(let ob of obs) {
 		if(ob._observers) {
 			ob._observers.add(fn);
 		}
-		// if(ob._deps) {
-		// 	for(let dep of ob._deps) {
-		// 		dep.add(fn);
-		// 	}
-		// }
 	}
 
+	// Call subscribe if not skipping 
 	if(!skip) {
 		fn();
 	}
 
+	// unsubscribe function
 	return () => {
 		for(let ob of obs) {
 			if(ob._observers) {
 				ob._observers.delete(fn);
 			}
-			// if(ob._deps) {
-			// 	for(let dep of ob._deps) {
-			// 		dep.delete(fn);
-			// 	}
-			// }
 		}
 	}
 }

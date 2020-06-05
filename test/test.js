@@ -1,39 +1,17 @@
-import source from '@hawa/loader';
+import { root, observable, computed, subscribe } from '@hawa/observable';
 
-source.call({
-	resourceQuery: '',
-	posix: {
 
-	},
-	query: {
-		path: '../components',
-        delimeter: '-',
-	}
-}, `
-<div>
-	@each(item, key in items)
-	<div :key="item">
-		<static check="true" :get="true" ref="test">
-			{{ \`button \${ item }\`  }}
-			<template slot="name">
-			test
-			</template>
-			adsa
-		</static>
-	</div>
-	@endeach
-</div>
+let v = observable(1);
 
-<script2>
-let size = p('medium');
-let c = () => {
-	return $props.d;
-}
-</script2>
+let v2 = computed(v, () => {
+	return v() * 2;
+})
 
-<style lang="scss" type="d">
-.text { 
-font-size: 1px;
-}
-</style>
-`)
+// tracker ??
+// transactions ??
+
+subscribe([v, v2], () => {
+	console.log('changed', v(), v2());
+});
+
+v(2);
