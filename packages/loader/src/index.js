@@ -93,7 +93,6 @@ export default function(source) {
 	 */
 	let code = `
 		import { observable, computed, subscribe, watch } from '@hawa/observable';
-		import { map as _each$ } from '@hawa/map';
 		${ imports }
 		${ importStyle }
 		${ components }
@@ -102,6 +101,7 @@ export default function(source) {
 			attrs as _makeAttrs$,
 			events as _makeEvents$,
 			slot as _slot$,
+			map as _each$,
 			statement as _statement$,
 			directive as _directive$,
 			getNode,

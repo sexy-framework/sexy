@@ -18,8 +18,10 @@ export default function program(context, options)
 	// init template
 	let template = options.createVariable(context, (n, l) => {
 		let index = options.createTemplate(this);
+		let nodeVariable = options.nodeVariable ? options.nodeVariable : options.getLastVariableId()
+
 		return new callExpression(
-			id('getNode'), [index, options.getLastVariableId(), id('render')]
+			id('getNode'), [index, nodeVariable, id('render')]
 		);
 	});
 

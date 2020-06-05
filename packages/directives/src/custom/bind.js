@@ -23,18 +23,22 @@
 
 export function bind(node, options, value, render)
 {
+	let valueProp = 'value';
+
+	if(node.type === 'checkbox') {
+		valueProp = 'checked';
+	}
+
 	function updateValue(event)
 	{
 		if(event instanceof CustomEvent) {
 			value.apply(null, event.detail);
 		} else {
-			value(node.value);
+			value(node[valueProp]);
 		}
 	}
 
-	// if(render) {
-	node.value = value();
-	// }
+	node[valueProp] = value();
 
 	node.addEventListener('input', updateValue);
 

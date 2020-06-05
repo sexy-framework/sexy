@@ -22,16 +22,16 @@ time('render');
 
 
 
-setTimeout(() => {
-	let tmp = layout.innerHTML;
-	layout.innerHTML = tmp;
-	findAndDispatchHook(layout, 'unmounted');
+// setTimeout(() => {
+// 	let tmp = layout.innerHTML;
+// 	layout.innerHTML = tmp;
+// 	findAndDispatchHook(layout, 'unmounted');
 
-	console.log('start hydration');
-	time('hydrate');
+// 	console.log('start hydration');
+// 	time('hydrate');
 	
-	let c = PageComponent(null, layout.firstChild);
-	dispatchHook(c.id, 'mounted');
+// 	let c = PageComponent(null, layout.firstChild);
+// 	dispatchHook(c.id, 'mounted');
 	
-	time('hydrate');
-}, 300)
+// 	time('hydrate');
+// }, 300)

@@ -21,7 +21,7 @@ export default function statement(context, options)
 		let body = [];
 
 		this.children[i].handle(body, {
-			lastContextVariableId: options.getLastVariableId(),
+			nodeVariable: id('node'),
 			...options
 		});
 

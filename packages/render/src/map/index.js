@@ -1,6 +1,6 @@
 import { diff } from './diff.js';
-import { add, persistent, diffable } from './utils.js';
-import { observable, computed, subscribe, value, cleanup } from '@hawa/observable';
+import { add, persistent, diffable } from '../utils.js';
+import { subscribe, value } from '@hawa/observable';
 /**
  * Map over a list of unique items that create DOM nodes.
  *
@@ -28,12 +28,15 @@ export function map(bindNode, items, keyExpr, expr, render)
 	const toRemove = new Set();
 	const defaultA = [];
 
+
 	// hydration prepare 
 	if(render) {
 		parent = document.createDocumentFragment();
 		endMark = add(parent, '');
 
 		bindNode.replaceWith(parent);
+
+		console.log('start each', parent, endMark)
 	} else {
 		let _items = value(items);
 		let node = bindNode;
@@ -112,6 +115,11 @@ export function map(bindNode, items, keyExpr, expr, render)
 		return content;
 		// });
 	}, !render);
+
+	// setTimeout(() => {
+	// 	console.log('[unsubscribe]', unsubscribe);
+	// 	unsubscribe();
+	// }, 2000)
 
 	// if(render) {
 	// 	bindNode.replaceWith(parent);

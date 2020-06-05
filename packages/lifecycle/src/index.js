@@ -38,8 +38,8 @@ export function createHooks(hooks, id)
 export function getHID(node)
 {
 	try {
-		let id = node.getAttribute(DOM_HOOK_ATTR);
-		return parseInt(id);
+		return node.getAttribute(DOM_HOOK_ATTR);
+		// return id;
 	} catch(err) {
 		return null;
 	}

@@ -80,16 +80,28 @@ export function subscribe(obs, value, skip = false)
 		if(ob._observers) {
 			ob._observers.add(fn);
 		}
-
-		if(ob._deps) {
-			for(let dep of ob._deps) {
-				dep.add(fn);
-			}
-		}
+		// if(ob._deps) {
+		// 	for(let dep of ob._deps) {
+		// 		dep.add(fn);
+		// 	}
+		// }
 	}
 
 	if(!skip) {
 		fn();
+	}
+
+	return () => {
+		for(let ob of obs) {
+			if(ob._observers) {
+				ob._observers.delete(fn);
+			}
+			// if(ob._deps) {
+			// 	for(let dep of ob._deps) {
+			// 		dep.delete(fn);
+			// 	}
+			// }
+		}
 	}
 }
 
