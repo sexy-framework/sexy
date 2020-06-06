@@ -1,21 +1,21 @@
-const TransitionContexts = new Map();
-const LastContextID
+// const TransitionContexts = new Map();
+// const LastContextID
 
-export function createContext()
-{
-	return new Map();
-}
+// export function createContext()
+// {
+// 	return new Map();
+// }
 
-export function createKeyedContext(context, key)
-{
-	let localContext = new Map();
+// export function createKeyedContext(context, key)
+// {
+// 	let localContext = new Map();
 	
-	context.set(key, localContext);
+// 	context.set(key, localContext);
 
-	return localContext;
-}
+// 	return localContext;
+// }
 
-export function createTransition(context, transition, node)
-{
+// export function createTransition(context, transition, node)
+// {
 
-}
+// }

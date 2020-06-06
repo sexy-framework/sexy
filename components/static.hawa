@@ -61,8 +61,8 @@ function unmounted()
 </script>
 
 
-<style>
+<!-- <style>
 .red {
 	color: rgb(0, 0, 0);
 }
-</style>
+</style> -->

@@ -36,7 +36,7 @@ export function map(bindNode, items, keyExpr, expr, render)
 
 		bindNode.replaceWith(parent);
 
-		console.log('start each', parent, endMark)
+		// console.log('start each', parent, endMark)
 	} else {
 		let _items = value(items);
 		let node = bindNode;

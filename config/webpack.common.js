@@ -11,7 +11,7 @@ module.exports = {
 	mode: 'development',
 
 	entry: [
-		'./test/test.js'
+		'./test/c.js'
 	],
 
 	output: {

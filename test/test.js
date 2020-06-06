@@ -10,8 +10,13 @@ let v2 = computed(v, () => {
 // tracker ??
 // transactions ??
 
-subscribe([v, v2], () => {
-	console.log('changed', v(), v2());
+let uns = subscribe(v2, () => {
+	console.log('changed', v2());
 });
 
 v(2);
+
+// uns();
+
+v(3);
+

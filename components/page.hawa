@@ -22,7 +22,7 @@ import { bind } from '@hawa/directives'
 
 // let items = o(Array.from({ length: 3 }, (_, i) => i));
 
-// let vv = o('test');
+// let vv = o('test'); 2
 let items = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
 
 let showItems = o(true);
@@ -47,10 +47,10 @@ function unmounted()
 }
 </script>
 
-
+<!-- 
 <style>
 .red {
 	color: rgb(0, 0, 0);
 }
 </style>
-
+ -->
