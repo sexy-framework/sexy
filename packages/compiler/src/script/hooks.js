@@ -39,17 +39,17 @@ export function hooks(ast, { context })
 	let body = [];
 
 	for(let name in hookObject) {
-		let methods = [];
+		let method = id('null');
 
 		for(let m of hookObject[name]) {
-			methods.push(id(m));
+			method = id(m);
 		}
 
 		hookObject[name].push(name);
 		body.push(
 			objectProperty(
 				id(name),
-				arrayExpression(methods),
+				method,
 			)
 		)
 	}

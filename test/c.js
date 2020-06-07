@@ -7,15 +7,16 @@ import {
 	findAndDispatchHook,
 } from '@hawa/lifecycle'
 
+import { root } from '@hawa/observable';
+
 let layout = document.getElementById('layout');
 
 console.log('start render');
 layout.innerHTML = '';
 time('render');
 
-let c = PageComponent.call({
-	test: null,
-});
+let c = PageComponent();
+
 
 let ID = c.id;
 dispatchHook(ID, 'mounted');
@@ -25,17 +26,17 @@ time('render');
 
 
 
-setTimeout(() => {
-	let tmp = layout.innerHTML;
-	layout.innerHTML = tmp;
-	findAndDispatchHook(layout, 'unmounted');
+// setTimeout(() => {
+// 	let tmp = layout.innerHTML;
+// 	layout.innerHTML = tmp;
+// 	findAndDispatchHook(layout, 'unmounted');
 
-	console.log('start hydration');
-	time('hydrate');
+// 	console.log('start hydration');
+// 	time('hydrate');
 	
-	let c = PageComponent(null, layout.firstChild);
-	dispatchHook(c.id, 'mounted');
+// 	let c = PageComponent(null, layout.firstChild);
+// 	dispatchHook(c.id, 'mounted');
 	
-	time('hydrate');
-}, 300)
+// 	time('hydrate');
+// }, 300)
 

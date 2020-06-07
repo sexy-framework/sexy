@@ -1,6 +1,6 @@
 import { diff } from './diff.js';
 import { add, persistent, diffable } from '../utils.js';
-import { subscribe, value } from '@hawa/observable';
+import { subscribe, value, root } from '@hawa/observable';
 /**
  * Map over a list of unique items that create DOM nodes.
  *
@@ -137,11 +137,16 @@ export function map(bindNode, items, keyExpr, expr, render)
 			toRemove.delete(item);
 
 			if (!n) {
-				n = (el ? el : expr(null, true, nodeKey, item, key));
+				let { value, tracker } = root(() => {
+					return expr(null, true, nodeKey, item, key);
+				}, true)
+
+				n = value;
 				
 				if (n.nodeType === 11) n = persistent(n) || n;
 				
 				nodes.set(nodeKey, n);
+				disposers.set(nodeKey, tracker.cleanup.bind(tracker));
 			}
 		} else if (i === -1) {
 			toRemove.add(nodeKey);

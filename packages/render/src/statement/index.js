@@ -1,17 +1,17 @@
-import { subscribe } from '@hawa/observable';
-import { createTracker } from '@hawa/tracker';
+import { subscribe, root } from '@hawa/observable';
 import { add, persistent, diffable, castNode } from '../utils.js';
 
 export function createInitFragment(start, end)
 {
 	let nodes = [];
 
-	while(!start.isSameNode(end)) {
+	while(start !== null && !start.isSameNode(end)) {
 		nodes.push(start);
 		start = start.nextSibling;
-	} ;
+	};
 
-	// nodes.push(end);
+	nodes.shift();
+
 	let length = nodes.length;
 
 	if (length < 2) return nodes[0];
@@ -49,24 +49,39 @@ export function statement(node, render, deps, ...args)
 {
 	// let 
 	let parent;
-	let endMark;
+	let endMark, startMark;
 	
 	if(render) {
+		let placeholder = document.createComment('');
+
 		parent = document.createDocumentFragment();
+		
+
+		startMark = add(parent, '');
+		placeholder = add(parent, placeholder);
 		endMark = add(parent, '');
 
 		node.replaceWith(parent);
 
+		node = placeholder;
+		
 		parent = endMark.parentNode;
 	} else {
 		parent = node.parentNode;
+
+		startMark = document.createTextNode('');
+
+		parent.insertBefore(startMark, node);
 	}
 
 	let lastConditionIndex = getInitValue(args, render);
 
 	// node = diffable(node, -1);
-	let lastNode = null;
 	let isFirstCall = true;
+
+	// obs trackers
+	let lastTracker = null;
+	let curTracker = null;
 
 	const unsubscribe = subscribe(deps, () => {
 		let n = document.createComment('');
@@ -77,7 +92,13 @@ export function statement(node, render, deps, ...args)
 			let renderFn = args[i + 1];
 
 			if (condition()) {
-				n = renderFn(node, lastConditionIndex !== i);
+				let { value, tracker } = root(() => {
+					return renderFn(node, lastConditionIndex !== i);
+				}, true);
+
+				curTracker = tracker;
+
+				n = value;
 
 				if (n.nodeType === 11) n = persistent(n) || n;
 
@@ -90,28 +111,19 @@ export function statement(node, render, deps, ...args)
 		if(isFirstCall && !render) {
 			endMark = castNode('');
 
-			// if no wasn't rendered then repalce placeholder with real placehodler
 			if(lastConditionIndex === null) {
 				n = node;
 			}
 
 			n.after(endMark);
 
-			lastNode = createInitFragment(node, endMark);
 			isFirstCall = false;
-
-			// console.warn(node, lastNode, endMark, parent.childNodes);
-
+			lastTracker = curTracker;
+			
 			return;
-			// console.warn(n, diffable(n, 1).lastChild);
 		}
 
 		let hasRendered = currentConditionIndex !== lastConditionIndex;
-
-		// fix add comment placeholder on render 
-		if(isFirstCall && render) {
-			hasRendered = true;
-		}
 
 		lastConditionIndex = currentConditionIndex;
 
@@ -121,12 +133,14 @@ export function statement(node, render, deps, ...args)
 			return;
 		}
 
-		// node
-		if(lastNode) {
-			parent.removeChild(diffable(lastNode, -1));
+		if(lastTracker) {
+			lastTracker.cleanup();
 		}
 
-		lastNode = n;
+		lastTracker = curTracker;
+	
+		let cleanNodes = createInitFragment(startMark, endMark);
+		parent.removeChild(diffable(cleanNodes, -1));
 
 		parent.insertBefore(diffable(n, 1), endMark);
 	});

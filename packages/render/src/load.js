@@ -17,7 +17,10 @@ export function loadComponent(component, node, render, options = {})
 		componentNode = mark;
 	}
 
-	dispatchHook(c.id, 'mounted');
+	if(c.hooks.mounted) {
+		c.hooks.mounted();
+	}
+	// dispatchHook(c.id, 'mounted');
 
 	return componentNode;
 }

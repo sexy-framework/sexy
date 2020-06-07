@@ -71,7 +71,6 @@ export function getFirstTemplateNode(entity, context, options)
 					id('_createHooks$'),
 					[
 						id('$hooks'),
-						id('$id'),
 					]
 				)
 			)

@@ -1,4 +1,7 @@
 import { DOM_HOOK_ATTR } from '@hawa/render';
+import { cleanup } from '@hawa/observable';
+
+
 
 let LifecycleBindings = new Map();
 
@@ -32,7 +35,11 @@ export function dispatchHook(id, name)
 
 export function createHooks(hooks, id)
 {
-	LifecycleBindings.set(id, hooks);
+	if(!hooks.unmounted) {
+		return;
+	}
+	
+	cleanup(hooks.unmounted);
 }
 
 export function getHID(node)

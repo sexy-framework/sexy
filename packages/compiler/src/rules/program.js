@@ -39,8 +39,8 @@ export default function program(context, options)
 					)
 				),
 				objectProperty(
-					id('id'),
-					id('$id'),
+					id('hooks'),
+					id('$hooks'),
 				)
 			])
 		));

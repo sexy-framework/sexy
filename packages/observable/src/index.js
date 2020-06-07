@@ -1,4 +1,34 @@
-let tracking;
+import { Tracker } from './tracker';
+
+let tracking = new Tracker();
+
+export function root(fn, returnTracker = false)
+{
+	let prevTracking = tracking;
+	let newTracking = new Tracker();
+
+	tracking.addChild(newTracking);
+
+	tracking = newTracking;
+
+	let result = fn();
+
+	tracking = prevTracking;
+
+	if(returnTracker) {
+		return {
+			value: result,
+			tracker: newTracking,
+		};
+	}
+
+	return result;
+}
+
+export function cleanup(fn)
+{
+	tracking.disposal(fn);
+}
 
 export function value(value)
 {
@@ -91,14 +121,17 @@ export function subscribe(obs, value, skip = false)
 		fn();
 	}
 
-	// unsubscribe function
-	return () => {
+	let unsubscribe = () => {
 		for(let ob of obs) {
 			if(ob._observers) {
 				ob._observers.delete(fn);
 			}
 		}
-	}
+	};
+
+	cleanup(unsubscribe);
+
+	return unsubscribe;
 }
 
 // Is property observable 
@@ -127,10 +160,4 @@ export function watch(prop, fn, render = true)
 	subscribe(prop, () => {
 		fn(prop());
 	}, !render);
-}
-
-
-export function cleanup(fn)
-{
-
 }
