@@ -2,25 +2,29 @@ import { Tracker } from './tracker';
 
 let tracking = new Tracker();
 
-export function root(fn, returnTracker = false)
+export function getRoot()
+{
+	return tracking;
+}
+
+export function root(fn, customParent = null)
 {
 	let prevTracking = tracking;
 	let newTracking = new Tracker();
 
-	tracking.addChild(newTracking);
-
+	if(customParent) {
+		customParent.addChild(newTracking);
+	} else {
+		tracking.addChild(newTracking);
+	}
+	
 	tracking = newTracking;
 
-	let result = fn();
+	let result = fn(() => {
+		newTracking.cleanup();
+	});
 
 	tracking = prevTracking;
-
-	if(returnTracker) {
-		return {
-			value: result,
-			tracker: newTracking,
-		};
-	}
 
 	return result;
 }

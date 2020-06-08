@@ -80,10 +80,17 @@ export function statement(node, render, deps, ...args)
 	let isFirstCall = true;
 
 	// obs trackers
-	let lastTracker = null;
-	let curTracker = null;
+	let disposers = new Map();
 
-	const unsubscribe = subscribe(deps, () => {
+	function disposeAll() {
+		disposers.forEach(d => d());
+		disposers.clear();
+	}
+
+	subscribe(deps, () => {
+
+		disposeAll();
+
 		let n = document.createComment('');
 		let currentConditionIndex = null;
 
@@ -92,13 +99,10 @@ export function statement(node, render, deps, ...args)
 			let renderFn = args[i + 1];
 
 			if (condition()) {
-				let { value, tracker } = root(() => {
+				n = root(dispose => {
+					disposers.set(i, dispose);
 					return renderFn(node, lastConditionIndex !== i);
-				}, true);
-
-				curTracker = tracker;
-
-				n = value;
+				});
 
 				if (n.nodeType === 11) n = persistent(n) || n;
 
@@ -119,7 +123,7 @@ export function statement(node, render, deps, ...args)
 
 			isFirstCall = false;
 			lastTracker = curTracker;
-			
+
 			return;
 		}
 
@@ -133,12 +137,6 @@ export function statement(node, render, deps, ...args)
 			return;
 		}
 
-		if(lastTracker) {
-			lastTracker.cleanup();
-		}
-
-		lastTracker = curTracker;
-	
 		let cleanNodes = createInitFragment(startMark, endMark);
 		parent.removeChild(diffable(cleanNodes, -1));
 

@@ -1,6 +1,6 @@
 import { diff } from './diff.js';
 import { add, persistent, diffable } from '../utils.js';
-import { subscribe, value, root } from '@hawa/observable';
+import { subscribe, value, root, getRoot } from '@hawa/observable';
 /**
  * Map over a list of unique items that create DOM nodes.
  *
@@ -18,8 +18,9 @@ export function map(bindNode, items, keyExpr, expr, render)
 	// const { root, subscribe, sample, cleanup } = api;
 
 	// Disable cleaning for templates by default.
-	let cleaning = true;//!expr.$t;
+	let curTracker = getRoot();//!expr.$t;
 
+	console.log(curTracker)
 	let parent;
 	let endMark;
 
@@ -49,7 +50,12 @@ export function map(bindNode, items, keyExpr, expr, render)
 
 			if(node && node.getAttribute) {
 				if(node.getAttribute('data-key') == itemKey) {
-					lastHydratedNode = expr(node, false, itemKey, item, key);
+
+					lastHydratedNode = root(disposal => {
+						disposers.set(itemKey, disposal);
+						return expr(node, false, itemKey, item, key);
+					}, curTracker);
+
 					node = lastHydratedNode.nextSibling;
 					// console.warn('lastHydratedNode', lastHydratedNode, node)
 					lastNode = lastHydratedNode;
@@ -137,16 +143,15 @@ export function map(bindNode, items, keyExpr, expr, render)
 			toRemove.delete(item);
 
 			if (!n) {
-				let { value, tracker } = root(() => {
+				n = root(disposal => {
+					disposers.set(nodeKey, disposal);
 					return expr(null, true, nodeKey, item, key);
-				}, true)
-
-				n = value;
+				}, curTracker);
 				
 				if (n.nodeType === 11) n = persistent(n) || n;
 				
 				nodes.set(nodeKey, n);
-				disposers.set(nodeKey, tracker.cleanup.bind(tracker));
+				
 			}
 		} else if (i === -1) {
 			toRemove.add(nodeKey);

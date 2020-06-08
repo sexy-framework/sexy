@@ -20,13 +20,13 @@ export class Tracker {
 
 	disposal(cleanup)
 	{
-		console.log('add', cleanup.prototype.constructor.name, this)
+		// console.log('add', cleanup.prototype.constructor.name)
 		this.disposals.add(cleanup);
 	}
 
 	cleanup()
 	{
-		console.warn('cleanup start', this);
+		// console.warn('cleanup start', this);
 		this.disposals.forEach(disposal => disposal());
 		this.disposals.clear();
 
