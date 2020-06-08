@@ -2,41 +2,26 @@
 import PageComponent from '../components/page.hawa'
 import time from './time';
 
-import {
-	dispatchHook,
-	findAndDispatchHook,
-} from '@hawa/lifecycle'
 
-import { root } from '@hawa/observable';
+import { render, hydrate } from '@hawa/render';
 
 let layout = document.getElementById('layout');
 
 console.log('start render');
-layout.innerHTML = '';
 time('render');
-
-let c = PageComponent();
-
-
-let ID = c.id;
-dispatchHook(ID, 'mounted');
-layout.appendChild(c.node);
-
+let unmount = render(PageComponent, layout);
 time('render');
 
 
 
-// setTimeout(() => {
-// 	let tmp = layout.innerHTML;
-// 	layout.innerHTML = tmp;
-// 	findAndDispatchHook(layout, 'unmounted');
+setTimeout(() => {
+	unmount();
 
-// 	console.log('start hydration');
-// 	time('hydrate');
+	console.log('start hydration');
+	time('hydrate');
 	
-// 	let c = PageComponent(null, layout.firstChild);
-// 	dispatchHook(c.id, 'mounted');
+	unmount = hydrate(PageComponent, layout);
 	
-// 	time('hydrate');
-// }, 300)
+	time('hydrate');
+}, 300)
 

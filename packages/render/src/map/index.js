@@ -20,7 +20,6 @@ export function map(bindNode, items, keyExpr, expr, render)
 	// Disable cleaning for templates by default.
 	let curTracker = getRoot();//!expr.$t;
 
-	console.log(curTracker)
 	let parent;
 	let endMark;
 

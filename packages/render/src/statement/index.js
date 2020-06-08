@@ -56,7 +56,6 @@ export function statement(node, render, deps, ...args)
 
 		parent = document.createDocumentFragment();
 		
-
 		startMark = add(parent, '');
 		placeholder = add(parent, placeholder);
 		endMark = add(parent, '');
@@ -68,15 +67,13 @@ export function statement(node, render, deps, ...args)
 		parent = endMark.parentNode;
 	} else {
 		parent = node.parentNode;
-
-		startMark = document.createTextNode('');
+		startMark = castNode('');
 
 		parent.insertBefore(startMark, node);
 	}
 
 	let lastConditionIndex = getInitValue(args, render);
 
-	// node = diffable(node, -1);
 	let isFirstCall = true;
 
 	// obs trackers
@@ -101,7 +98,7 @@ export function statement(node, render, deps, ...args)
 			if (condition()) {
 				n = root(dispose => {
 					disposers.set(i, dispose);
-					return renderFn(node, lastConditionIndex !== i);
+					return renderFn(startMark.nextSibling, lastConditionIndex !== i);
 				});
 
 				if (n.nodeType === 11) n = persistent(n) || n;
@@ -119,10 +116,10 @@ export function statement(node, render, deps, ...args)
 				n = node;
 			}
 
+			// console.log(lastConditionIndex, n, endMark)
 			n.after(endMark);
 
 			isFirstCall = false;
-			lastTracker = curTracker;
 
 			return;
 		}
@@ -137,9 +134,11 @@ export function statement(node, render, deps, ...args)
 			return;
 		}
 
+		// remove old nodes
 		let cleanNodes = createInitFragment(startMark, endMark);
 		parent.removeChild(diffable(cleanNodes, -1));
 
+		// add new nodes
 		parent.insertBefore(diffable(n, 1), endMark);
 	});
 
