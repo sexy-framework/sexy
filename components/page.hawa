@@ -14,7 +14,7 @@
 		<!-- <div transition:faded>
 			22 test {{ item }}
 		</div> -->
-		<nav.container :key="item" transition:classed="fade">
+		<nav.container :key="item">
 			test {{ item }}
 		</nav.container>
 		<!-- <div>check double</div>
