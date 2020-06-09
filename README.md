@@ -42,8 +42,9 @@ Benchmark was made with 10 000 components with loop function. (Without loop its 
 - [x] Animation (basic via class)
 - [x] Lazy loading (there is bug with root subscriber)
 - [x] Dependencies (SFC)
-- [ ] Recursive components
 - [ ] Store (Vuex, Mobx...)
+- [ ] SSR tool (fetching)
+- [ ] Recursive components
 
 Expression generation should be fixed and tested more
 
@@ -87,7 +88,7 @@ Example with Loop, external component, (bind) (two-way data binding and directiv
 ```vue
 <div>
 	@each(item, key in items)
-		<nav.container ref="test" :key="item.v" (bind)="vv">
+		<nav.container ref="test" :key="item.v" (bind)="vv" transition:classed="fade" lazy>
 			test {{ item.v }}
 		</nav.container>
 	@endeach
