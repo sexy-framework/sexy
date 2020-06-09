@@ -19,7 +19,7 @@ Thanks SolidJS (dom expressions) and Sinuous (fast looping) for their work that 
 ## Performance
 
 Performance is a main key of HAWA.
-1. Faster in x4 times to hydrate dynamic components then NuxtJS
+1. Faster in x4.5 times to hydrate dynamic components then NuxtJS
 2. Faster in x3.5 times to hydrate static components then NuxtJS
 2. Faster in x3 times to hydrate components with events then NuxtJS
 2. Faster in x10 times to hydrate components then Svelte
