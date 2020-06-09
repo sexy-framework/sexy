@@ -9,14 +9,11 @@ function getDuration(node, activeClass, out)
 	}
 
 	let tmp = document.createElement('div');
-
+	tmp.classList.add(activeClass)
+	
 	document.body.append(tmp)
 
-	let style = getComputedStyle(tmp);
-
-	tmp.classList.add(activeClass)
-
-	let duration = style.transitionDuration;
+	let duration = getComputedStyle(tmp).transitionDuration;
 
 	tmp.remove();
 

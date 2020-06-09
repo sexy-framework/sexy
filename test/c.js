@@ -1,6 +1,9 @@
 // import StaticComponent from '../components/static.hawa'
-import PageComponent from '../components/page.hawa'
+// import PageComponent from '../components/page.hawa'
 import time from './time';
+
+
+const PageComponent = import('../components/page.hawa')
 
 
 import { render, hydrate, refresh } from '@hawa/render';
@@ -14,15 +17,15 @@ time('render');
 
 
 
-setTimeout(() => {
-	unmount();
-	refresh(layout);
+// setTimeout(() => {
+// 	unmount();
+// 	refresh(layout);
 
-	console.log('start hydration');
-	time('hydrate');
+// 	console.log('start hydration');
+// 	time('hydrate');
 	
-	unmount = hydrate(PageComponent, layout);
+// 	unmount = hydrate(PageComponent, layout);
 	
-	time('hydrate');
-}, 300)
+// 	time('hydrate');
+// }, 300)
 

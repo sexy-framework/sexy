@@ -14,11 +14,11 @@
 		<!-- <div transition:faded>
 			22 test {{ item }}
 		</div> -->
-		<nav.container :key="item">
+		<nav.container :key="item" transition:classed="fade" lazy>
 			test {{ item }}
 		</nav.container>
-		<!-- <div>check double</div>
-		<div>check tripple</div> -->
+		<div>check double</div>
+		<div  transition:classed="fade">check tripple</div>
 		@endeach
 	<!-- @else
 	hidden -->
@@ -33,7 +33,7 @@ function faded() {}
 
 // let items = o(Array.from({ length: 3 }, (_, i) => i));
 // let vv = o('test'); 2
-let items = o(Array.from({ length: 1000 }, (_, i) => i));;//o(['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']);
+let items = o(Array.from({ length: 5 }, (_, i) => i));;//o(['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']);
 
 // let showItems = o(true);
 // let range = o(5);

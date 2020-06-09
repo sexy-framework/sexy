@@ -10,6 +10,7 @@ export default class Component extends Type {
 		super();
 		
 		this.name = name;
+		this.attrs = attrs;
 		this.option = parseAttrs(attrs, true);
 		this.children = [];
 		this.type = 'component';
@@ -33,6 +34,10 @@ export default class Component extends Type {
 	getImport(path, delimeter)
 	{
 		let name = this.name.replace(/[^0-9a-z]/gi, '/');
+
+		if(this.attrs.lazy !== undefined) {
+			return `const ${ this.getName() } = import("${path}/${ name }.hawa");`	
+		}
 		// console.log(this.name, name)
 		return `import ${ this.getName() } from "${path}/${ name }.hawa";`
 		

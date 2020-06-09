@@ -10,7 +10,7 @@ So its like Svelte, but much faster because of
 Thanks SolidJS (dom expressions) and Sinuous (fast looping) for their work that helped to make max performance.
 
 ## Benefits
-- **Small.** hello world at `3.6kB` gzip.
+- **Small.** hello world at `4.7kB` gzip.
 - **Fast.** No reactivity libs, No runtime work
 - **Partial hydration.** Hydrate only dynamic and statefull parts of application
 - **Truly reactive.** automatically derived from the app state.
@@ -40,7 +40,7 @@ Benchmark was made with 10 000 components with loop function. (Without loop its 
 - [x] Directives (Plugins)
 - [x] Two-way bindings
 - [x] Animation (basic via class)
-- [ ] Lazy loading
+- [x] Lazy loading
 - [x] Dependencies (SFC)
 - [ ] Recursive components
 - [ ] Store (Vuex, Mobx...)

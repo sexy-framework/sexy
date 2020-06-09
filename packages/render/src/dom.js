@@ -1,16 +1,21 @@
 import { root, getRoot } from '@hawa/observable';
+import { lazy } from './load';
 
 export function render(component, rootNode)
 {
 	let root = getRoot();
-	let c = component();
+	
+	lazy(component, (component) => {
 
-	rootNode.innerHTML = '';
-	rootNode.appendChild(c.node);
+		let c = component();
 
-	if(c.hooks.mounted) {
-		c.hooks.mounted();
-	}
+		rootNode.innerHTML = '';
+		rootNode.appendChild(c.node);
+
+		if(c.hooks.mounted) {
+			c.hooks.mounted();
+		}
+	});
 
 	return () => {
 		root.cleanup();
@@ -27,12 +32,14 @@ export function hydrate(component, rootNode)
 {
 	let root = getRoot();
 
-	let c = component(null, rootNode.firstChild);
+	lazy(component, (component) => {
+		let c = component(null, rootNode.firstChild);
 
-	if(c.hooks && c.hooks.mounted) {
-		c.hooks.mounted();
-	}
-
+		if(c.hooks && c.hooks.mounted) {
+			c.hooks.mounted();
+		}
+	});
+	
 	return () => {
 		root.cleanup();
 	}

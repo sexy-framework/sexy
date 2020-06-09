@@ -1,26 +1,41 @@
-import {
-	dispatchHook,
-} from '@hawa/lifecycle'
+import { castNode } from './utils.js';
+
+export function lazy(component, callback)
+{
+	if(component instanceof Promise) {
+		component.then((module) => {
+			callback(
+				module.default
+			);
+		});
+
+		return;
+	}
+
+	callback(
+		component
+	);
+}
 
 export function loadComponent(component, node, render, options = {})
 {
-	let c = component(options, render ? false : node);
+	let endMark = castNode('');
 
-	let componentNode = c.node;
+	node.after(endMark);
 
-	if(render) {
+	lazy(component, (component) => {
+		let c = component(options, render ? false : node);
 
-		let mark = componentNode.lastChild;
-		
-		node.replaceWith(componentNode);
+		let componentNode = c.node;
 
-		componentNode = mark;
-	}
+		if(render) {
+			node.replaceWith(componentNode);
+		}
 
-	if(c.hooks.mounted) {
-		c.hooks.mounted();
-	}
-	// dispatchHook(c.id, 'mounted');
+		if(c.hooks.mounted) {
+			c.hooks.mounted();
+		}
+	});
 
-	return componentNode;
+	return endMark;
 }

@@ -27,6 +27,10 @@ var isRootAttr = makeMap(
 	'key,ref'
 );
 
+var isReservedAttr = makeMap(
+	'lazy'
+);
+
 function makeValue(value, isExpression = false)
 {
 	return {
@@ -75,6 +79,10 @@ export function attrs(obj, isComponent = false)
 		let value = obj[prop];
 		let { name, options } = parseName(prop);
 
+		if(isReservedAttr(name)) {
+			continue;
+		}
+		
 		if(isDomAttr(name, isComponent)) {
 			result.staticAttrs[name] = value;
 		// transitions
