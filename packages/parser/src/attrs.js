@@ -83,7 +83,7 @@ export function attrs(obj, isComponent = false)
 			
 			let settings = {
 				name,
-				options: value === '' ? '{}' : value,
+				options: value.match(/^\{.*\}$/g) ? value : `'${value}'`,
 			}
 
 			if(options.in) {

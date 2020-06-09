@@ -8,15 +8,15 @@
 	</div>
 	@if(showItems)
 		@each(item, key in items.slice(0, range))
-		<div :key="item" transition:fade>
+		<!-- <div :key="item" transition:fade>
 			test {{ item }}
-		</div>
+		</div> -->
 		<!-- <div transition:faded>
 			22 test {{ item }}
 		</div> -->
-		<!-- <nav.container ref="test" :key="item" @input="eventd">
+		<nav.container ref="test" :key="item" @input="eventd" transition:classed="fade">
 			test {{ item }}
-		</nav.container> -->
+		</nav.container>
 		@endeach
 	<!-- @else
 	hidden -->
@@ -25,7 +25,7 @@
 
 <script>
 import { bind } from '@hawa/directives'
-import { fade } from '@hawa/transition'
+import { classed } from '@hawa/transition'
 
 function faded() {}
 
@@ -44,9 +44,9 @@ function eventd()
 function mounted()
 {
 	console.log('page mounted');
-	setTimeout(() => {
-		items(['one', 'seven', 'three', 'four', 'five', 'six', 'two', 'eight', 'nine', 'ten'])
-	}, 1000);
+	// setTimeout(() => {
+	// 	items(['one', 'seven', 'three', 'four', 'five', 'six', 'two', 'eight', 'nine', 'ten'])
+	// }, 1000);
 }
 
 function unmounted()

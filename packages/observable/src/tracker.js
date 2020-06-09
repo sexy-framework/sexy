@@ -55,7 +55,6 @@ export class Tracker {
 
 		if(callback) {
 			setTimeout(callback, maxDuration);
-			console.log(maxDuration, callback)
 		}
 
 		return maxDuration;

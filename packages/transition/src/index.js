@@ -1,50 +1,27 @@
 import { cleanup } from '@hawa/observable';
 export { fade } from './fade';
+export { classed } from './classed';
 
 export function transition(node, t_in, t_in_opts, t_out, t_out_opts)
 {
 	if(t_in) {
-		transition_in(t_in, node)
+		transition_in(node, t_in, t_in_opts)
 	}
 
 	if(t_out) {
 		cleanup(
-			transition_out.bind(null, t_out, node)
+			transition_out.bind(null, node, t_out, t_out_opts)
 		);
 	}
 }
 
-function transition_in(transition, node)
+function transition_in(node, transition, options)
 {
-	// console.log('animate_in', node);
-	node.style.opacity = 0;
-	node.style.transitionProperty = 'opacity';
-	node.style.transitionTimingFunction = 'ease-in';
-	node.style.transitionDuration = '400ms';
-
-	setTimeout(() => {
-		node.style.opacity = 1;
-	}, 50)
-	// tracker.children.add(transition);
-
+	return transition(node, options);
 }
 
-function transition_out(transition, node)
+function transition_out(node, transition, options)
 {
-	// console.log('animate_out', node);
-
-	node.style.opacity = 1;
-	node.style.transitionProperty = 'opacity';
-	node.style.transitionTimingFunction = 'ease-in';
-	node.style.transitionDuration = '400ms';
-
-	setTimeout(() => {
-		node.style.opacity = 0;
-	}, 0)
-
-	return {
-		duration: 400
-	}
-	// tracker.children.add(transition);
+	return transition(node, options, true);
 }
 
