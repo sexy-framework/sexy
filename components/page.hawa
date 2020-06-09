@@ -1,26 +1,28 @@
 <div>
-	<label>
+	<!-- <label>
 		<input type="checkbox" (bind)="showItems">
 		show list
 	</label>
 	<div>
 		<input type="range" (bind)="range" max=10>
-	</div>
-	@if(showItems)
-		@each(item, key in items.slice(0, range))
+	</div> -->
+	<!-- @if(showItems) -->
+		@each(item, key in items)
 		<!-- <div :key="item" transition:fade>
 			test {{ item }}
 		</div> -->
 		<!-- <div transition:faded>
 			22 test {{ item }}
 		</div> -->
-		<nav.container ref="test" :key="item" @input="eventd" transition:classed="fade">
+		<nav.container :key="item">
 			test {{ item }}
 		</nav.container>
+		<!-- <div>check double</div>
+		<div>check tripple</div> -->
 		@endeach
 	<!-- @else
 	hidden -->
-	@endif
+	<!-- @endif -->
 </div>
 
 <script>
@@ -31,28 +33,28 @@ function faded() {}
 
 // let items = o(Array.from({ length: 3 }, (_, i) => i));
 // let vv = o('test'); 2
-let items = o(['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']);
+let items = o(Array.from({ length: 1000 }, (_, i) => i));;//o(['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']);
 
-let showItems = o(true);
-let range = o(5);
+// let showItems = o(true);
+// let range = o(5);
 
-function eventd()
-{
-	alert(1)
-}
+// function eventd()
+// {
+// 	alert(1)
+// }
 
-function mounted()
-{
-	console.log('page mounted');
-	// setTimeout(() => {
-	// 	items(['one', 'seven', 'three', 'four', 'five', 'six', 'two', 'eight', 'nine', 'ten'])
-	// }, 1000);
-}
+// function mounted()
+// {
+// 	console.log('page mounted');
+// 	// setTimeout(() => {
+// 	// 	items(['one', 'seven', 'three', 'four', 'five', 'six', 'two', 'eight', 'nine', 'ten'])
+// 	// }, 1000);
+// }
 
-function unmounted()
-{
-	console.log('page unmounted');
-}
+// function unmounted()
+// {
+// 	console.log('page unmounted');
+// }
 </script>
 
 <!-- 

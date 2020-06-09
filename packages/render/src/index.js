@@ -10,7 +10,7 @@ export { emit } from './emit'
 export { call } from './call'
 export { loadComponent } from './load'
 
-export { render, hydrate } from './dom'
+export { render, hydrate, refresh } from './dom'
 
 // export {
 // 	attrs,

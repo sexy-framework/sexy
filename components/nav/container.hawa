@@ -17,44 +17,18 @@ let classList = () => {
 
 function change()
 {
-	$emit('input', 2);
+	// $emit('input', 2);
+	alert(1)
 }
 
-function mounted()
-{
-	console.log($id, 'container mounted');
-	// console.log('default value: ', value()); 
-}
+// function mounted()
+// {
+// 	console.log($id, 'container mounted');
+// 	// console.log('default value: ', value()); 
+// }
 
-function unmounted()
-{
-	console.log($id, 'container unmounted');	
-}
+// function unmounted()
+// {
+// 	console.log($id, 'container unmounted');	
+// }
 </script>
-<!-- 
-let _hookContext$ = enterHookContext({
-	mounted,
-	unmounted,
-});
-
-each() {
-	enterHookContext();
-
-	loadCOmponent(1)
-	loadCOmponent(2)
-
-	exitHookContext();
-}
-
-currentHook[i] = [
-	{
-		0: [],
-		'data-key: 1': [],
-	}
-]
-
-remove(i) {
-	
-}
-
-exitHookContext(); -->

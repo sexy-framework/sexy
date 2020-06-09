@@ -17,17 +17,19 @@ export function render(component, rootNode)
 	}
 }
 
-
-export function hydrate(component, rootNode)
+export function refresh(rootNode)
 {
 	let tmp = rootNode.innerHTML;
 	rootNode.innerHTML = tmp;
+}
 
+export function hydrate(component, rootNode)
+{
 	let root = getRoot();
 
 	let c = component(null, rootNode.firstChild);
 
-	if(c.hooks.mounted) {
+	if(c.hooks && c.hooks.mounted) {
 		c.hooks.mounted();
 	}
 

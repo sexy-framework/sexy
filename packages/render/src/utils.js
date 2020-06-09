@@ -67,6 +67,20 @@ export const diffable = (node, operation) =>
 	node._firstChild :
 	node;
 
+
+
+export const manualPersistent = (start, end) => {
+	if(start.isSameNode(end)) {
+		return start;
+	}
+
+	return {
+		nodeType: 111,
+		_firstChild: start,
+		_lastChild: end,
+	};
+}
+
 export const persistent = (fragment) => {
 	const { childNodes } = fragment;
 	const { length } = childNodes;

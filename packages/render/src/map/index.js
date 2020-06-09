@@ -1,7 +1,9 @@
 import { diff } from './diff.js';
-import { add, persistent, diffable } from '../utils.js';
+import { add, persistent, diffable, manualPersistent } from '../utils.js';
 import { subscribe, value, root, getRoot } from '@hawa/observable';
 import {  getRoot as transRoot } from '@hawa/transition';
+
+import time from '../../../../test/time';
 /**
  * Map over a list of unique items that create DOM nodes.
  *
@@ -56,42 +58,19 @@ export function map(bindNode, items, keyExpr, expr, render)
 						return expr(node, false, itemKey, item, key);
 					}, curTracker);
 
+					let n = manualPersistent(node, lastHydratedNode)
+
+					defaultA[key] = item;
+					nodes.set(itemKey, n);
+
+					// console.warn('[hydr]', itemKey, n)
+
 					node = lastHydratedNode.nextSibling;
-					// console.warn('lastHydratedNode', lastHydratedNode, node)
+					
 					lastNode = lastHydratedNode;
 				}
 			}
-
-			if(lastHydratedNode && lastHydratedNode.hasAttribute) {
-				let hydratedNodes = [];
-
-				if(!lastHydratedNode.hasAttribute('data-key')) {
-					let startNodeSearch = lastHydratedNode;
-					while(startNodeSearch) {
-						hydratedNodes.unshift(startNodeSearch);
-						if(startNodeSearch.hasAttribute('data-key')) {
-							break;
-						}
-						
-						startNodeSearch = startNodeSearch.previousSibling;
-					}
-				}
-
-				defaultA[key] = item;
-
-				let n = lastHydratedNode;
-
-				if(hydratedNodes.length > 0) {
-					n = persistent({
-						childNodes: hydratedNodes
-					})
-				}
-
-				nodes.set(itemKey, n);
-				diffable(n, 1);
-			}
 		}
-
 		// console.log(defaultA);
 
 		endMark = document.createTextNode('');
@@ -102,6 +81,8 @@ export function map(bindNode, items, keyExpr, expr, render)
 		} else {
 			lastNode.after(endMark);
 		}
+
+
 		// console.error(bindNode, lastNode, endMark, endMark.parentNode);
 		// endMark = add(lastNode, '');
 	}

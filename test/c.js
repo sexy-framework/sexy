@@ -3,7 +3,7 @@ import PageComponent from '../components/page.hawa'
 import time from './time';
 
 
-import { render, hydrate } from '@hawa/render';
+import { render, hydrate, refresh } from '@hawa/render';
 
 let layout = document.getElementById('layout');
 
@@ -14,14 +14,15 @@ time('render');
 
 
 
-// setTimeout(() => {
-// 	unmount();
+setTimeout(() => {
+	unmount();
+	refresh(layout);
 
-// 	console.log('start hydration');
-// 	time('hydrate');
+	console.log('start hydration');
+	time('hydrate');
 	
-// 	unmount = hydrate(PageComponent, layout);
+	unmount = hydrate(PageComponent, layout);
 	
-// 	time('hydrate');
-// }, 300)
+	time('hydrate');
+}, 300)
 
