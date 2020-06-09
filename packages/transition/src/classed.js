@@ -42,18 +42,18 @@ export function classed(node, name, out = false) {
 
 	let duration = getDuration(node, activeClass, out)
 
-	node.classList.add(activeClass);
-	node.classList.add(startClass);
+	let defaultClassName = node.className;
+	let defaultActiveClassName = node.className + ' ' + activeClass;
+
+	node.className = defaultActiveClassName + ' ' + startClass;
 
 	setTimeout(() => {
-		node.classList.add(finishClass);
-		node.classList.remove(startClass);
+		node.className = defaultActiveClassName + ' ' + finishClass;
 	}, 20);
 
 	// cleanup
 	setTimeout(() => {
-		node.classList.remove(activeClass);
-		node.classList.remove(finishClass);
+		node.className = defaultClassName;
 	}, duration)
 
 	return {
