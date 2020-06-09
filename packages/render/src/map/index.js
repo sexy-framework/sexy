@@ -38,8 +38,6 @@ export function map(bindNode, items, keyExpr, expr, render)
 		endMark = add(parent, '');
 
 		bindNode.replaceWith(parent);
-
-		// console.log('start each', parent, endMark)
 	} else {
 		let _items = value(items);
 		let node = bindNode;
@@ -71,7 +69,6 @@ export function map(bindNode, items, keyExpr, expr, render)
 				}
 			}
 		}
-		// console.log(defaultA);
 
 		endMark = document.createTextNode('');
 
@@ -81,10 +78,6 @@ export function map(bindNode, items, keyExpr, expr, render)
 		} else {
 			lastNode.after(endMark);
 		}
-
-
-		// console.error(bindNode, lastNode, endMark, endMark.parentNode);
-		// endMark = add(lastNode, '');
 	}
 	
 	const unsubscribe = subscribe(items, a => {
@@ -114,7 +107,7 @@ export function map(bindNode, items, keyExpr, expr, render)
 
 	// disposeAll();
 
-	function addNode(item, key, i, el = null) {
+	function addNode(item, key, i, parent = null) {
 		if (item == null) return;
 
 		let nodeKey = keyExpr(item, key);
@@ -128,22 +121,26 @@ export function map(bindNode, items, keyExpr, expr, render)
 					disposers.set(nodeKey, disposal);
 					return expr(null, true, nodeKey, item, key);
 				}, curTracker);
-				
+
 				if (n.nodeType === 11) n = persistent(n) || n;
-				
+
 				nodes.set(nodeKey, n);
 				
 			}
 		} else if (i === -1) {
 			toRemove.add(nodeKey);
+			
 			let disposer = disposers.get(nodeKey);
+
 			if(disposer) {
 				disposers.set(nodeKey,
 					disposer.bind(null, () => {
-						endMark.parentNode.removeChild(diffable(n, i));
+						endMark.parentNode.removeChild(diffable(n, -1));
 					})
 				)
 			}
+
+			return;
 		}
 
 		return diffable(n, i);

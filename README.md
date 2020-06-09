@@ -40,7 +40,7 @@ Benchmark was made with 10 000 components with loop function. (Without loop its 
 - [x] Directives (Plugins)
 - [x] Two-way bindings
 - [x] Animation (basic via class)
-- [x] Lazy loading
+- [x] Lazy loading (there is bug with root subscriber)
 - [x] Dependencies (SFC)
 - [ ] Recursive components
 - [ ] Store (Vuex, Mobx...)

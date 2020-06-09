@@ -39,7 +39,9 @@ export function castNode(value) {
 
 
 export function removeNodes(parent, startNode, endMark) {
-	while (startNode && startNode !== endMark) {
+	// console.warn(startNode, endMark)
+	while (startNode && !startNode.isSameNode(endMark)) {
+		// console.log(startNode);
 		const n = startNode.nextSibling;
 		// Is needed in case the child was pulled out the parent before clearing.
 		if (parent === startNode.parentNode) {

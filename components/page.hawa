@@ -1,13 +1,13 @@
 <div>
-	<!-- <label>
+	<label>
 		<input type="checkbox" (bind)="showItems">
 		show list
 	</label>
 	<div>
 		<input type="range" (bind)="range" max=10>
-	</div> -->
-	<!-- @if(showItems) -->
-		@each(item, key in items)
+	</div>
+	@if(showItems)
+		@each(item, key in items.slice(0, range))
 		<!-- <div :key="item" transition:fade>
 			test {{ item }}
 		</div> -->
@@ -17,12 +17,12 @@
 		<nav.container :key="item" transition:classed="fade" lazy>
 			test {{ item }}
 		</nav.container>
-		<div>check double</div>
-		<div  transition:classed="fade">check tripple</div>
+		<!-- <div>check double</div> -->
+		<!-- <div  transition:classed="fade">check tripple</div> -->
 		@endeach
 	<!-- @else
 	hidden -->
-	<!-- @endif -->
+	@endif
 </div>
 
 <script>
@@ -33,10 +33,10 @@ function faded() {}
 
 // let items = o(Array.from({ length: 3 }, (_, i) => i));
 // let vv = o('test'); 2
-let items = o(Array.from({ length: 5 }, (_, i) => i));;//o(['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']);
+let items = o(['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']);
 
-// let showItems = o(true);
-// let range = o(5);
+let showItems = o(true);
+let range = o(5);
 
 // function eventd()
 // {

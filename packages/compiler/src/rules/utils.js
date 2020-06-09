@@ -52,17 +52,17 @@ export function getFirstTemplateNode(entity, context, options)
 		);
 
 		// id
-		context.push(expressionStatement(
-			assignmentExpression(
-				'=',
-				id('$id'),
-				callExpression(
-					id('_createComponent$'), [
-					pointer.name,
-					id('render'),
-				])
-			)
-		));
+		// context.push(expressionStatement(
+		// 	assignmentExpression(
+		// 		'=',
+		// 		id('$id'),
+		// 		callExpression(
+		// 			id('_createComponent$'), [
+		// 			pointer.name,
+		// 			id('render'),
+		// 		])
+		// 	)
+		// ));
 
 		// hooks
 		context.push(

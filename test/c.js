@@ -1,9 +1,9 @@
 // import StaticComponent from '../components/static.hawa'
-// import PageComponent from '../components/page.hawa'
+import PageComponent from '../components/page.hawa'
 import time from './time';
 
 
-const PageComponent = import('../components/page.hawa')
+// const PageComponent = import('../components/page.hawa')
 
 
 import { render, hydrate, refresh } from '@hawa/render';

@@ -1,6 +1,6 @@
 import { cleanup } from '@hawa/observable';
 
-export function createHooks(hooks, id)
+export function createHooks(hooks)
 {
 	if(!hooks.unmounted) {
 		return;

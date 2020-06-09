@@ -1,6 +1,6 @@
 /* eslint-env node */
 module.exports = {
-	presets: [
+    presets: [
         [
             '@babel/preset-env',
             {
@@ -13,10 +13,15 @@ module.exports = {
         ]
     ],
     plugins: [
+        ["@babel/plugin-transform-runtime",
+            {
+                "regenerator": true
+            }
+        ],
         ['@babel/plugin-transform-object-assign'],
         ['@babel/plugin-transform-modules-commonjs', {
-	    	"allowTopLevelThis": true
-	    }],
+            "allowTopLevelThis": true
+        }],
         ['@babel/plugin-proposal-object-rest-spread', { 'loose': true }]
     ],
 }
