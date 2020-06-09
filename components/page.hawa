@@ -8,9 +8,15 @@
 	</div>
 	@if(showItems)
 		@each(item, key in items.slice(0, range))
-		<nav.container ref="test" :key="item" @input="eventd">
+		<div :key="item" transition:fade>
 			test {{ item }}
-		</nav.container>
+		</div>
+		<!-- <div transition:faded>
+			22 test {{ item }}
+		</div> -->
+		<!-- <nav.container ref="test" :key="item" @input="eventd">
+			test {{ item }}
+		</nav.container> -->
 		@endeach
 	<!-- @else
 	hidden -->
@@ -19,11 +25,13 @@
 
 <script>
 import { bind } from '@hawa/directives'
+import { fade } from '@hawa/transition'
+
+function faded() {}
 
 // let items = o(Array.from({ length: 3 }, (_, i) => i));
-
 // let vv = o('test'); 2
-let items = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+let items = o(['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']);
 
 let showItems = o(true);
 let range = o(5);
@@ -36,9 +44,9 @@ function eventd()
 function mounted()
 {
 	console.log('page mounted');
-	// setTimeout(() => {
-	// 	items(Array.from({ length: 2 }, (_, i) => i))
-	// }, 1000);
+	setTimeout(() => {
+		items(['one', 'seven', 'three', 'four', 'five', 'six', 'two', 'eight', 'nine', 'ten'])
+	}, 1000);
 }
 
 function unmounted()

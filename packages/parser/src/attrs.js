@@ -63,6 +63,11 @@ export function attrs(obj, isComponent = false)
 		attributes: {},
 		staticAttrs: {},
 		directives: {},
+		transition: {
+			in: null,
+			out: null,
+			events: {},
+		},
 	}
 
 	for(let prop in obj)
@@ -72,15 +77,35 @@ export function attrs(obj, isComponent = false)
 
 		if(isDomAttr(name, isComponent)) {
 			result.staticAttrs[name] = value;
+		// transitions
+		} else if(name.match(/^transition\:/g)) {
+			name = name.replace(/^transition\:/g, '');
+			
+			let settings = {
+				name,
+				options: value === '' ? '{}' : value,
+			}
+
+			if(options.in) {
+				result.transition.in = settings;
+			} else if(options.out) {
+				result.transition.out = settings;
+			} else {
+				result.transition.in = settings;
+				result.transition.out = settings;
+			}
+		// directives
 		} else if(name.match(/^\(.*\)$/g)) {
 			name = name.replace(/[()]/g, '');
 			result.directives[name] = {
 				options,
 				value,
 			}
+		// events
 		} if(name.match(/^@/g)) {
 			name = name.replace(/^@/g, '');
 			result.events[name] = makeValue(value, true);
+		// dynamic value
 		} else if(name.match(/^\:/g)) {
 			name = name.replace(/^\:/g, '');
 			value = makeValue(value, true);
@@ -92,6 +117,7 @@ export function attrs(obj, isComponent = false)
 			} else {
 				result.props[name] = value;
 			}
+		// static value
 		} else {
 			if(isRootAttr(name)) {
 				result[name] = value;
@@ -101,6 +127,8 @@ export function attrs(obj, isComponent = false)
 			// console.error(`Attr ${name} doesnt registered. Cant understand type.`)
 		}
 	}
+
+	// console.log(result)
 
 	return result;
 }

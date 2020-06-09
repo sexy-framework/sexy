@@ -7,7 +7,7 @@ export function getRoot()
 	return tracking;
 }
 
-export function root(fn, customParent = null)
+export function root(fn, customParent = null, transParent = null)
 {
 	let prevTracking = tracking;
 	let newTracking = new Tracker();
@@ -20,8 +20,8 @@ export function root(fn, customParent = null)
 	
 	tracking = newTracking;
 
-	let result = fn(() => {
-		newTracking.cleanup();
+	let result = fn((callback) => {
+		newTracking.cleanup(callback);
 	});
 
 	tracking = prevTracking;

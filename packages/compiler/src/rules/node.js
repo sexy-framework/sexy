@@ -17,6 +17,10 @@ import { attrs } from '../dynamic';
 
 export default function node(context, options)
 {
+	// create transition
+	options.dynamic.transition(this.option.transition, options.getLastVariableId(), context, options);
+
+	// create directives
 	options.dynamic.directives(this.option.directives, options.getLastVariableId(), context, options);
 
 	// register node reference 

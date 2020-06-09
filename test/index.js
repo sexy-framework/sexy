@@ -1,7 +1,6 @@
 import { parse } from '@hawa/parser';
 import { compile } from '@hawa/compiler';
 import { observable, computed, subscribe, watch } from '@hawa/observable';
-import { map as _each$ } from '@hawa/map';
 
 import {
 	attrs as _makeAttrs$,
@@ -97,11 +96,11 @@ function gett() {
 	html = `
 <div>
 	@each(item, key in items)
-		<nav.container ref="test" :key="item.v" :test="d" (model)="v" @input="mounted">
+		<nav.container ref="test" :key="item.v" :test="d" (model)="v" @input="mounted" transition:fade>
 			test {{ item.v }}
 		</nav.container>
 	@endeach
-	<input type="text" $model.static="v" />
+	<input type="text" transition:fade.in />
 	@if(d === 1)
 	<nav.container >
 	test if

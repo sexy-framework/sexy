@@ -1,6 +1,7 @@
 import { diff } from './diff.js';
 import { add, persistent, diffable } from '../utils.js';
 import { subscribe, value, root, getRoot } from '@hawa/observable';
+import {  getRoot as transRoot } from '@hawa/transition';
 /**
  * Map over a list of unique items that create DOM nodes.
  *
@@ -154,6 +155,14 @@ export function map(bindNode, items, keyExpr, expr, render)
 			}
 		} else if (i === -1) {
 			toRemove.add(nodeKey);
+			let disposer = disposers.get(nodeKey);
+			if(disposer) {
+				disposers.set(nodeKey,
+					disposer.bind(null, () => {
+						endMark.parentNode.removeChild(diffable(n, i));
+					})
+				)
+			}
 		}
 
 		return diffable(n, i);
@@ -161,12 +170,12 @@ export function map(bindNode, items, keyExpr, expr, render)
 
 	// cleanup(disposeAll);
 
-	function disposeAll() {
-		disposers.forEach(d => d());
-		disposers.clear();
-		nodes.clear();
-		toRemove.clear();
-	}
+	// function disposeAll() {
+	// 	disposers.forEach(d => d());
+	// 	disposers.clear();
+	// 	nodes.clear();
+	// 	toRemove.clear();
+	// }
 
 	function dispose(item) {
 		let disposer = disposers.get(item);

@@ -24,13 +24,27 @@ export class Tracker {
 		this.disposals.add(cleanup);
 	}
 
-	cleanup()
+	cleanup(callback)
 	{
+		let maxDuration = 0;
 		// console.warn('cleanup start', this);
-		this.disposals.forEach(disposal => disposal());
+		this.disposals.forEach(disposal => {
+			let result = disposal();
+
+			if(result && result.duration) {
+				if(result.duration > maxDuration) {
+					maxDuration = result.duration;
+				}
+			}
+		});
 		this.disposals.clear();
 
-		this.children.forEach(child => child.cleanup());
+		this.children.forEach(child => {
+			let duration = child.cleanup();
+			if(duration > maxDuration) {
+				maxDuration = duration;
+			}
+		});
 		// this.children.clear();
 
 		if(this.parent) {
@@ -38,6 +52,13 @@ export class Tracker {
 		}
 
 		delete this;
+
+		if(callback) {
+			setTimeout(callback, maxDuration);
+			console.log(maxDuration, callback)
+		}
+
+		return maxDuration;
 	}
 
 }

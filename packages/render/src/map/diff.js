@@ -30,7 +30,7 @@ export function diff(parent, a, b, keyExpr, get, before)
 			i++;
 		} else if (b.length <= j) {
 			// No more elements in new, this is a delete
-			parent.removeChild(get(a[i], i, -1));
+			get(a[i], i, -1);
 			i++;
 		} else if (a.length <= i) {
 			// No more elements in old, this is an addition
@@ -51,7 +51,7 @@ export function diff(parent, a, b, keyExpr, get, before)
 			var wantedElmInOld = aIdx.get(key_bElm);
 			if (curElmInNew === undefined) {
 				// Current element is not in new list, it has been removed
-				parent.removeChild(get(a[i], i, -1));
+				get(a[i], i, -1);
 				i++;
 			} else if (wantedElmInOld === undefined) {
 				// New element is not in old list, it has been added

@@ -34,6 +34,8 @@ export function getConfig(entity, context, options)
 
 	let callbackContext = [];
 
+	// create transition
+	options.dynamic.transition(entity.option.transition, id('node'), callbackContext, options);
 	// create directives
 	options.dynamic.directives(entity.option.directives, id('node'), callbackContext, options);
 	// create refs

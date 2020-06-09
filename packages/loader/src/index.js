@@ -117,8 +117,13 @@ export default function(source) {
 
 		import {
 			createHooks as _createHooks$,
-			dispatchHook as _dispatchHook$,
 		} from '@hawa/lifecycle'
+
+		import {
+			transition as _transition$,
+		} from '@hawa/transition'
+
+		_transition$
 		
 		// templates
 		${ templates }

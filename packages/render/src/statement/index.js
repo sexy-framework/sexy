@@ -50,6 +50,12 @@ export function statement(node, render, deps, ...args)
 	// let 
 	let parent;
 	let endMark, startMark;
+
+	function cleanup()
+	{
+		let cleanNodes = createInitFragment(startMark, endMark);
+		parent.removeChild(diffable(cleanNodes, -1));
+	}
 	
 	if(render) {
 		let placeholder = document.createComment('');
@@ -65,6 +71,8 @@ export function statement(node, render, deps, ...args)
 		node = placeholder;
 		
 		parent = endMark.parentNode;
+
+		cleanup();
 	} else {
 		parent = node.parentNode;
 		startMark = castNode('');
@@ -77,16 +85,21 @@ export function statement(node, render, deps, ...args)
 	let isFirstCall = true;
 
 	// obs trackers
-	let disposers = new Map();
+	const disposers = new Map();
+	const toRemove = new Set();
+	// .clear();
 
-	function disposeAll() {
-		disposers.forEach(d => d());
-		disposers.clear();
+	function dispose(item) {
+		let disposer = disposers.get(item);
+		if (disposer) {
+			disposer(cleanup);
+			disposers.delete(item);
+		}
 	}
 
 	subscribe(deps, () => {
 
-		disposeAll();
+		toRemove.forEach(dispose);
 
 		let n = document.createComment('');
 		let currentConditionIndex = null;
@@ -97,6 +110,7 @@ export function statement(node, render, deps, ...args)
 
 			if (condition()) {
 				n = root(dispose => {
+					toRemove.add(i);
 					disposers.set(i, dispose);
 					return renderFn(startMark.nextSibling, lastConditionIndex !== i);
 				});
@@ -133,10 +147,6 @@ export function statement(node, render, deps, ...args)
 		if(!hasRendered) {
 			return;
 		}
-
-		// remove old nodes
-		let cleanNodes = createInitFragment(startMark, endMark);
-		parent.removeChild(diffable(cleanNodes, -1));
 
 		// add new nodes
 		parent.insertBefore(diffable(n, 1), endMark);
