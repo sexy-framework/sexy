@@ -11,9 +11,11 @@
   "alias": {
     "~": "~/.."
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
   "browser": {
     "fs": false,
     "child_process": false

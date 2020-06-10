@@ -1,0 +1,30 @@
+{
+  "name": "hawa-loader",
+  "version": "0.0.23",
+  "description": "Support assets list input file type",
+  "module": "src/index.js",
+  "main": "dist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Compiler\"",
+    "watch": "cross-env NODE_ENV=development webpack --config webpack.config.js ",
+    "build": "cross-env NODE_ENV=development webpack --config webpack.config.js"
+  },
+  "author": "Kir Burkhanov",
+  "license": "MIT",
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "loader-utils": "^2.0.0",
+    "querystring": "^0.2.0",
+    "schema-utils": "^2.6.6",
+    "webpack": "^4.43.0"
+  },
+  "gitHead": "c96e4b0b26723e73dd0c2f09f62f8bae182c27b8",
+  "devDependencies": {
+    "babel-plugin-add-module-exports": "^1.0.2",
+    "path": "^0.12.7",
+    "virtual-file-loader": "^0.0.4"
+  }
+}

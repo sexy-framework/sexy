@@ -97,7 +97,7 @@ Example with Loop, external component, (bind) (two-way data binding and directiv
 </div>
 
 <script>
-import { bind } from '@hawa/directives'
+import { bind } from 'hawa/directives'
 
 let items = o([{
 	v: 'a'

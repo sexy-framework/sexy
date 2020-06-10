@@ -58,7 +58,7 @@ module.exports = {
 			{
 				test: /\.hawa$/i,
 				use: [{
-					loader: '@hawa/loader',
+					loader: 'hawa-loader',
 					options: {
 						loaders: ['css-loader', 'sass-loader'],
 						path: '../components',
