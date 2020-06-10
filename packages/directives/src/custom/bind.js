@@ -1,26 +1,3 @@
-// import { Directive } from '../directive';
-
-// static parser(entity)
-// 	{
-// 		if(entity.type !== 'component') {
-// 			return;
-// 		}
-
-// 		let modelDirective = entity.option.directives[Model.getName()];
-
-// 		if(modelDirective === undefined) {
-// 			return;
-// 		}
-
-// 		entity.option.props['value'] = {
-// 			value: `(${ modelDirective.value.value })()`,
-// 			isExpression: true,
-// 		};
-		
-// 		// get
-// 		// console.log(entity.option);
-// 	}
-
 export function bind(node, options, value, render)
 {
 	let valueProp = 'value';
