@@ -126,10 +126,13 @@ export default function(source) {
 			emit as _emit$,
 			call as _call$,
 			createComponent as _createComponent$,
-			createHooks as _createHooks$,
 			parseContext,
 			loadComponent,
 		} from 'hawa/render';
+
+		import {
+			createHooks as _createHooks$,
+		} from 'hawa/lifecycle'
 
 		import {
 			transition as _transition$,

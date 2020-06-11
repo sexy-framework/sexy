@@ -1,9 +1,9 @@
 {
-  "name": "hawa-loader",
+  "name": "hawa-ssr",
   "version": "0.0.23",
   "description": "Support assets list input file type",
   "module": "src/index.js",
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "publishConfig": {
     "access": "public"
   },
@@ -15,10 +15,7 @@
   "author": "Kir Burkhanov",
   "license": "MIT",
   "dependencies": {
-    "loader-utils": "^2.0.0",
-    "querystring": "^0.2.0",
-    "schema-utils": "^2.6.6",
-    "webpack": "^4.43.0"
+    
   },
   "gitHead": "c96e4b0b26723e73dd0c2f09f62f8bae182c27b8",
   "devDependencies": {

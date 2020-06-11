@@ -10,7 +10,7 @@ So its like Svelte, but much faster because of
 Thanks SolidJS (dom expressions) and Sinuous (fast looping) for their work that helped to make max performance.
 
 ## Benefits
-- **Small.** hello world at `4.7kB` gzip.
+- **Small.** hello world at `3.73kB` gzip.
 - **Fast.** No reactivity libs, No runtime work
 - **Partial hydration.** Hydrate only dynamic and statefull parts of application
 - **Truly reactive.** automatically derived from the app state.

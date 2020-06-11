@@ -6,24 +6,22 @@ module.exports = {
             {
                 modules: false,
                 loose: true,
-                // targets: {
-                //     browsers: ['ie >= 9']
-                // }
+                targets: {
+                    browsers: ['ie >= 9']
+                }
             }
         ]
     ],
     plugins: [
-        // ["@babel/plugin-transform-runtime",
-        //     {
-        //         "regenerator": true
-        //     }
-        // ],
+        ["@babel/plugin-transform-runtime",
+            {
+                "regenerator": true
+            }
+        ],
         ['@babel/plugin-transform-object-assign'],
         ['@babel/plugin-transform-modules-commonjs', {
-            "allowTopLevelThis": true,
-            "loose": true,
+            "allowTopLevelThis": true
         }],
-        // ["add-module-exports"],
         ['@babel/plugin-proposal-object-rest-spread', { 'loose': true }]
     ],
 }

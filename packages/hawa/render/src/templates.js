@@ -1,4 +1,14 @@
-import { watch, computed, isObservable } from 'hawa/observable';
+import { watch, computed, isObservable, cleanup } from 'hawa/observable';
+
+export function createHooks(hooks)
+{
+	if(!hooks.unmounted) {
+		return;
+	}
+	
+	cleanup(hooks.unmounted);
+}
+
 
 export function getNode(template, node, render) {
 	if (render) {

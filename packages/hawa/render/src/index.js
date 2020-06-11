@@ -1,7 +1,7 @@
 export { attrs } from './attrs'
 export { events } from './events'
 export { slot } from './slot'
-export { getNode, parseContext, getProp, setRef, setKey } from './templates'
+export { getNode, parseContext, getProp, setRef, setKey, createHooks } from './templates'
 export { statement } from './statement'
 export { map } from './map'
 export { directive } from './directive'

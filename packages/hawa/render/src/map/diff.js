@@ -1,4 +1,3 @@
-import { findAndDispatchHook } from 'hawa/lifecycle';
 
 export function diff(parent, a, b, keyExpr, get, before)
 {
