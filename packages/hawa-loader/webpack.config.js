@@ -7,6 +7,7 @@ module.exports = {
 
 	mode: isProduction ? 'production' : 'development',
 
+	watch: !isProduction,
 	// devtool: "source-map",
 
 	entry: [

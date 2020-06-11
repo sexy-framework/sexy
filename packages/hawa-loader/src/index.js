@@ -79,7 +79,7 @@ export default function(source) {
 	 * Compiler
 	 */
 	let blocks = parse(source);
-	let { render, templates, script, components, styles, imports } = compile(options, blocks);
+	let { module, styles } = compile(options, blocks);
 
 	/**
 	 * Import style block
@@ -102,64 +102,8 @@ export default function(source) {
 		
 		return `import '${cssFileName}';`;
 	}
-	 
-	/**
-	 * Main component code
-	 */
-	let code = `
-		import { observable, computed, subscribe, watch } from 'hawa/observable';
-		${ imports }
-		${ importStyle }
-		${ components }
-
-		import {
-			attrs as _makeAttrs$,
-			events as _makeEvents$,
-			slot as _slot$,
-			map as _each$,
-			statement as _statement$,
-			directive as _directive$,
-			getNode,
-			getProp as _getProp$,
-			setRef as _setRef$,
-			setKey as _setKey$,
-			emit as _emit$,
-			call as _call$,
-			createComponent as _createComponent$,
-			createHooks as _createHooks$,
-			parseContext,
-			loadComponent,
-		} from 'hawa/render';
-
-		import {
-			transition as _transition$,
-		} from 'hawa/transition'
-
-		_transition$
-		
-		// templates
-		${ templates }
-		
-		// component function
-		function render(context, node = false) {
-			let render = node === false;
-
-			let { $props, $slots, $refs, $customInit } = parseContext(context);
-			
-			let $emit, $id;
-			// code
-			${ script }
-			
-			// render
-			${ render }
-		}
-
-		export default render;
-		`;
-	// }
-
-	// console.log(code);
-
-	return code;
-	// return block.source || 'export default {}';
+	
+	return module({
+		afterImport: importStyle,
+	})
 }

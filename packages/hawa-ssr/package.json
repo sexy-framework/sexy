@@ -15,7 +15,7 @@
   "author": "Kir Burkhanov",
   "license": "MIT",
   "dependencies": {
-    
+    "router5": "^8.0.1"
   },
   "gitHead": "c96e4b0b26723e73dd0c2f09f62f8bae182c27b8",
   "devDependencies": {

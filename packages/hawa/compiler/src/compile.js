@@ -3,6 +3,7 @@ import { analyse } from 'hawa/analyser';
 import { script } from './script';
 import { components } from './components';
 import dynamic from './dynamic';
+import { module } from './module';
 
 import {
 	variableDeclaration,
@@ -173,11 +174,13 @@ export function compile(loaderOptions, blocks)
 	});
 
 	return {
-		render: code.code,
-		templates: getTemplates(),
-		script: script(codeAnalyse, blocks.script),
-		imports: imports.code,
+		module: module({
+			render: code.code,
+			templates: getTemplates(),
+			script: script(codeAnalyse, blocks.script),
+			imports: imports.code,
+			components: components(entity)(loaderOptions.path, loaderOptions.delimeter),
+		}),
 		styles: blocks.style,
-		components: components(entity)(loaderOptions.path, loaderOptions.delimeter),
 	}
 }
