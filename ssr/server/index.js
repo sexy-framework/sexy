@@ -1,16 +1,26 @@
 import routes from '../routes.js';
 import path from 'path';
+import fs from 'fs';
 import fastifyStatic from 'fastify-static';
+import fastifyCompress from 'fastify-compress';
 import { JSDOM } from 'jsdom';
 import { render } from 'hawa/render';
+
+const ROOT_PATH = path.join(__dirname, '../', '../', '/.hawa');
+
+let manifest = JSON.parse(fs.readFileSync(path.join(ROOT_PATH, 'client/manifest.json'), 'utf-8'))
 
 const fastify = require('fastify')({
   logger: true
 })
 
+fastify.register(fastifyCompress, { threshold: 0 })
+
+
 fastify.register(fastifyStatic, {
-  root: path.join(__dirname, '../', '../', '/.hawa'),
+  root: ROOT_PATH,
 })
+
 
 let cache = {};
 
@@ -28,8 +38,8 @@ for(let item of routes) {
 			<html lang="ru">
 			<head>
 				<title>Test - ${ item.route }</title>
-				<script src="/client/vendors.0.js" defer></script>
-				<script src="/client/main.js" defer></script>
+				<script src="${ manifest['vendors.js'] }" defer></script>
+				<script src="${ manifest['main.js'] }" defer></script>
 				<link href="/client/0.css" rel="stylesheet">
 			</head>
 			<body><div id="_hawa"></div></body>
@@ -44,10 +54,12 @@ for(let item of routes) {
 		global.document = document;
 
 		let component = await item.component();
-	
-		render(component.default, root);
-
 		
+		try {
+			render(component.default, root);
+		} catch(err) {
+			console.log(err);
+		}
 
 		return cache[item.route] = dom.serialize();
 	})

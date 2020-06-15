@@ -5,11 +5,12 @@ const webpack = require('webpack');
 // const VirtualModulePlugin = require('virtual-module-webpack-plugin');
 const ExtraWatchWebpackPlugin = require('extra-watch-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 function config(type)
 {
 	return {
-		mode: 'production',
+		mode: 'production', // development
 
 		// watch: true,
 
@@ -29,7 +30,9 @@ function config(type)
 		    'jsdom',
 		    'fastify',
 		    'fastify-static',
+		    'fastify-compress',
 		    'Navigo',
+		    'fs',
 	    ],
 
 		module: {
@@ -66,6 +69,8 @@ function config(type)
 		},
 
 		plugins: [
+
+			new ManifestPlugin(),
 
 			new ExtraWatchWebpackPlugin({
 				dirs: [
