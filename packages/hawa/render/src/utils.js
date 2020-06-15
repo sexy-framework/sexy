@@ -30,7 +30,7 @@ export function castNode(value) {
 	if (typeof value === 'string') {
 		return document.createTextNode(value);
 	}
-	if (!(value instanceof Node)) {
+	if (!(value instanceof window.Node)) {
 		// Passing an empty array creates a DocumentFragment.
 		return document.createDocumentFragment([value]);
 	}

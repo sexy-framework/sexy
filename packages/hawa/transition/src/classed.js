@@ -13,7 +13,7 @@ function getDuration(node, activeClass, out)
 	
 	document.body.append(tmp)
 
-	let duration = getComputedStyle(tmp).transitionDuration;
+	let duration = window.getComputedStyle(tmp).transitionDuration;
 
 	tmp.remove();
 

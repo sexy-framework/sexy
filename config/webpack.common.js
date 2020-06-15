@@ -60,9 +60,10 @@ module.exports = {
 				use: [{
 					loader: 'hawa-loader',
 					options: {
-						loaders: ['css-loader', 'sass-loader'],
+						// loaders: ['css-loader', 'sass-loader'],
 						path: '../components',
 						delimeter: '-',
+						styles: true,
 					}
 				}]
 			},

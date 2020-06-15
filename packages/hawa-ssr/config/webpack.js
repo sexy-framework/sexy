@@ -52,3 +52,28 @@ export default {
 		}
 	}
 };
+
+target: 'node' (Webpack needs this)
+output.libraryTarget: 'commonjs' (makes Webpack use commonjs for unbundled libs)
+externals: [ /^(?!\.|\/).+/i, ] (makes Webpack not bundle anything in node_modules, or anything that is not a relative path (starting with . or /)
+
+// const path = require('path');
+// const serverConfig = {
+//   target: 'node',
+//   output: {
+//     path: path.resolve(__dirname, 'dist'),
+//     filename: 'lib.node.js'
+//   }
+//   //…
+// };
+
+// const clientConfig = {
+//   target: 'web', // <=== can be omitted as default is 'web'
+//   output: {
+//     path: path.resolve(__dirname, 'dist'),
+//     filename: 'lib.js'
+//   }
+//   //…
+// };
+
+// module.exports = [ serverConfig, clientConfig ];

@@ -1,4 +1,4 @@
-<div>
+
 	<label>
 		<input type="checkbox" (bind)="showItems">
 		show list
@@ -8,32 +8,31 @@
 	</div>
 	<div @click="add">add</div>
 	{{ counter }}
-	@if(showItems)
-		@each(item, key in items.slice(0, range))
-		<!-- <div :key="item" transition:fade>
+	<!-- @if(showItems) -->
+		@each(item, key in items)
+		<div :key="item">
 			test {{ item }}
-		</div> -->
+		</div>
 		<!-- <div transition:faded>
 			22 test {{ item }}
 		</div> -->
-		<nav.container :key="item" transition:classed="fade">
+		<!-- <nav.container :key="item" transition:classed="fade">
 			test {{ item }}
-		</nav.container>
+		</nav.container> -->
 		<!-- <div>check double</div> -->
 		<!-- <div  transition:classed="fade">check tripple</div> -->
 		@endeach
 	<!-- @else
 	hidden -->
-	@endif
-</div>
+	<!-- @endif -->
+
 
 <script>
 import { bind } from 'hawa/directives'
 import { classed } from 'hawa/transition'
 
-// let items = o(Array.from({ length: 3 }, (_, i) => i));
-// let vv = o('test'); 2
-let items = o(['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']);
+let items = o(Array.from({ length: 1000 }, (_, i) => i));
+// let items = o(['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']);
 
 let showItems = o(true);
 let range = o(5);
@@ -62,10 +61,19 @@ function add()
 // }
 </script>
 
-<!-- 
 <style>
-.red {
-	color: rgb(0, 0, 0);
+/*.fade*/
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity ease 250ms;
+}
+
+/*.fade-enter-to,
+.fade-leave {
+	opacity: 1;
+}*/
+
+.fade-enter, .fade-leave-to {
+	opacity: 0;
 }
 </style>
- -->

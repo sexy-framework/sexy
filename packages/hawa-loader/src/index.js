@@ -74,7 +74,7 @@ export default function(source) {
 
 	// parse options
 	const options = loaderUtils.getOptions(loaderContext) || {};
-
+	
 	/**
 	 * Compiler
 	 */
@@ -93,7 +93,7 @@ export default function(source) {
 	/**
 	 * Add virtual module for styles
 	 */
-	if (incomingQuery.type === 'style') {
+	if (incomingQuery.type === 'style' && options.styles) {
 		let cssFileName = `${ resourcePath }.${ styles.options.lang }`;
 
 		if (virtualModules) {
