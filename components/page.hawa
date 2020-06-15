@@ -1,71 +1,40 @@
 <div>
-	<label>
-		<input type="checkbox" (bind)="showItems">
-		show list
-	</label>
-	<div>
-		<input type="range" (bind)="range" max=10>
-	</div>
-	<div @click="add">add</div>
-	{{ counter }}
-	@if(showItems)
-		@each(item, key in items.slice(0, range))
-		<!-- <div :key="item" transition:fade>
-			test {{ item }}
-		</div> -->
-		<!-- <div transition:faded>
-			22 test {{ item }}
-		</div> -->
-		<nav.container :key="item" transition:classed="fade">
-			test {{ item }}
-		</nav.container>
-		<!-- <div>check double</div> -->
-		<!-- <div  transition:classed="fade">check tripple</div> -->
-		@endeach
-	<!-- @else
-	hidden -->
-	@endif
+	<h1>Index page</h1>
+	<div></div>
+	<static>
+		<div @click="alert(1)">
+			1
+			<static>2</static>
+		</div>
+	</static>
+	
 </div>
 
 <script>
-import { bind } from 'hawa/directives'
-import { classed } from 'hawa/transition'
-
-// let items = o(Array.from({ length: 3 }, (_, i) => i));
-// let vv = o('test'); 2
-let items = o(['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']);
-
-let showItems = o(true);
-let range = o(5);
 let counter = o(1);
-
-function add()
-{
-	counter(counter() + 1)
-}
-// function eventd()
-// {
-// 	alert(1)
-// }
-
-// function mounted()
-// {
-// 	console.log('page mounted');
-// 	// setTimeout(() => {
-// 	// 	items(['one', 'seven', 'three', 'four', 'five', 'six', 'two', 'eight', 'nine', 'ten'])
-// 	// }, 1000);
-// }
-
-// function unmounted()
-// {
-// 	console.log('page unmounted');
+let items = o(Array.from({ length: 200 }, (_, i) => i));
+// function mounted() {
+// 	setTimeout(() => {
+// 		// console.log('[1] change counter', counter());
+// 		counter(2);
+// 		// console.log('[2] change counter', counter());
+// 	}, 500)
 // }
 </script>
 
-<!-- 
 <style>
-.red {
-	color: rgb(0, 0, 0);
+/*.fade*/
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity ease 250ms;
+}
+
+/*.fade-enter-to,
+.fade-leave {
+	opacity: 1;
+}*/
+
+.fade-enter, .fade-leave-to {
+	opacity: 0;
 }
 </style>
- -->

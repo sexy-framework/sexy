@@ -4,12 +4,12 @@ export function slot($slots, name, node, render, callback) {
 		return;
 	}
 
-	let slotNodes = $slots[name]();
+	let slotNodes = $slots[name](node, render);
 	// console.log(node,slotNodes, render)
-	if(render) {
-		node.innerHTML = '';
-		node.appendChild(slotNodes);
-	}
+	// if(render) {
+	// 	node.innerHTML = '';
+	// 	node.appendChild(slotNodes);
+	// }
 	
 	return node;
 }

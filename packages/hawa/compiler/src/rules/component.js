@@ -10,6 +10,8 @@ import {
 	objectProperty,
 	returnStatement,
 	conditionalExpression,
+	assignmentExpression,
+	IfStatement,
 } from "@babel/types";
 
 import { attrs } from '../dynamic';
@@ -85,28 +87,42 @@ export function getConfig(entity, context, options)
 			let body = [];
 
 			let template = options.createVariable(body, (n, l) => {
-				let index = options.createTemplate(slot);
-				return new callExpression(
-					id('getNode'), [index, id('node'), id('render')]
-				);
+				return memberExpression(id('node'), id('firstChild'))
 			});
 
-			body.push(template.value);
-
-			let lastChild = children(slot, body, options, getFirstTemplateNode);
-
-			let returnPointer = new returnStatement(
-				new conditionalExpression(
-					id('render'), template.name, lastChild
+			body.push(
+				IfStatement(
+					id('render'),
+					blockStatement([
+						expressionStatement(
+							assignmentExpression('=', 
+								memberExpression(id('node'), id('innerHTML')),
+								stringLiteral(slot.makeTemplate(true))
+							)
+						)
+					])
 				)
 			);
 
-			body.push(returnPointer);
+			body.push(template.value);
+
+			let lastChild = children(slot, body, options, () => {});
+
+			// let returnPointer = new returnStatement(
+			// 	new conditionalExpression(
+			// 		id('render'), template.name, lastChild
+			// 	)
+			// );
+
+			// body.push(returnPointer);
 
 			slots.push(
 				objectProperty(
 					stringLiteral(slot.attrs.slot),
-					arrowFunctionExpression([], blockStatement(body)),
+					arrowFunctionExpression([
+						id('node'),
+						id('render'),
+					], blockStatement(body)),
 				)
 			)
 		}
