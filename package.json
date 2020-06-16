@@ -1,5 +1,5 @@
 {
-  "name": "sexy",
+  "name": "sexy-framework",
   "repository": "lastonoga/sexy",
   "version": "0.0.6",
   "description": "",
@@ -34,7 +34,8 @@
     "watch": "cross-env NODE_ENV=development webpack --config config/webpack.dev.js ",
     "build": "cross-env NODE_ENV=development webpack --config config/webpack.prod.js",
     "bundle": "cross-env NODE_ENV=development webpack --config config/webpack.package.js",
-    "ssr": "cross-env NODE_ENV=development webpack --config ssr/webpack.config.js "
+    "ssr": "cross-env NODE_ENV=development webpack --config ssr/webpack.config.js ",
+    "clear": "echo 1"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
