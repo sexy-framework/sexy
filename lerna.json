@@ -5,8 +5,7 @@
   "command": {
     "publish": {
       "ignoreChanges": [
-        "ignored-file",
-        "*.md"
+        "ignored-file"
       ],
       "message": "Release %v"
     },
