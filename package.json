@@ -58,14 +58,5 @@
     "webpack-bundle-analyzer": "^3.8.0",
     "webpack-cli": "^3.3.11",
     "webpack-merge": "^4.2.2"
-  },
-  "dependencies": {
-    "extra-watch-webpack-plugin": "^1.0.3",
-    "fastify": "^2.14.1",
-    "fastify-compress": "^2.0.1",
-    "fastify-static": "^2.7.0",
-    "jsdom": "^16.2.2",
-    "navigo": "^7.1.2",
-    "webpack-manifest-plugin": "^2.2.0"
   }
 }

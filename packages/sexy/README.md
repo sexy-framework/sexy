@@ -3,17 +3,19 @@
 ![npm](https://img.shields.io/npm/v/sexy-framework?color=%23&style=flat-square)
 ![Badge size](https://img.badgesize.io/https://unpkg.com/sexy-framework/dist/sexy.js?compression=gzip&label=gzip&style=flat-square)
 
-Sexy - is a Javascript template compiler and code analyser that compile template to DOM expressions and create variable (observable, computed) dependecies on compiler time.
+Sexy - is super fast reactive framework for building fast UI.
+Perfect Google PageSpeed metrics (better 4-5 times then NuxtJS)
 
-So its like Svelte, but much faster because of
+Sexy is fast because it compiles components to Native Javascript and it manages reactivity at compiler time!
+
 1. No reactivity libs (all deps are made by code analyser)
-2. No runtime (i mean framework doesnt work in runtime, only on compilation step)
+2. No runtime (Framework doesnt work in runtime, only on compilation step)
 3. Partial hydration (even for loops and conditional statements)
 
 Thanks SolidJS (dom expressions) and Sinuous (fast looping) for their work that helped to make max performance.
 
 ## Benefits
-- **Small.** hello world at `3.73kB` gzip.
+- **Small.** `3.73kB` gzip.
 - **Fast.** No reactivity libs, No runtime work
 - **Partial hydration.** Hydrate only dynamic and statefull parts of application
 - **Truly reactive.** automatically derived from the app state.

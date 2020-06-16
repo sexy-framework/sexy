@@ -6,7 +6,7 @@ import fastifyCompress from 'fastify-compress';
 import { JSDOM } from 'jsdom';
 import { render } from 'sexy-framework/render';
 
-const ROOT_PATH = path.join(__dirname, '../', '../', '/.sexy-framework');
+const ROOT_PATH = path.join(__dirname, '../', '../', '/.sexy');
 
 let manifest = JSON.parse(fs.readFileSync(path.join(ROOT_PATH, 'client/manifest.json'), 'utf-8'))
 
@@ -20,7 +20,6 @@ fastify.register(fastifyCompress, { threshold: 0 })
 fastify.register(fastifyStatic, {
   root: ROOT_PATH,
 })
-
 
 let cache = {};
 
