@@ -1,6 +1,6 @@
 {
   "name": "sexy-loader",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Support assets list input file type",
   "module": "src/index.js",
   "main": "dist/index.js",
@@ -11,13 +11,12 @@
     "url": "https://github.com/sexy-framework/sexy/issues"
   },
   "homepage": "https://github.com/sexy-framework/sexy#readme",
-  "author": "Kirill Burkhanov <kir.burkhanov@gmail.com>",
+  "author": "Kir Burkhanov",
   "scripts": {
     "test": "echo \"Compiler\"",
     "watch": "cross-env NODE_ENV=development webpack --config webpack.config.js ",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js"
   },
-  "author": "Kir Burkhanov",
   "license": "MIT",
   "dependencies": {
     "loader-utils": "^2.0.0",
