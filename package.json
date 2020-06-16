@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/sexy-framework/sexy#readme",
   "author": "Kirill Burkhanov <kir.burkhanov@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "prepack": "yarn clear && yarn bundle",
     "packages:watch": "yarn clear && lerna run --parallel start",

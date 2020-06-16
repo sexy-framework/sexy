@@ -7,6 +7,11 @@
   "publishConfig": {
     "access": "public"
   },
+  "bugs": {
+    "url": "https://github.com/sexy-framework/sexy/issues"
+  },
+  "homepage": "https://github.com/sexy-framework/sexy#readme",
+  "author": "Kirill Burkhanov <kir.burkhanov@gmail.com>",
   "scripts": {
     "test": "echo \"Compiler\"",
     "watch": "cross-env NODE_ENV=development webpack --config webpack.config.js ",
