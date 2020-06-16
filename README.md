@@ -1,1 +1,1 @@
-/Applications/MAMP/htdocs/hawa/packages/sexy/README.md
+./packages/sexy/README.md
