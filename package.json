@@ -26,12 +26,11 @@
   "author": "Kirill Burkhanov <kir.burkhanov@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "prepack": "yarn clear && yarn bundle",
+    "prepack": "yarn clear && yarn build",
     "packages:watch": "yarn clear && lerna run --parallel start",
     "packages:bundle": "lerna run --parallel build",
     "watch": "cross-env NODE_ENV=development webpack --config config/webpack.dev.js ",
     "build": "cross-env NODE_ENV=development webpack --config config/webpack.prod.js",
-    "bundle": "cross-env NODE_ENV=development webpack --config config/webpack.package.js",
     "ssr": "cross-env NODE_ENV=development webpack --config ssr/webpack.config.js ",
     "clear": "rm -rf ./packages/*/dist"
   },
