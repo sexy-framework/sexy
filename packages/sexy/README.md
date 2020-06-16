@@ -18,11 +18,11 @@ Thanks SolidJS (dom expressions) and Sinuous (fast looping) for their work that 
 
 ## Performance
 
-Performance is a main key of Sexy framework.
+Performance is a main key of Sexy framework. (syntethic tests)
 1. Faster in x4.5 times to hydrate dynamic components then NuxtJS
 2. Faster in x3.5 times to hydrate static components then NuxtJS
 2. Faster in x3 times to hydrate components with events then NuxtJS
-2. Faster in x10 times to hydrate components then Svelte
+2. Faster in x10 times to hydrate components then Svelte (in real test FID better in 3 times)
 
 Best choice for mobile web apps development.
 
