@@ -1,6 +1,6 @@
-import { parse } from '@sexy/parser';
-import { compile } from '@sexy/compiler';
-import { observable, computed, subscribe, watch } from '@sexy/observable';
+import { parse } from '@sexy-framework/parser';
+import { compile } from '@sexy-framework/compiler';
+import { observable, computed, subscribe, watch } from '@sexy-framework/observable';
 
 import {
 	attrs as _makeAttrs$,
@@ -9,7 +9,7 @@ import {
 	statement as _statement$,
 	getNode,
 	parseContext,
-} from '@sexy/render';
+} from '@sexy-framework/render';
 
 import time from './time';
 

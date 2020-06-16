@@ -19,7 +19,7 @@ function config(type)
 		],
 
 		output: {
-			path: path.resolve(__dirname, '../.sexy/' + type),
+			path: path.resolve(__dirname, '../.sexy-framework/' + type),
 			// publicPath: '/', 
 			filename: '[name].js',
 			chunkFilename: '[name].[id].js', // [hash]/[name].[id].js
@@ -39,9 +39,9 @@ function config(type)
 			rules: [
 
 				{
-					test: /\.sexy$/i,
+					test: /\.sexy-framework$/i,
 					use: [{
-						loader: 'sexy-loader',
+						loader: 'sexy-framework-loader',
 						options: {
 							loaders: ['css-loader', 'sass-loader'],
 							path: '../components',

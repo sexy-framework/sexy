@@ -1,5 +1,5 @@
 {
-  "name": "sexy/render",
+  "name": "sexy-framework/render",
   "version": "0.0.23",
   "description": "Support assets list input file type",
   "main": "src/index.js",

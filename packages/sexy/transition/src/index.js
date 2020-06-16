@@ -1,4 +1,4 @@
-import { cleanup } from 'sexy/observable';
+import { cleanup } from 'sexy-framework/observable';
 export { fade } from './fade';
 export { classed } from './classed';
 

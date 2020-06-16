@@ -1,4 +1,4 @@
-import { watch, computed, isObservable, cleanup } from 'sexy/observable';
+import { watch, computed, isObservable, cleanup } from 'sexy-framework/observable';
 
 export function createHooks(hooks)
 {

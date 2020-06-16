@@ -1,5 +1,5 @@
-import { rules } from 'sexy/compiler';
-import { parser } from 'sexy/directives';
+import { rules } from 'sexy-framework/compiler';
+import { parser } from 'sexy-framework/directives';
 
 export default class Type
 {

@@ -1,7 +1,7 @@
 import { diff } from './diff.js';
 import { add, persistent, diffable, manualPersistent } from '../utils.js';
-import { subscribe, value, root, getRoot } from 'sexy/observable';
-import {  getRoot as transRoot } from 'sexy/transition';
+import { subscribe, value, root, getRoot } from 'sexy-framework/observable';
+import {  getRoot as transRoot } from 'sexy-framework/transition';
 /**
  * Map over a list of unique items that create DOM nodes.
  *

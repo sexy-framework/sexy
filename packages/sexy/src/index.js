@@ -2,4 +2,4 @@ export {
 	render,
 	hydrate,
 	refresh
-} from 'sexy/render';
+} from 'sexy-framework/render';

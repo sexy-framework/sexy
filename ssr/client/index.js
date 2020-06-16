@@ -1,6 +1,6 @@
 import { router } from './router';
 
-const root = document.getElementById('_sexy');
+const root = document.getElementById('_sexy-framework');
 
 
 

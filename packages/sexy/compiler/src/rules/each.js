@@ -10,7 +10,7 @@ import {
 
 import { children, getFirstTemplateNode } from './utils';
 
-import { Expression } from 'sexy/parser';
+import { Expression } from 'sexy-framework/parser';
 
 export const CUR_EACH_LOOP_KEY = '_eachNodeKey$';
 

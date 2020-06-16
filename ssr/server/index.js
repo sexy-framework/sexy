@@ -4,9 +4,9 @@ import fs from 'fs';
 import fastifyStatic from 'fastify-static';
 import fastifyCompress from 'fastify-compress';
 import { JSDOM } from 'jsdom';
-import { render } from 'sexy/render';
+import { render } from 'sexy-framework/render';
 
-const ROOT_PATH = path.join(__dirname, '../', '../', '/.sexy');
+const ROOT_PATH = path.join(__dirname, '../', '../', '/.sexy-framework');
 
 let manifest = JSON.parse(fs.readFileSync(path.join(ROOT_PATH, 'client/manifest.json'), 'utf-8'))
 
@@ -42,13 +42,13 @@ for(let item of routes) {
 				<script src="${ manifest['main.js'] }" defer></script>
 				<link href="/client/0.css" rel="stylesheet">
 			</head>
-			<body><div id="_sexy"></div></body>
+			<body><div id="_sexy-framework"></div></body>
 			</html>`);
 
 		const window = dom.window;
 		const document = window.document;
 
-		let root = document.getElementById('_sexy');
+		let root = document.getElementById('_sexy-framework');
 
 		global.window = window
 		global.document = document;
@@ -78,7 +78,7 @@ fastify.listen(3000, (err, address) => {
 // routes[0].component().then((module) => {
 // 	let component = module.default;
 
-// 	let root = document.getElementById('_sexy');
+// 	let root = document.getElementById('_sexy-framework');
 	
 // 	render(component, root);
 

@@ -1,6 +1,6 @@
 import routes from '../routes.js';
 import navigo from 'navigo';
-import { hydrate } from 'sexy/render';
+import { hydrate } from 'sexy-framework/render';
 
 var router = new navigo();
 

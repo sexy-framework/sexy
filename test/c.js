@@ -11,7 +11,7 @@ import time from './time';
 // const PageComponent = import('../components/page.sexy')
 
 
-import { render, hydrate, refresh } from 'sexy';
+import { render, hydrate, refresh } from 'sexy-framework';
 
 
 

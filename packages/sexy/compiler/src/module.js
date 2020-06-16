@@ -4,7 +4,7 @@ export function module({ imports, components, templates, script, render })
 		afterImport = '',
 		componentScope = ''
 	}) => `
-		import { observable, computed, subscribe, watch } from 'sexy/observable';
+		import { observable, computed, subscribe, watch } from 'sexy-framework/observable';
 		${ imports }
 		${ components }
 		${ afterImport }
@@ -26,11 +26,11 @@ export function module({ imports, components, templates, script, render })
 			createHooks as _createHooks$,
 			parseContext,
 			loadComponent,
-		} from 'sexy/render';
+		} from 'sexy-framework/render';
 
 		import {
 			transition as _transition$,
-		} from 'sexy/transition'
+		} from 'sexy-framework/transition'
 
 		_transition$
 		

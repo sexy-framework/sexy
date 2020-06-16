@@ -1,5 +1,5 @@
-import { Expression } from 'sexy/parser';
-import { analyse } from 'sexy/analyser';
+import { Expression } from 'sexy-framework/parser';
+import { analyse } from 'sexy-framework/analyser';
 import { script } from './script';
 import { components } from './components';
 import dynamic from './dynamic';

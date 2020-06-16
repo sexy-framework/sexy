@@ -1,4 +1,4 @@
-import { root, observable, computed, subscribe } from '@sexy/observable';
+import { root, observable, computed, subscribe } from '@sexy-framework/observable';
 
 
 let v = observable(1);

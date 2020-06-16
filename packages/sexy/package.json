@@ -1,6 +1,7 @@
 {
-  "name": "sexy",
+  "name": "sexy-framework",
   "version": "0.0.2",
   "main": "src/index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "gitHead": "0acf42b0d3f3c1331691748adc54c6fde41b12f5"
 }

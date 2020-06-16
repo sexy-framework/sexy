@@ -1,5 +1,5 @@
 {
-  "name": "sexy/directives",
+  "name": "sexy-framework/directives",
   "version": "0.0.23",
   "description": "Support assets list input file type",
   "main": "src/index.js",

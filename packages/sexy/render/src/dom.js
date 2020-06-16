@@ -1,4 +1,4 @@
-import { root, getRoot } from 'sexy/observable';
+import { root, getRoot } from 'sexy-framework/observable';
 import { lazy } from './load';
 
 export function render(component, rootNode)

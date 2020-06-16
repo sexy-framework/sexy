@@ -1,5 +1,5 @@
 {
-  "name": "sexy/analyser",
+  "name": "sexy-framework/analyser",
   "version": "0.0.23",
   "description": "Support assets list input file type",
   "main": "src/index.js",
