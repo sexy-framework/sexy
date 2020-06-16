@@ -1,6 +1,6 @@
 {
   "name": "sexy-framework",
-  "repository": "lastonoga/sexy",
+  "repository": "sexy-framework/sexy",
   "version": "0.0.6",
   "description": "",
   "main": "dist/index.js",
@@ -21,10 +21,10 @@
     "child_process": false
   },
   "bugs": {
-    "url": "https://github.com/lastonoga/sexy/issues"
+    "url": "https://github.com/sexy-framework/sexy/issues"
   },
-  "homepage": "https://github.com/lastonoga/sexy#readme",
-  "author": "Kirill Burkhanov <me@burkhanov.com> (https://burkhanov.com)",
+  "homepage": "https://github.com/sexy-framework/sexy#readme",
+  "author": "Kirill Burkhanov <kir.burkhanov@gmail.com>",
   "license": "ISC",
   "scripts": {
     "prepare": "yarn clear",
