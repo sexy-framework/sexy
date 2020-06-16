@@ -26,7 +26,7 @@
   "author": "Kirill Burkhanov <kir.burkhanov@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "prepack": "yarn clear && yarn build",
+    "prepare": "yarn clear && yarn build",
     "packages:watch": "yarn clear && lerna run --parallel start",
     "packages:bundle": "lerna run --parallel build",
     "watch": "cross-env NODE_ENV=development webpack --config config/webpack.dev.js ",
