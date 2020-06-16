@@ -58,7 +58,7 @@ module.exports = {
 			{
 				test: /\.sexy$/i,
 				use: [{
-					loader: 'sexy-framework-loader',
+					loader: 'sexy-loader',
 					options: {
 						// loaders: ['css-loader', 'sass-loader'],
 						path: '../components',
