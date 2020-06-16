@@ -1,5 +1,10 @@
 # Sexy framework
 
+![npm](https://img.shields.io/npm/v/sexy-framework?color=%23)
+https://img.badgesize.io/:filepath[.svg|png|jpg][?compression=gzip|brotli][&label=string][&max=string][&softmax=string]
+
+![Badge size](https://img.badgesize.io/https://unpkg.com/sexy-framework/dist/vendor.bundle.js?compression=gzip&label=gzip&style=flat-square)
+
 Sexy - is a Javascript template compiler and code analyser that compile template to DOM expressions and create variable (observable, computed) dependecies on compiler time.
 
 So its like Svelte, but much faster because of

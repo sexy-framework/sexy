@@ -15,8 +15,8 @@ module.exports = {
 	],
 
 	output: {
-		path: path.resolve(__dirname, '../build'),
-		publicPath: '/', // path.resolve(__dirname, '../build'),
+		path: path.resolve(__dirname, '../dist'),
+		publicPath: '/', // path.resolve(__dirname, '../dist'),
 		filename: '[name].bundle.js',
 		chunkFilename: '[name].bundle.js',
 	},
@@ -26,7 +26,7 @@ module.exports = {
 		splitChunks: {
 			cacheGroups: {
 				vendor: {
-					test: /[\\/]packages[\\/]/,
+					test: /[\\/](packages|node_modules)[\\/]/,
 					name: 'vendors',
 					enforce: true,
 					chunks: 'all'
