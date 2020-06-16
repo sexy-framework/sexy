@@ -1,6 +1,6 @@
 {
-  "name": "hawa",
-  "repository": "lastonoga/hawa",
+  "name": "sexy",
+  "repository": "lastonoga/sexy",
   "version": "0.0.6",
   "description": "",
   "main": "dist/index.js",
@@ -21,9 +21,9 @@
     "child_process": false
   },
   "bugs": {
-    "url": "https://github.com/lastonoga/hawa/issues"
+    "url": "https://github.com/lastonoga/sexy/issues"
   },
-  "homepage": "https://github.com/lastonoga/hawa#readme",
+  "homepage": "https://github.com/lastonoga/sexy#readme",
   "author": "Kirill Burkhanov <me@burkhanov.com> (https://burkhanov.com)",
   "license": "ISC",
   "scripts": {

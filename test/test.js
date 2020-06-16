@@ -1,4 +1,4 @@
-import { root, observable, computed, subscribe } from '@hawa/observable';
+import { root, observable, computed, subscribe } from '@sexy/observable';
 
 
 let v = observable(1);

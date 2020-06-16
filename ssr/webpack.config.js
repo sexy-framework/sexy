@@ -19,7 +19,7 @@ function config(type)
 		],
 
 		output: {
-			path: path.resolve(__dirname, '../.hawa/' + type),
+			path: path.resolve(__dirname, '../.sexy/' + type),
 			// publicPath: '/', 
 			filename: '[name].js',
 			chunkFilename: '[name].[id].js', // [hash]/[name].[id].js
@@ -39,9 +39,9 @@ function config(type)
 			rules: [
 
 				{
-					test: /\.hawa$/i,
+					test: /\.sexy$/i,
 					use: [{
-						loader: 'hawa-loader',
+						loader: 'sexy-loader',
 						options: {
 							loaders: ['css-loader', 'sass-loader'],
 							path: '../components',

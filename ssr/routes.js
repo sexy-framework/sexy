@@ -25,7 +25,7 @@ module.exports = function (options, loaderContext)
 		let route = item
 			.replace(regexp, '')
 			.replace(/\_/g, ':')
-			.replace(/([^\/]+)\.hawa/g, '$1')
+			.replace(/([^\/]+)\.sexy/g, '$1')
 			.replace(/\/index\/?/g, '/')
 
 

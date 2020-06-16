@@ -3,15 +3,15 @@
 
 
 
-// import StaticComponent from '../components/static.hawa'
-import PageComponent from '../components/page.hawa'
+// import StaticComponent from '../components/static.sexy'
+import PageComponent from '../components/page.sexy'
 import time from './time';
 
 
-// const PageComponent = import('../components/page.hawa')
+// const PageComponent = import('../components/page.sexy')
 
 
-import { render, hydrate, refresh } from 'hawa';
+import { render, hydrate, refresh } from 'sexy';
 
 
 

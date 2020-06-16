@@ -1,19 +1,14 @@
-import routes from '../routes.js';
-import navigo from 'navigo';
-import { hydrate } from 'hawa/render';
+import { router } from './router';
 
-const root = document.getElementById('_hawa');
+const root = document.getElementById('_sexy');
 
-var router = new navigo();
 
-for(let item of routes) {
-	router.on(item.route, function () {
-		console.time('hydrate');
-		hydrate(item.component(), root)
-		console.timeEnd('hydrate');
-		
-		// console.log(root, item.component());
-	})
-}
 
-router.resolve();
+router.start(root);
+
+// router.notFound(function (query) {
+//   // ...
+// });
+
+
+// router.navigate('/blog');

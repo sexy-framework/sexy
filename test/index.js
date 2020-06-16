@@ -1,6 +1,6 @@
-import { parse } from '@hawa/parser';
-import { compile } from '@hawa/compiler';
-import { observable, computed, subscribe, watch } from '@hawa/observable';
+import { parse } from '@sexy/parser';
+import { compile } from '@sexy/compiler';
+import { observable, computed, subscribe, watch } from '@sexy/observable';
 
 import {
 	attrs as _makeAttrs$,
@@ -9,7 +9,7 @@ import {
 	statement as _statement$,
 	getNode,
 	parseContext,
-} from '@hawa/render';
+} from '@sexy/render';
 
 import time from './time';
 
