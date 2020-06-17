@@ -1,7 +1,10 @@
 import path from 'path';
 
-export default function config(cwd, root)
+export default function config(paths)
 {
+	let cwd = paths.cwd;
+	let root = paths.root;
+
 	return {
 		
 		client: {
@@ -26,13 +29,13 @@ export default function config(cwd, root)
 
 			entry: () => {
 				return {
-					index: path.resolve(cwd, './.sexy/server/middleware'),
+					index: paths.internal('server.js'),
 				};
 			},
 
 			output: () => {
 				return {
-					path: path.resolve(cwd, './.sexy/server'),
+					path: paths.serverBuild(''),
 					filename: '[name].js',
 					chunkFilename: '[name].js',
 					libraryTarget: 'commonjs2',

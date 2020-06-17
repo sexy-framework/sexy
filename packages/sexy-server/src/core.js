@@ -1,2 +1,6 @@
 export { watcher } from './core/watcher';
-export { createServerMiddleware } from './core/server_middleware';
+export { createRoutes, findRoute } from './core/routes';
+export { createBundles } from './core/bundles';
+export { createHttp, createTemplate, parseUrl } from './core/http';
+export { envPaths } from './core/env';
+

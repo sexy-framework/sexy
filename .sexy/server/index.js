@@ -101,22 +101,10 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./.sexy/server/middleware.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./packages/sexy-server/src/internal/server.js");
 /******/ })
 /************************************************************************/
 /******/ ({
-
-/***/ "./.sexy/server/middleware.js":
-/*!************************************!*\
-  !*** ./.sexy/server/middleware.js ***!
-  \************************************/
-/*! exports provided: build */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"build\", function() { return build; });\n/* harmony import */ var jsdom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jsdom */ \"jsdom\");\n/* harmony import */ var jsdom__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jsdom__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var sexy_framework_render__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sexy-framework/render */ \"./packages/sexy/render/src/index.js\");\n\n\nvar dom = new jsdom__WEBPACK_IMPORTED_MODULE_0__[\"JSDOM\"]('<div id=\"_layout\"></div>');\nvar window = dom.window;\nvar document = window.document;\nglobal.window = window;\nglobal.document = document; // IMPORTS\n\nvar imports = {\n  '/blog/:article': Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./pages/blog/_article.sexy */ \"./pages/blog/_article.sexy\")),\n  '/blog/': Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./pages/blog/index.sexy */ \"./pages/blog/index.sexy\")),\n  '/home': Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./pages/home.sexy */ \"./pages/home.sexy\")),\n  '/': Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./pages/index.sexy */ \"./pages/index.sexy\"))\n};\nprocess.on('message', function (_ref) {\n  var route = _ref.route;\n  build({\n    route: route\n  }, function (code) {\n    process.send({\n      code: code\n    });\n  });\n});\n\nfunction make(module) {\n  var root = document.getElementById('_layout');\n\n  try {\n    Object(sexy_framework_render__WEBPACK_IMPORTED_MODULE_1__[\"render\"])(module.default, root);\n  } catch (err) {\n    console.log('[ ERROR ]', err);\n  }\n\n  return root.innerHTML;\n}\n\nfunction build(_ref2, callback) {\n  var route = _ref2.route;\n\n  if (imports[route] === undefined) {\n    throw new Error(\"There is no page:\" + route + \" ready\");\n  }\n\n  imports[route].then(function (module) {\n    callback(make(module));\n  });\n}\n\n//# sourceURL=webpack:///./.sexy/server/middleware.js?");
-
-/***/ }),
 
 /***/ "./components/static.sexy":
 /*!********************************!*\
@@ -138,6 +126,30 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var sexy
 /***/ (function(module, exports) {
 
 eval("function _extends() {\n  module.exports = _extends = Object.assign || function (target) {\n    for (var i = 1; i < arguments.length; i++) {\n      var source = arguments[i];\n\n      for (var key in source) {\n        if (Object.prototype.hasOwnProperty.call(source, key)) {\n          target[key] = source[key];\n        }\n      }\n    }\n\n    return target;\n  };\n\n  return _extends.apply(this, arguments);\n}\n\nmodule.exports = _extends;\n\n//# sourceURL=webpack:///./node_modules/@babel/runtime/helpers/extends.js?");
+
+/***/ }),
+
+/***/ "./packages/sexy-server/src/internal/routes.js":
+/*!*****************************************************!*\
+  !*** ./packages/sexy-server/src/internal/routes.js ***!
+  \*****************************************************/
+/*! exports provided: APP_ROUTES */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"APP_ROUTES\", function() { return APP_ROUTES; });\nvar APP_ROUTES = {\n  '/blog/:article': Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./pages/blog/_article.sexy */ \"./pages/blog/_article.sexy\")),\n  '/blog/': Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./pages/blog/index.sexy */ \"./pages/blog/index.sexy\")),\n  '/home': Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./pages/home.sexy */ \"./pages/home.sexy\")),\n  '/': Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./pages/index.sexy */ \"./pages/index.sexy\"))\n};\n\n//# sourceURL=webpack:///./packages/sexy-server/src/internal/routes.js?");
+
+/***/ }),
+
+/***/ "./packages/sexy-server/src/internal/server.js":
+/*!*****************************************************!*\
+  !*** ./packages/sexy-server/src/internal/server.js ***!
+  \*****************************************************/
+/*! exports provided: build, routes */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"build\", function() { return build; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"routes\", function() { return routes; });\n/* harmony import */ var jsdom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jsdom */ \"jsdom\");\n/* harmony import */ var jsdom__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jsdom__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var sexy_framework_render__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sexy-framework/render */ \"./packages/sexy/render/src/index.js\");\n/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./routes */ \"./packages/sexy-server/src/internal/routes.js\");\n\n\n\nvar dom = new jsdom__WEBPACK_IMPORTED_MODULE_0__[\"JSDOM\"]('<div id=\"_layout\"></div>');\nvar window = dom.window;\nvar document = window.document;\nglobal.window = window;\nglobal.document = document;\nprocess.on('message', function (_ref) {\n  var route = _ref.route;\n  build({\n    route: route\n  }, function (code) {\n    process.send({\n      code: code\n    });\n  });\n});\n\nfunction make(module) {\n  var root = document.getElementById('_layout');\n\n  try {\n    Object(sexy_framework_render__WEBPACK_IMPORTED_MODULE_1__[\"render\"])(module.default, root);\n  } catch (err) {\n    console.log('[ ERROR ]', err);\n  }\n\n  return root.innerHTML;\n}\n\nfunction build(_ref2, callback) {\n  var route = _ref2.route;\n\n  if (_routes__WEBPACK_IMPORTED_MODULE_2__[\"APP_ROUTES\"][route] === undefined) {\n    throw new Error(\"There is no page:\" + route + \" ready\");\n  }\n\n  _routes__WEBPACK_IMPORTED_MODULE_2__[\"APP_ROUTES\"][route].then(function (module) {\n    callback(make(module));\n  });\n}\nfunction routes() {\n  return Object.keys(_routes__WEBPACK_IMPORTED_MODULE_2__[\"APP_ROUTES\"]);\n}\n\n//# sourceURL=webpack:///./packages/sexy-server/src/internal/server.js?");
 
 /***/ }),
 

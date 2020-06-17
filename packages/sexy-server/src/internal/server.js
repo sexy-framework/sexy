@@ -1,5 +1,6 @@
 import { JSDOM } from 'jsdom';
 import { render } from 'sexy-framework/render';
+import { APP_ROUTES } from './routes';
 
 const dom = new JSDOM('<div id="_layout"></div>');
 
@@ -8,11 +9,6 @@ const document = window.document;
 
 global.window = window
 global.document = document;
-
-// IMPORTS
-let imports = {
-	'/blog/:article': import('/Applications/MAMP/htdocs/hawa/pages/blog/_article.sexy'),'/blog/': import('/Applications/MAMP/htdocs/hawa/pages/blog/index.sexy'),'/home': import('/Applications/MAMP/htdocs/hawa/pages/home.sexy'),'/': import('/Applications/MAMP/htdocs/hawa/pages/index.sexy')
-}
 
 process.on('message', ({ route }) => {
 	build({ route }, (code) => {
@@ -37,11 +33,16 @@ function make(module)
 
 export function build({ route }, callback)
 {
-	if(imports[route] === undefined) {
+	if(APP_ROUTES[route] === undefined) {
 		throw new Error(`There is no page:${ route } ready`);
 	}
 
-	imports[route].then(module => {
+	APP_ROUTES[route].then(module => {
 		callback(make(module))
 	});
+}
+
+export function routes()
+{
+	return Object.keys(APP_ROUTES);
 }
