@@ -1,9 +1,10 @@
 import url from 'url';
 import http from 'http';
+import fs from 'fs';
 
-export function parseUrl(url)
+export function parseUrl(full_url)
 {
-	let url_parts = url.parse(url, true);
+	let url_parts = url.parse(full_url, true);
 	let params = Object.assign({}, url_parts.query);
 	let pathname = url_parts.pathname;
 
@@ -14,9 +15,44 @@ export function parseUrl(url)
 	}
 }
 
-export function createTemplate()
+export function createTemplate(paths, { req, res, templateData, })
 {
+	let data = {
+		sexy: templateData
+	}
 
+	return {
+		building(html) {
+			res.writeHead(200);
+			res.end(makeTemplate(paths, data, 'page is builind'));
+		},
+
+		compile(html) {
+			res.writeHead(200);
+			res.end(makeTemplate(paths, data, html));
+		},
+
+		notFound(html) {
+			res.writeHead(200);
+			res.end(makeTemplate(paths, data, 'not found'));
+		},
+	}
+}
+
+export function makeTemplate(paths, data, html)
+{
+	data['sexy']['html'] = html;
+
+	let source = fs.readFileSync(paths.internal('template.html'), 'utf8');
+
+	return source.replace(/\%([^\%].*)\%/g, (matched, index, original) => {
+		let [ namespace, key ] = matched.replace(/\%/g, '').split('.');
+		if(data[namespace] && data[namespace][key]) {
+			return data[namespace][key];
+		}
+
+		return '';
+	});
 }
 
 export function createHttp(handler)

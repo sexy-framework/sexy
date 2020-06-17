@@ -5,7 +5,7 @@ import path from 'path';
 import webpack from 'webpack';
 
 import * as api from './api';
-import { watcher, createRoutes, createBundles, createHttp, parseUrl, envPaths, findRoute } from './core';
+import { watcher, createRoutes, createBundles, createHttp, createTemplate, parseUrl, envPaths, findRoute } from './core';
 
 const prog = sade('sexy');
 
@@ -58,10 +58,12 @@ export function dev()
 	});
 
 	createHttp((req, res) => {
-		template = createTemplate(req, res);
+		let templateData = { base: '', styles: '', head: '', html: 'not set', scripts: '' };
+
+		let template = createTemplate(paths, { req, res, templateData });
 
 		if(!proc) {
-			return template.loading();
+			return template.building();
 		}
 
 		let { url, params, pathname } = parseUrl(req.url);
