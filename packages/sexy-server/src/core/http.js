@@ -1,6 +1,17 @@
 import url from 'url';
 import http from 'http';
 import fs from 'fs';
+import path from 'path';
+
+const mediaTypes = {
+	zip: 'application/zip',
+	jpg: 'image/jpeg',
+	html: 'text/html',
+	js: 'text/javascript',
+	json: 'application/json',
+	css: 'text/css',
+	/* add more media types */
+}
 
 export function parseUrl(full_url)
 {
@@ -15,45 +26,33 @@ export function parseUrl(full_url)
 	}
 }
 
-export function createTemplate(paths, { req, res, templateData, })
-{
-	let data = {
-		sexy: templateData
-	}
+export function findClientAsset(paths, { req, res }) {
+	
 
-	return {
-		building(html) {
-			res.writeHead(200);
-			res.end(makeTemplate(paths, data, 'page is builind'));
-		},
+	const filepath = paths.rootBuild('.' + req.url)
 
-		compile(html) {
-			res.writeHead(200);
-			res.end(makeTemplate(paths, data, html));
-		},
+	try {
+		const data = fs.readFileSync(filepath, { encoding:'utf8' })
 
-		notFound(html) {
-			res.writeHead(200);
-			res.end(makeTemplate(paths, data, 'not found'));
-		},
-	}
-}
+		let mediaType = 'text/html'
+		const ext = path.extname(filepath);
 
-export function makeTemplate(paths, data, html)
-{
-	data['sexy']['html'] = html;
-
-	let source = fs.readFileSync(paths.internal('template.html'), 'utf8');
-
-	return source.replace(/\%([^\%].*)\%/g, (matched, index, original) => {
-		let [ namespace, key ] = matched.replace(/\%/g, '').split('.');
-		if(data[namespace] && data[namespace][key]) {
-			return data[namespace][key];
+		if (ext.length > 0 && mediaTypes.hasOwnProperty(ext.slice(1))) {
+			mediaType = mediaTypes[ext.slice(1)]
 		}
 
-		return '';
-	});
+		res.setHeader('Content-Type', mediaType)
+		res.end(data)
+
+		return true;
+	} catch(err) {
+		return false;
+	}
+
+	return false;
 }
+
+
 
 export function createHttp(handler)
 {

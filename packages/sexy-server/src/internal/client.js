@@ -1,4 +1,5 @@
-import { hydrate, render } from 'sexy-framework/render';
-import { APP_ROUTES } from './routes';
+import { router } from './router';
 
-console.log(APP_ROUTES);
+const root = document.getElementById('_layout');
+
+router.start(root);

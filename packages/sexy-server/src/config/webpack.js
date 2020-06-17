@@ -11,16 +11,16 @@ export default function config(paths)
 
 			entry: () => {
 				return {
-					main: `${root}/client`
+					app: paths.internal('client.js'),
 				};
 			},
 
 			output: () => {
 				return {
-					path: path.resolve(cwd, './.sexy/client'),
+					path: paths.clientBuild(''),
 					publicPath: '/client/', 
 					filename: '[name].js',
-					chunkFilename: '[name].[id].js', // [hash]/[name].[id].js
+					chunkFilename: '[id].js', // [hash]/[name].[id].js
 				};
 			}
 		},

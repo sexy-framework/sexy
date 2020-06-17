@@ -28,7 +28,7 @@ export function routes(routesPath)
 
 		let id = path.relative(routesPath, component)
 			.replace(/([^\/]+)\.sexy/g, '$1')
-			.replace(/([^\w])/g, '$')
+			.replace(/([^\w])/g, '.')
 
 
 		return {

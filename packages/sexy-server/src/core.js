@@ -1,6 +1,7 @@
 export { watcher } from './core/watcher';
 export { createRoutes, findRoute } from './core/routes';
 export { createBundles } from './core/bundles';
-export { createHttp, createTemplate, parseUrl } from './core/http';
+export { createHttp, parseUrl, findClientAsset } from './core/http';
+export { createTemplate } from './core/template';
 export { envPaths } from './core/env';
 
