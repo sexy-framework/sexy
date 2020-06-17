@@ -31,6 +31,8 @@ export function dev()
 			root,
 		});
 
+		console.log('start compiling');
+
 		api.bundle({
 			cwd,
 			root: path.resolve(__dirname, '../'),
@@ -43,6 +45,8 @@ export function dev()
 			let file = path.resolve(cwd, './.sexy/server/index.js');
 
 			proc = child_process.fork(file);
+
+			console.log('compiled');
 		});
 	});
 

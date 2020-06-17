@@ -132,8 +132,6 @@ export function bundle({ cwd, root }, callback)
 				return;
 			}
 
-			console.log('Compiled')
-
 			callback();
 
 			// console.log(stats.toString({
