@@ -18,20 +18,22 @@ module.exports = {
 		path: path.resolve(__dirname, './dist'),
 		filename: 'index.js',
 		// library: '',
-		// libraryTarget: 'commonjs2',
+		libraryTarget: 'commonjs2',
 		// globalObject: 'this',
 	},
 
+	target: 'node',
+
+	node: {
+		__filename: false,
+		__dirname: false
+	},
 
 	resolve: {
 		
 	},
 
-	externals: [
-	    'path',
-	    'loader-utils',
-	    'querystring',
-    ],
+	externals: Object.keys(require('./package.json').dependencies),
 
 	/**
 	 * Module

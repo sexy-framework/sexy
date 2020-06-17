@@ -16,23 +16,32 @@
   "homepage": "https://github.com/sexy-framework/sexy#readme",
   "author": "Kir Burkhanov",
   "scripts": {
-    
+    "test": "echo \"Compiler\"",
+    "watch2": "cross-env NODE_ENV=development webpack --config webpack.config.js ",
+    "watch": "babel --root-mode upward src --watch --out-dir dist --source-maps inline --copy-files --ignore spec.js,spec.jsx",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js"
   },
   "license": "MIT",
   "dependencies": {
+    "chokidar": "^3.4.0",
+    "decache": "^4.6.0",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "jsdom": "^16.2.2",
+    "kleur": "^3.0.3",
     "loader-utils": "^2.0.0",
+    "navigo": "^7.1.2",
     "querystring": "^0.2.0",
+    "regexparam": "^1.3.0",
+    "require-relative": "^0.8.7",
+    "sade": "^1.7.3",
     "schema-utils": "^2.6.6",
+    "url": "^0.11.0",
     "webpack": "^4.43.0"
   },
   "gitHead": "0acf42b0d3f3c1331691748adc54c6fde41b12f5",
   "devDependencies": {
-    "extra-watch-webpack-plugin": "^1.0.3",
-    "fastify": "^2.14.1",
-    "fastify-compress": "^2.0.1",
-    "fastify-static": "^2.7.0",
-    "jsdom": "^16.2.2",
-    "navigo": "^7.1.2",
+    "@babel/plugin-transform-modules-commonjs": "^7.10.1",
     "webpack-manifest-plugin": "^2.2.0"
   }
 }

@@ -31,7 +31,7 @@
     "packages:bundle": "lerna run --parallel build",
     "watch": "cross-env NODE_ENV=development webpack --config config/webpack.dev.js ",
     "build": "cross-env NODE_ENV=development webpack --config config/webpack.prod.js",
-    "ssr": "cross-env NODE_ENV=development webpack --config ssr/webpack.config.js ",
+    "sexy": "sexy dev",
     "clear": "rm -rf ./packages/*/dist"
   },
   "devDependencies": {

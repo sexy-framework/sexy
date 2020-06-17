@@ -86,14 +86,14 @@ export default function(source) {
 	 * @type {String}
 	 */
 	let importStyle = '';
-	if (styles) {
+	if (styles && options.styles) {
 		importStyle = `import _component_styles$ from ${ stringifyRequest(resourcePath + '?type=style') }`;
 	}
 
 	/**
 	 * Add virtual module for styles
 	 */
-	if (incomingQuery.type === 'style' && options.styles) {
+	if (incomingQuery.type === 'style') {
 		let cssFileName = `${ resourcePath }.${ styles.options.lang }`;
 
 		if (virtualModules) {

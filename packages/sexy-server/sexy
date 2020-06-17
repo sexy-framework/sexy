@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-let cli = require('./dist/index.js');
+let lib = require('./dist/index.js');
 
-cli.start();
+lib.cli();
