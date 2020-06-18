@@ -17,8 +17,7 @@
   "author": "Kir Burkhanov",
   "scripts": {
     "test": "echo \"Compiler\"",
-    "watch2": "cross-env NODE_ENV=development webpack --config webpack.config.js ",
-    "watch": "babel --root-mode upward src --watch --out-dir dist --source-maps inline --copy-files --ignore spec.js,spec.jsx",
+    "watch": "cross-env NODE_ENV=development webpack --config webpack.config.js ",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js"
   },
   "license": "MIT",
@@ -44,7 +43,6 @@
   },
   "gitHead": "0acf42b0d3f3c1331691748adc54c6fde41b12f5",
   "devDependencies": {
-    "@babel/plugin-transform-modules-commonjs": "^7.10.1",
     "webpack-manifest-plugin": "^2.2.0"
   }
 }

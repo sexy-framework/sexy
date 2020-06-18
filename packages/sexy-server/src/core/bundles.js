@@ -51,17 +51,17 @@ function client({ mode, webpackConfig, externals, }) {
 			// runtimeChunk: 'single',
 			splitChunks: {
 
-				chunks: 'async',
-				minSize: 50000,
-				maxSize: 150000,
-				minChunks: 2,
-				maxAsyncRequests: 6,
-				maxInitialRequests: 4,
-				automaticNameDelimiter: '~',
+				// chunks: 'async',
+				// minSize: 10000,
+				// maxSize: 150000,
+				// minChunks: 2,
+				// maxAsyncRequests: 6,
+				// maxInitialRequests: 4,
+				// automaticNameDelimiter: '~',
 
 				cacheGroups: {
 
-					default: false,
+					// default: false,
 
 					vendor: {
 						test: /[\\/](packages|node_modules)[\\/]/,
@@ -74,8 +74,8 @@ function client({ mode, webpackConfig, externals, }) {
 						name: 'styles',
 						test: /\.s?css$/,
 						chunks: 'all',
-						minChunks: 1,
-						reuseExistingChunk: true,
+						// minChunks: 1,
+						// reuseExistingChunk: true,
 						enforce: true,
 					},
 				}

@@ -150,7 +150,7 @@ export function build()
 	})
 
 	let http = createHttp((req, res) => {
-		let templateData = { base: '', styles: '', head: '', html: 'not set', scripts: getScripts() };
+		let templateData = { base: '', styles: '', head: '', html: 'not set', scripts: getScripts(entrypoints) };
 
 		let template = createTemplate(paths, { req, res, templateData });
 
