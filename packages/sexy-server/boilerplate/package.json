@@ -1,0 +1,14 @@
+{
+  "name": "Test",
+  "version": "0.0.1",
+  "description": "",
+  "license": "MIT",
+  "scripts": {
+    "dev": "sexy dev",
+    "build": "sexy build",
+    "start": "sexy start"
+  },
+  "dependencies": {
+    "sexy-server": "^0.2.0"
+  }
+}

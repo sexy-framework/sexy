@@ -22,6 +22,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "babel-loader": "^8.1.0",
     "chokidar": "^3.4.0",
     "css-loader": "^3.6.0",
     "decache": "^4.6.0",
@@ -38,6 +39,8 @@
     "sade": "^1.7.3",
     "sass-loader": "^8.0.2",
     "schema-utils": "^2.6.6",
+    "sexy-framework": "^0.2.0",
+    "sexy-loader": "^0.2.0",
     "url": "^0.11.0",
     "webpack": "^4.43.0"
   },
