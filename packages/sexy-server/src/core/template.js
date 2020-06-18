@@ -61,7 +61,7 @@ export function createTemplate(paths, { req, res, templateData, })
 	return {
 		building(html) {
 			res.writeHead(200);
-			res.end(makeTemplate(paths, data, 'page is builind'));
+			res.end(makeTemplate(paths, data, 'page is building...'));
 		},
 
 		compile(html) {
@@ -71,7 +71,7 @@ export function createTemplate(paths, { req, res, templateData, })
 
 		notFound(html) {
 			res.writeHead(200);
-			res.end(makeTemplate(paths, data, 'not found'));
+			res.end(makeTemplate(paths, data, 'page not found'));
 		},
 	}
 }
