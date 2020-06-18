@@ -6,9 +6,6 @@
     "sexy": "./sexy"
   },
   "main": "dist/index.js",
-  "publishConfig": {
-    "access": "public"
-  },
   "bugs": {
     "url": "https://github.com/sexy-framework/sexy/issues"
   },
@@ -38,7 +35,6 @@
     "url": "^0.11.0",
     "webpack": "^4.43.0"
   },
-  "gitHead": "0acf42b0d3f3c1331691748adc54c6fde41b12f5",
   "devDependencies": {
     "webpack-manifest-plugin": "^2.2.0"
   }

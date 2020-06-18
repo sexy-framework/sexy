@@ -86,7 +86,7 @@ export function build()
 
 	bundle('production');
 
-	start();
+	// start();
 }
 
 export function bundle(mode)
