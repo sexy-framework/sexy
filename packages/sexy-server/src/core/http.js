@@ -28,8 +28,11 @@ export function parseUrl(full_url)
 
 export function findClientAsset(paths, { req, res }) {
 	
+	let u = req.url;
 
-	const filepath = paths.rootBuild('.' + req.url)
+	u = u.replace(/^\/client/, '');
+
+	const filepath = paths.rootBuild('./client/' + u);
 
 	try {
 		const data = fs.readFileSync(filepath, { encoding:'utf8' })

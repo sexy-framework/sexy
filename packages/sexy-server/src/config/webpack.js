@@ -18,7 +18,7 @@ export default function config(paths)
 			output: () => {
 				return {
 					path: paths.clientBuild(''),
-					publicPath: '/client/', 
+					publicPath: '/',
 					filename: '[name].js',
 					chunkFilename: '[name].chunk.js', // [hash]/[name].[id].js
 				};

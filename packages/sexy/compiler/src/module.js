@@ -32,8 +32,6 @@ export function module({ imports, components, templates, script, render })
 			transition as _transition$,
 		} from 'sexy-framework/transition'
 
-		_transition$
-		
 		// templates
 		${ templates }
 

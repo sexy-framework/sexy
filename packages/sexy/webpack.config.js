@@ -11,7 +11,7 @@ module.exports = {
 	// devtool: "source-map",
 
 	entry: [
-		'./src/index.js'
+		'./src/module.js'
 	],
 
 	output: {

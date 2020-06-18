@@ -75,6 +75,7 @@ export default function(source) {
 	// parse options
 	const options = loaderUtils.getOptions(loaderContext) || {};
 	
+	options.styles = options.styles === undefined ? true : options.styles;
 	/**
 	 * Compiler
 	 */

@@ -35,7 +35,7 @@ export function getScripts(files = ['vendors.js', 'app.js'])
 	return files.map(file => {
 		return {
 			tag: 'script',
-			src: `/client/${ file }`,
+			src: `/${ file }`,
 			defer: true
 		}
 	});

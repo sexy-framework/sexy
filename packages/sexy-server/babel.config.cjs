@@ -3,13 +3,13 @@ module.exports = {
     presets: [
         [
             '@babel/preset-env',
-            {
-                modules: false,
-                loose: true,
-                targets: {
-                    browsers: ['ie >= 9']
-                }
-            }
+            // {
+            //     modules: false,
+            //     loose: true,
+            //     targets: {
+            //         browsers: ['ie >= 9']
+            //     }
+            // }
         ]
     ],
     plugins: [

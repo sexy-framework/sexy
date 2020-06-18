@@ -2,7 +2,6 @@ import c from 'kleur';
 import sade from 'sade';
 
 import path from 'path';
-import webpack from 'webpack';
 import fs from 'fs';
 
 import * as api from './api';
@@ -16,7 +15,9 @@ import {
 	envPaths,
 	findRoute,
 	findClientAsset,
-	getScripts
+	getScripts,
+	createManifest,
+	getManifest,
 } from './core';
 
 const prog = sade('sexy');
@@ -44,16 +45,16 @@ export function cleanup()
 	fs.rmdirSync(paths.rootBuild(''), { recursive: true });
 }
 
+let proc = null;
+let routes = [];
+let paths = envPaths();
+let entrypoints = [];
+
 /**
  * Watch and start dev server
  */
 export function dev()
 {
-	let proc = null;
-	let routes = [];
-	let paths = envPaths();
-	let entrypoints = [];
-
 	console.log(c.green().bold('Sexy server has started'));
 
 	watcher(paths.cwd, () => {
@@ -64,56 +65,11 @@ export function dev()
 		console.log('');
 		console.log(c.green('Sexy has changed...'));
 
-		createBundles({ paths }, (entries) => {
-
-			entrypoints = entries;
-			
-			if(proc) {
-				proc.kill();
-			}
-
-			console.log(c.green('Bundle is ready'));
-			
-			let file = paths.serverBuild('index.js');
-
-			proc = child_process.fork(file);
-
-		})
+		bundle('development');
 	});
 
-	let http = createHttp((req, res) => {
-		let templateData = { base: '', styles: '', head: '', html: 'not set', scripts: getScripts(entrypoints) };
-
-		let template = createTemplate(paths, { req, res, templateData });
-
-		if(!proc) {
-			return template.building();
-		}
-
-		let { url, params, pathname } = parseUrl(req.url);
-
-
-		if(findClientAsset(paths, { req, res })) {
-			return false;
-		}
-
-		let route = findRoute({
- 			routes,
- 			params,
- 			pathname,
- 		})
-
- 		if(!route) {
- 			return template.notFound();
- 		}
-
- 		proc.send({ route });
-
-		proc.on('message', ({ code }) => {
-			template.compile(code);
-		});
-	});
-
+	
+	start();
 }
 
 /**
@@ -121,11 +77,6 @@ export function dev()
  */
 export function build()
 {
-	let proc = null;
-	let routes = [];
-	let paths = envPaths();
-	let entrypoints = [];
-
 	console.log('');
 	console.log(c.green().bold('Sexy started building'));
 
@@ -133,24 +84,39 @@ export function build()
 	// generate routes config
 	createRoutes({ paths, routes });
 
-	createBundles({ paths, mode: 'production' }, (entries) => {
+	bundle('production');
 
-		entrypoints = entries;
+	start();
+}
+
+export function bundle(mode)
+{
+	createBundles({ paths, mode }, (entrypoints) => {
+
+		createManifest(paths, {
+			entrypoints,
+		});
 
 		if(proc) {
 			proc.kill();
 		}
 
-		console.log(c.green('Success'));
+		console.log(c.green('Bundle is ready'));
 		
 		let file = paths.serverBuild('index.js');
 
 		proc = child_process.fork(file);
 
-	})
+	});
+}
 
+export function start()
+{
 	let http = createHttp((req, res) => {
-		let templateData = { base: '', styles: '', head: '', html: 'not set', scripts: getScripts(entrypoints) };
+
+		let manifest = getManifest(paths);
+
+		let templateData = { base: '', styles: '', head: '', html: 'not set', scripts: getScripts(manifest.entrypoints) };
 
 		let template = createTemplate(paths, { req, res, templateData });
 
@@ -189,6 +155,8 @@ export function build()
  */
 export function cli()
 {
+	paths = envPaths();
+
 	cleanup();
 
 	let type = process.argv[2];
@@ -214,6 +182,14 @@ export function cli()
 		.example('build app public -o main.js')
 		.action((opts) => {
 			build();
+		});
+
+	prog
+		.command('start')
+		.describe('start the source directory. Expects an `index.js` entry file.')
+		.example('start app public -o main.js')
+		.action((opts) => {
+			start();
 		});
 	// console.log(type);
 	prog.parse(process.argv);

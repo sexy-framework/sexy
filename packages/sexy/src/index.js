@@ -1,3 +1,3 @@
-require('sexy-framework/observable');
-require('sexy-framework/transition');
-require('sexy-framework/render');
+
+
+export { render, hydrate, refresh } from 'sexy-framework/render';

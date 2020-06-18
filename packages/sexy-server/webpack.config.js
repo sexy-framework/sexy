@@ -28,11 +28,7 @@ module.exports = {
 		__filename: false,
 		__dirname: false
 	},
-
-	resolve: {
-		
-	},
-
+	
 	externals: Object.keys(require('./package.json').dependencies),
 
 	/**
@@ -47,48 +43,15 @@ module.exports = {
 			 *
 			 * Use Babel to transpile JavaScript files.
 			 */
-			{
-				test: /\.js$/,
-				exclude: /node_modules/,
-				use: [{
-					loader: 'babel-loader',
-					options: {
-						presets: [
-					        [
-					            '@babel/preset-env',
-					            {
-					                modules: false,
-					                loose: true,
-					                targets: {
-					                    browsers: ['ie >= 9']
-					                }
-					            }
-					        ]
-					    ],
-					    plugins: [
-					        // ["@babel/plugin-transform-runtime",
-					        //     {
-					        //         "regenerator": true
-					        //     }
-					        // ],
-					        // // ['@babel/plugin-transform-modules-commonjs'],
-					        // ['@babel/plugin-transform-object-assign'],
-					        // ['@babel/plugin-proposal-object-rest-spread', { 'loose': true }]
-					    ],
-					}
-				}],
-			},
+			// {
+			// 	test: /\.js$/,
+			// 	exclude: /node_modules/,
+			// 	use: [{
+			// 		loader: 'babel-loader',
+			// 	}],
+			// },
 		]
 	},
-
-
-	plugins: [
-
-	
-
-		// new PrintChunksPlugin()
-	]
-
 
 
 }

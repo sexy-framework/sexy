@@ -31,7 +31,8 @@ export function createBundles({ paths, mode = 'development' }, callback)
 		})
 
 		callback(entrypoints);
-		console.log(stats.toString({
+		
+		console.log(stats.stats[0].toString({
 			chunks: false,  // Makes the build much quieter
 			colors: true    // Shows colors in the console
 		}));
@@ -47,40 +48,40 @@ function client({ mode, webpackConfig, externals, }) {
 		entry: webpackConfig.client.entry(),
 		output: webpackConfig.client.output(),
 
-		optimization: {
-			// runtimeChunk: 'single',
-			splitChunks: {
+		// optimization: {
+		// 	// runtimeChunk: 'single',
+		// 	splitChunks: {
 
-				// chunks: 'async',
-				// minSize: 10000,
-				// maxSize: 150000,
-				// minChunks: 2,
-				// maxAsyncRequests: 6,
-				// maxInitialRequests: 4,
-				// automaticNameDelimiter: '~',
+		// 		// chunks: 'async',
+		// 		// minSize: 10000,
+		// 		// maxSize: 150000,
+		// 		// minChunks: 2,
+		// 		// maxAsyncRequests: 6,
+		// 		// maxInitialRequests: 4,
+		// 		// automaticNameDelimiter: '~',
 
-				cacheGroups: {
+		// 		cacheGroups: {
 
-					// default: false,
+		// 			// default: false,
 
-					vendor: {
-						test: /[\\/](packages|node_modules)[\\/]/,
-						name: 'vendors',
-						enforce: true,
-						chunks: 'all'
-					},
+		// 			vendor: {
+		// 				test: /[\\/](packages|node_modules)[\\/]/,
+		// 				name: 'vendors',
+		// 				// enforce: true,
+		// 				chunks: 'all'
+		// 			},
 					
-					styles: {
-						name: 'styles',
-						test: /\.s?css$/,
-						chunks: 'all',
-						// minChunks: 1,
-						// reuseExistingChunk: true,
-						enforce: true,
-					},
-				}
-			}
-		},
+		// 			styles: {
+		// 				name: 'styles',
+		// 				test: /\.s?css$/,
+		// 				chunks: 'all',
+		// 				// minChunks: 1,
+		// 				// reuseExistingChunk: true,
+		// 				enforce: true,
+		// 			},
+		// 		}
+		// 	}
+		// },
 
 		// optimization: {
 		// 	splitChunks: {
@@ -148,7 +149,10 @@ function client({ mode, webpackConfig, externals, }) {
 
 		plugins: [
 
-			new MiniCssExtractPlugin(),
+			new MiniCssExtractPlugin({
+				filename: '[name].css',
+      			chunkFilename: '[id].css',
+			}),
 
 		]
 
