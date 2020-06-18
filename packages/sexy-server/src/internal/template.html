@@ -10,23 +10,13 @@
 	<link rel='manifest' href='manifest.json' crossorigin='use-credentials'>
 	<link rel='icon' type='image/png' href='favicon.png'>
 
-	<!-- sexy generates a <style> tag containing critical CSS
-	     for the current page. CSS for the rest of the app is
-	     lazily loaded when it precaches secondary pages -->
 	%sexy.styles%
 
-	<!-- This contains the contents of the <svelte:head> component, if
-	     the current page has one -->
 	%sexy.head%
+
+	%sexy.scripts%
 </head>
 <body>
-	<!-- The application will be rendered inside this element,
-	     because `src/client.js` references it -->
 	<div id='_layout'>%sexy.html%</div>
-
-	<!-- sexy creates a <script> tag containing `src/client.js`
-	     and anything else it needs to hydrate the app and
-	     initialise the router -->
-	%sexy.scripts%
 </body>
 </html>

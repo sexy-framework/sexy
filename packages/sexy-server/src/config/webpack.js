@@ -20,7 +20,7 @@ export default function config(paths)
 					path: paths.clientBuild(''),
 					publicPath: '/client/', 
 					filename: '[name].js',
-					chunkFilename: '[id].js', // [hash]/[name].[id].js
+					chunkFilename: '[name].chunk.js', // [hash]/[name].[id].js
 				};
 			}
 		},

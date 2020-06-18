@@ -95,7 +95,10 @@ module.exports = {
 
 	plugins: [
 
-		new MiniCssExtractPlugin(),
+		new MiniCssExtractPlugin({
+			filename: '[name].css',
+      		chunkFilename: '[id].css',
+		}),
 		// new CleanWebpackPlugin(),
 		new HtmlWebpackPlugin({
 			title: 'Production',

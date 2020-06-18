@@ -3,6 +3,9 @@ import webpack from 'webpack';
 import path from 'path';
 import { routes } from './routes';
 
+// Plugins
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+
 
 export function createBundles({ paths, mode = 'development' }, callback)
 {
@@ -21,11 +24,17 @@ export function createBundles({ paths, mode = 'development' }, callback)
 			return;
 		}
 
-		callback();
-		// console.log(stats.toString({
-		// 	chunks: false,  // Makes the build much quieter
-		// 	colors: true    // Shows colors in the console
-		// }));
+		// 0 because client
+		let entrypoints = [];
+		stats.stats[0].compilation.entrypoints.get('app').chunks.map(chunk => {
+			entrypoints = entrypoints.concat(chunk.files);
+		})
+
+		callback(entrypoints);
+		console.log(stats.toString({
+			chunks: false,  // Makes the build much quieter
+			colors: true    // Shows colors in the console
+		}));
 	});
 }
 
@@ -35,21 +44,39 @@ function client({ mode, webpackConfig, externals, }) {
 	return  {
 		mode,
 
-		// cache: false,
-		
 		entry: webpackConfig.client.entry(),
 		output: webpackConfig.client.output(),
 
 		optimization: {
 			// runtimeChunk: 'single',
 			splitChunks: {
+
+				chunks: 'async',
+				minSize: 50000,
+				maxSize: 150000,
+				minChunks: 2,
+				maxAsyncRequests: 6,
+				maxInitialRequests: 4,
+				automaticNameDelimiter: '~',
+
 				cacheGroups: {
+
+					default: false,
+
 					vendor: {
 						test: /[\\/](packages|node_modules)[\\/]/,
 						name: 'vendors',
 						enforce: true,
+						chunks: 'all'
+					},
+					
+					styles: {
+						name: 'styles',
+						test: /\.s?css$/,
 						chunks: 'all',
-					    priority: 20
+						minChunks: 1,
+						reuseExistingChunk: true,
+						enforce: true,
 					},
 				}
 			}
@@ -57,14 +84,14 @@ function client({ mode, webpackConfig, externals, }) {
 
 		// optimization: {
 		// 	splitChunks: {
-		// 		chunks: 'async',
-		// 		minSize: 50000,
-		// 		// minRemainingSize: 0,
-		// 		maxSize: 150000,
-		// 		minChunks: 2,
-		// 		maxAsyncRequests: 6,
-		// 		maxInitialRequests: 4,
-		// 		automaticNameDelimiter: '~',
+				// chunks: 'async',
+				// minSize: 50000,
+				// // minRemainingSize: 0,
+				// maxSize: 150000,
+				// minChunks: 2,
+				// maxAsyncRequests: 6,
+				// maxInitialRequests: 4,
+				// automaticNameDelimiter: '~',
 		// 		cacheGroups: {
 		// 			defaultVendors: {
   //        				reuseExistingChunk: true,
@@ -82,14 +109,14 @@ function client({ mode, webpackConfig, externals, }) {
 
 		module: {
 			rules: [
-
+				// Sexy components
 				{
 					test: /\.sexy$/i,
 					use: [{
 						loader: 'sexy-loader',
 						options: {
 							path: '../components',
-							styles: false
+							styles: true
 						}
 					}]
 				},
@@ -99,10 +126,29 @@ function client({ mode, webpackConfig, externals, }) {
 					exclude: /node_modules/,
 					use: ['babel-loader'],
 				},
+
+				// CSS
+				{
+					test: /\.s[ac]ss$/i,
+					use: [
+						MiniCssExtractPlugin.loader,
+						// Translates CSS into CommonJS
+						'css-loader',
+						// Compiles Sass to CSS
+						'sass-loader',
+					],
+				},
+
+				{
+					test: /\.css$/i,
+					use: [MiniCssExtractPlugin.loader, 'css-loader'],
+				},
 			]
 		},
 
 		plugins: [
+
+			new MiniCssExtractPlugin(),
 
 		]
 
@@ -120,8 +166,6 @@ function server({ mode, webpackConfig, externals, }) {
 		
 		entry: webpackConfig.server.entry(),
 		output: webpackConfig.server.output(),
-
-		
 
 		module: {
 			rules: [

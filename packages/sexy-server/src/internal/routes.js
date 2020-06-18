@@ -1,3 +1,3 @@
 
-		export const APP_ROUTES = { '/blog/:article': import(/* webpackChunkName: "page.blog._article" */ '/Applications/MAMP/htdocs/hawa/pages/blog/_article.sexy'),'/blog/': import(/* webpackChunkName: "page.blog.index" */ '/Applications/MAMP/htdocs/hawa/pages/blog/index.sexy'),'/home': import(/* webpackChunkName: "page.home" */ '/Applications/MAMP/htdocs/hawa/pages/home.sexy'),'/': import(/* webpackChunkName: "page.index" */ '/Applications/MAMP/htdocs/hawa/pages/index.sexy') };
+		export default { '/blog/:article': import(/* webpackChunkName: "page.blog._article" */ '/Applications/MAMP/htdocs/hawa/pages/blog/_article.sexy'),'/blog/': import(/* webpackChunkName: "page.blog.index" */ '/Applications/MAMP/htdocs/hawa/pages/blog/index.sexy'),'/home': import(/* webpackChunkName: "page.home" */ '/Applications/MAMP/htdocs/hawa/pages/home.sexy'),'/': import(/* webpackChunkName: "page.index" */ '/Applications/MAMP/htdocs/hawa/pages/index.sexy') };
 	

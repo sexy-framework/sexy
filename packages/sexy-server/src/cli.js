@@ -6,7 +6,18 @@ import webpack from 'webpack';
 import fs from 'fs';
 
 import * as api from './api';
-import { watcher, createRoutes, createBundles, createHttp, createTemplate, parseUrl, envPaths, findRoute , findClientAsset } from './core';
+import {
+	watcher,
+	createRoutes,
+	createBundles,
+	createHttp,
+	createTemplate,
+	parseUrl,
+	envPaths,
+	findRoute,
+	findClientAsset,
+	getScripts
+} from './core';
 
 const prog = sade('sexy');
 
@@ -41,6 +52,7 @@ export function dev()
 	let proc = null;
 	let routes = [];
 	let paths = envPaths();
+	let entrypoints = [];
 
 	console.log(c.green().bold('Sexy server has started'));
 
@@ -52,7 +64,10 @@ export function dev()
 		console.log('');
 		console.log(c.green('Sexy has changed...'));
 
-		createBundles({ paths }, () => {
+		createBundles({ paths }, (entries) => {
+
+			entrypoints = entries;
+			
 			if(proc) {
 				proc.kill();
 			}
@@ -67,7 +82,7 @@ export function dev()
 	});
 
 	let http = createHttp((req, res) => {
-		let templateData = { base: '', styles: '', head: '', html: 'not set', scripts: '' };
+		let templateData = { base: '', styles: '', head: '', html: 'not set', scripts: getScripts(entrypoints) };
 
 		let template = createTemplate(paths, { req, res, templateData });
 
@@ -109,6 +124,7 @@ export function build()
 	let proc = null;
 	let routes = [];
 	let paths = envPaths();
+	let entrypoints = [];
 
 	console.log('');
 	console.log(c.green().bold('Sexy started building'));
@@ -117,7 +133,10 @@ export function build()
 	// generate routes config
 	createRoutes({ paths, routes });
 
-	createBundles({ paths, mode: 'production' }, () => {
+	createBundles({ paths, mode: 'production' }, (entries) => {
+
+		entrypoints = entries;
+
 		if(proc) {
 			proc.kill();
 		}
@@ -131,7 +150,7 @@ export function build()
 	})
 
 	let http = createHttp((req, res) => {
-		let templateData = { base: '', styles: '', head: '', html: 'not set', scripts: '' };
+		let templateData = { base: '', styles: '', head: '', html: 'not set', scripts: getScripts() };
 
 		let template = createTemplate(paths, { req, res, templateData });
 

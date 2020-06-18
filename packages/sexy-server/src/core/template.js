@@ -30,19 +30,15 @@ function createTags(items)
 }
 
 
-function getScripts()
+export function getScripts(files = ['vendors.js', 'app.js'])
 {
-	return [
-		{
+	return files.map(file => {
+		return {
 			tag: 'script',
-			src: '/client/vendors.js',
+			src: `/client/${ file }`,
 			defer: true
-		},{
-			tag: 'script',
-			src: '/client/app.js',
-			defer: true
-		}, 
-	]
+		}
+	});
 }
 
 function prepareData(data)
@@ -56,7 +52,7 @@ function prepareData(data)
 
 export function createTemplate(paths, { req, res, templateData, })
 {
-	templateData.scripts = getScripts();
+	// templateData.scripts = getScripts();
 
 	let data = {
 		sexy: prepareData(templateData)

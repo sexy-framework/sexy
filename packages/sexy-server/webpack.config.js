@@ -50,7 +50,33 @@ module.exports = {
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
-				use: ['babel-loader'],
+				use: [{
+					loader: 'babel-loader',
+					options: {
+						presets: [
+					        [
+					            '@babel/preset-env',
+					            {
+					                modules: false,
+					                loose: true,
+					                targets: {
+					                    browsers: ['ie >= 9']
+					                }
+					            }
+					        ]
+					    ],
+					    plugins: [
+					        // ["@babel/plugin-transform-runtime",
+					        //     {
+					        //         "regenerator": true
+					        //     }
+					        // ],
+					        // // ['@babel/plugin-transform-modules-commonjs'],
+					        // ['@babel/plugin-transform-object-assign'],
+					        // ['@babel/plugin-proposal-object-rest-spread', { 'loose': true }]
+					    ],
+					}
+				}],
 			},
 		]
 	},

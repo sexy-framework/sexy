@@ -1,6 +1,6 @@
 import { JSDOM } from 'jsdom';
 import { render } from 'sexy-framework/render';
-import { APP_ROUTES } from './routes';
+import APP_ROUTES from './routes';
 
 const dom = new JSDOM('<div id="_layout"></div>');
 

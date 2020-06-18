@@ -13,13 +13,8 @@ module.exports = {
         ]
     ],
     plugins: [
-        ["@babel/plugin-transform-runtime",
-            {
-                "regenerator": true
-            }
-        ],
-        ['@babel/plugin-transform-modules-commonjs'],
-        ['@babel/plugin-transform-object-assign'],
-        ['@babel/plugin-proposal-object-rest-spread', { 'loose': true }]
+        ["@babel/plugin-transform-runtime"],
+        // ['@babel/plugin-transform-object-assign'],
+        // ['@babel/plugin-proposal-object-rest-spread', { 'loose': true }]
     ],
 }
