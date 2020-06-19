@@ -37,7 +37,7 @@ export function build({ route }, callback)
 		throw new Error(`There is no page:${ route } ready`);
 	}
 
-	APP_ROUTES[route].then(module => {
+	APP_ROUTES[route]().then(module => {
 		callback(make(module))
 	});
 }

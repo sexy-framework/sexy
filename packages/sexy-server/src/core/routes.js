@@ -45,7 +45,7 @@ export function createRoutes({ paths, routes })
 	let imports = [];
 
 	for (let page of routes) {
-		imports.push(`'${page.route}': import(/* webpackChunkName: "page.${ page.id }" */ '${ page.component }')`)
+		imports.push(`'${page.route}': () => { return import(/* webpackChunkName: "page.${ page.id }" */ '${ page.component }'); }`)
 	}
 
 	ensureDirectoryExistence(routesPath);
