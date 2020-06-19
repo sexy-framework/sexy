@@ -23,6 +23,7 @@
     "css-loader": "^3.6.0",
     "fs": "^0.0.1-security",
     "http": "^0.0.1-security",
+    "ignore-emit-webpack-plugin": "^2.0.2",
     "jsdom": "^16.2.2",
     "kleur": "^3.0.3",
     "mini-css-extract-plugin": "^0.9.0",
@@ -32,6 +33,7 @@
     "sass-loader": "^8.0.2",
     "sexy-framework": "^0.2.0",
     "sexy-loader": "^0.2.0",
+    "style-loader": "^1.2.1",
     "url": "^0.11.0",
     "webpack": "^4.43.0"
   },

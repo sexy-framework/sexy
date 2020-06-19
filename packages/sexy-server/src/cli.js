@@ -55,6 +55,7 @@ let entrypoints = [];
  */
 export function dev()
 {
+	cleanup();
 	console.log(c.green().bold('Sexy server has started'));
 
 	watcher(paths.cwd, () => {
@@ -77,6 +78,8 @@ export function dev()
  */
 export function build()
 {
+	cleanup();
+
 	console.log('');
 	console.log(c.green().bold('Sexy started building'));
 
@@ -84,12 +87,12 @@ export function build()
 	// generate routes config
 	createRoutes({ paths, routes });
 
-	bundle('production');
-
-	// start();
+	bundle('production', () => {
+		process.exit();
+	});
 }
 
-export function bundle(mode)
+export function bundle(mode, callback = () => {})
 {
 	createBundles({ paths, mode }, (entrypoints) => {
 
@@ -97,21 +100,32 @@ export function bundle(mode)
 			entrypoints,
 		});
 
-		if(proc) {
-			proc.kill();
-		}
-
 		console.log(c.green('Bundle is ready'));
 		
-		let file = paths.serverBuild('index.js');
+		startRender();
 
-		proc = child_process.fork(file);
-
+		callback();
 	});
+
+}
+
+export function startRender()
+{
+	if(proc) {
+		proc.kill();
+	}
+
+	console.log(c.green('Sexy-server-render has started'));
+	
+	let file = paths.serverBuild('index.js');
+
+	proc = child_process.fork(file);
 }
 
 export function start()
 {
+	// startRender();
+
 	let http = createHttp((req, res) => {
 
 		let manifest = getManifest(paths);
@@ -157,11 +171,7 @@ export function cli()
 {
 	paths = envPaths();
 
-	cleanup();
-
 	let type = process.argv[2];
-
-	
 
 	prog
 	  .version('1.0.0')

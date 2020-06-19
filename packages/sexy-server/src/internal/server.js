@@ -31,14 +31,22 @@ function make(module)
 	return root.innerHTML;
 }
 
+let cache = {};
+
 export function build({ route }, callback)
 {
 	if(APP_ROUTES[route] === undefined) {
 		throw new Error(`There is no page:${ route } ready`);
 	}
 
+	if(cache[route]) {
+		callback(cache[route]);
+		return;
+	}
+
 	APP_ROUTES[route]().then(module => {
-		callback(make(module))
+		cache[route] = make(module);
+		callback(cache[route])
 	});
 }
 

@@ -1,7 +1,7 @@
 <div>
 	<h1>Index 2page</h1>
 	<static>2f asd as</static>
-	<div @click="alert(1)">1</div>
+	<div @click="alert(1)">12</div>
 	<div>1</div>
 	<div>2</div>
 	<div>3</div>

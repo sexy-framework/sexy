@@ -1,12 +1,13 @@
-import createConfig from '../config/webpack';
+import createConfig from '../webpack/config';
 import webpack from 'webpack';
 import path from 'path';
 import { routes } from './routes';
 
 // Plugins
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-
-
+import IgnoreEmitPlugin from 'ignore-emit-webpack-plugin';
+// import { MiniCssExtractPluginCleanup } from '../webpack/styles_cleanup.js';
+  
 export function createBundles({ paths, mode = 'development' }, callback)
 {
 	let webpackConfig = createConfig(paths);
@@ -40,13 +41,30 @@ export function createBundles({ paths, mode = 'development' }, callback)
 }
 
 
-function client({ mode, webpackConfig, externals, }) {
+function client({ mode, webpackConfig, externals, })
+{
+	let isProduction = mode === 'production'
+	let cssExtractLoader = isProduction ? MiniCssExtractPlugin.loader : 'style-loader';
 
 	return  {
 		mode,
 
 		entry: webpackConfig.client.entry(),
 		output: webpackConfig.client.output(),
+
+
+		optimization: {
+			splitChunks: {
+				cacheGroups: {
+					styles: {
+						name: 'styles',
+						test: /\.css$/,
+						chunks: 'all',
+						enforce: true,
+					},
+				},
+			},
+		},
 
 		// optimization: {
 		// 	// runtimeChunk: 'single',
@@ -64,12 +82,12 @@ function client({ mode, webpackConfig, externals, }) {
 
 		// 			// default: false,
 
-		// 			vendor: {
-		// 				test: /[\\/](packages|node_modules)[\\/]/,
-		// 				name: 'vendors',
-		// 				// enforce: true,
-		// 				chunks: 'all'
-		// 			},
+		// 			// vendor: {
+		// 			// 	test: /[\\/](packages|node_modules)[\\/]/,
+		// 			// 	name: 'vendors',
+		// 			// 	enforce: true,
+		// 			// 	chunks: 'all'
+		// 			// },
 					
 		// 			styles: {
 		// 				name: 'styles',
@@ -132,7 +150,7 @@ function client({ mode, webpackConfig, externals, }) {
 				{
 					test: /\.s[ac]ss$/i,
 					use: [
-						MiniCssExtractPlugin.loader,
+						cssExtractLoader,
 						// Translates CSS into CommonJS
 						'css-loader',
 						// Compiles Sass to CSS
@@ -142,7 +160,7 @@ function client({ mode, webpackConfig, externals, }) {
 
 				{
 					test: /\.css$/i,
-					use: [MiniCssExtractPlugin.loader, 'css-loader'],
+					use: [cssExtractLoader, 'css-loader'],
 				},
 			]
 		},
@@ -153,6 +171,9 @@ function client({ mode, webpackConfig, externals, }) {
 				filename: '[name].css',
       			chunkFilename: '[id].css',
 			}),
+
+			// new IgnoreEmitPlugin('styles.js'),
+			// new MiniCssExtractPluginCleanup([/\.css\.js(\.map)?$/])
 
 		]
 
