@@ -1,3 +1,0 @@
-
-		export default { '/blog/:article': () => { return import(/* webpackChunkName: "page.blog._article" */ '/Applications/MAMP/htdocs/sexy/pages/blog/_article.sexy'); },'/blog/': () => { return import(/* webpackChunkName: "page.blog.index" */ '/Applications/MAMP/htdocs/sexy/pages/blog/index.sexy'); },'/home': () => { return import(/* webpackChunkName: "page.home" */ '/Applications/MAMP/htdocs/sexy/pages/home.sexy'); },'/': () => { return import(/* webpackChunkName: "page.index" */ '/Applications/MAMP/htdocs/sexy/pages/index.sexy'); } };
-	
