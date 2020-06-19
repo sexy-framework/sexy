@@ -13,5 +13,8 @@
     "test": "echo \"Compiler\"",
     "watch": "cross-env NODE_ENV=development webpack --config webpack.config.js ",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js"
+  },
+  "dependencies": {
+    "htmlparser2": "^4.1.0"
   }
 }

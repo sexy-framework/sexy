@@ -10,6 +10,7 @@ const document = window.document;
 global.window = window
 global.document = document;
 
+console.log(process.argv)
 process.on('message', ({ route }) => {
 	build({ route }, (code) => {
 		process.send({

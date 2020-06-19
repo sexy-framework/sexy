@@ -40,6 +40,7 @@ export function findRoute({ routes, params, pathname })
 
 export function createRoutes({ paths, routes })
 {
+	// paths.rootBuild
 	let routesPath = paths.internal('routes.js');
 
 	let imports = [];

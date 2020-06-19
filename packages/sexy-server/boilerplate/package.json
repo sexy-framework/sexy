@@ -9,6 +9,6 @@
     "start": "sexy start"
   },
   "dependencies": {
-    "sexy-server": "^0.2.0"
+    "sexy-server": "^0.2.0",
   }
 }

@@ -19,15 +19,13 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@babel/core": "^7.10.2",
+    "cross-env": "^7.0.2",
     "loader-utils": "^2.0.0",
     "querystring": "^0.2.0",
     "schema-utils": "^2.6.6",
-    "webpack": "^4.43.0"
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
   },
-  "gitHead": "0acf42b0d3f3c1331691748adc54c6fde41b12f5",
-  "devDependencies": {
-    "babel-plugin-add-module-exports": "^1.0.2",
-    "path": "^0.12.7",
-    "virtual-file-loader": "^0.0.4"
-  }
+  "gitHead": "0acf42b0d3f3c1331691748adc54c6fde41b12f5"
 }
