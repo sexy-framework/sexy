@@ -1,6 +1,6 @@
 import { JSDOM } from 'jsdom';
 import { render } from 'sexy-framework/render';
-import APP_ROUTES from './routes';
+import APP_ROUTES from 'sexy-routes';
 
 const dom = new JSDOM('<div id="_layout"></div>');
 
@@ -10,7 +10,6 @@ const document = window.document;
 global.window = window
 global.document = document;
 
-console.log(process.argv)
 process.on('message', ({ route }) => {
 	build({ route }, (code) => {
 		process.send({

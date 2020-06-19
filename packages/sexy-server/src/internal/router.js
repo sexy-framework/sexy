@@ -1,4 +1,4 @@
-import APP_ROUTES from './routes.js';
+import APP_ROUTES from 'sexy-routes';
 import navigo from 'navigo';
 import { hydrate } from 'sexy-framework/render';
 

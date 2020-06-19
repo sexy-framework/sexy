@@ -11,12 +11,12 @@ import IgnoreEmitPlugin from 'ignore-emit-webpack-plugin';
 export function createBundles({ paths, mode = 'development' }, callback)
 {
 	let webpackConfig = createConfig(paths);
-
+	let routesConfig = paths.rootBuild('routes.js');
 	let externals = Object.keys(require('../../package.json').dependencies)
 
 	const compiler = webpack([
-		client({ mode, webpackConfig, externals }),
-		server({ mode, webpackConfig, externals })
+		client({ mode, webpackConfig, routesConfig, externals }),
+		server({ mode, webpackConfig, routesConfig, externals })
 	]);
 
 	compiler.run((err, stats) => {
@@ -41,7 +41,7 @@ export function createBundles({ paths, mode = 'development' }, callback)
 }
 
 
-function client({ mode, webpackConfig, externals, })
+function client({ mode, webpackConfig, routesConfig, externals, })
 {
 	let isProduction = mode === 'production'
 	let cssExtractLoader = isProduction ? MiniCssExtractPlugin.loader : 'style-loader';
@@ -52,6 +52,11 @@ function client({ mode, webpackConfig, externals, })
 		entry: webpackConfig.client.entry(),
 		output: webpackConfig.client.output(),
 
+		resolve: {
+			alias: {
+				'sexy-routes': routesConfig,
+			}
+		},
 
 		optimization: {
 			splitChunks: {
@@ -181,7 +186,7 @@ function client({ mode, webpackConfig, externals, })
 
 }
 
-function server({ mode, webpackConfig, externals, }) {
+function server({ mode, webpackConfig, routesConfig, externals, }) {
 	return  {
 		mode,
 		externals,
@@ -191,6 +196,12 @@ function server({ mode, webpackConfig, externals, }) {
 		
 		entry: webpackConfig.server.entry(),
 		output: webpackConfig.server.output(),
+
+		resolve: {
+			alias: {
+				'sexy-routes': routesConfig,
+			}
+		},
 
 		module: {
 			rules: [
