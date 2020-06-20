@@ -44,7 +44,7 @@ function dev()
 	console.log(c.green().bold('Sexy server has started'));
 
 	watcher(paths.cwd, () => {
-		routes = api.routes(paths.routes);
+		routes = api.routes(paths);
 		// generate routes config
 		createRoutes({ paths, routes });
 
@@ -68,7 +68,7 @@ function build()
 	console.log('');
 	console.log(c.green().bold('Sexy started building'));
 
-	routes = api.routes(paths.routes);
+	routes = api.routes(paths);
 	// generate routes config
 	createRoutes({ paths, routes });
 
@@ -145,6 +145,11 @@ function startDevServer()
 			return false;
 		}
 
+		proc.on('message', ({ html }) => {
+			res.writeHead(200);
+			res.end(html);
+		});
+
 		let route = findRoute({
  			routes,
  			params,
@@ -153,16 +158,11 @@ function startDevServer()
 
  		if(!route) {
  			return proc.send({
-				route: '__not_found',
+				route: '/error-404',
 			});
  		}
 
  		proc.send({ route });
-
-		proc.on('message', ({ html }) => {
-			res.writeHead(200);
-			res.end(html);
-		});
 	});
 }
 

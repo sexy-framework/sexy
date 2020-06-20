@@ -8,11 +8,15 @@ router.start = function(root)
 {
 	for(let route in APP_ROUTES) {
 		router.on(route, function (params, query) {
-			console.time('hydrate');
+			// console.time('hydrate');
 			hydrate(APP_ROUTES[route](), root)
-			console.timeEnd('hydrate');
+			// console.timeEnd('hydrate');
 		})
 	}
+
+	router.on('*', function (query) {
+		hydrate(APP_ROUTES['/error-404'](), root);
+	});
 
 	router.resolve();
 }

@@ -13,20 +13,60 @@ function walk(dir) {
     return files.reduce((all, folderContents) => all.concat(folderContents), []);
 }
 
-export function routes(routesPath)
+function technicalRoutes(paths)
 {
-	let regexp = new RegExp(routesPath);
-	let files = walk(routesPath);
+	let defaultErrors = fs.readdirSync(
+		path.resolve(paths.root, './pages/errors')
+	); 
 
-	return files.map(component => {
-		let route = ('/' + path.relative(routesPath, component))
+	let customErrors = [];
+
+	try {
+		customErrors = fs.readdirSync(
+			path.resolve(paths.routes, './errors')
+		); 
+	} catch(err) {
+
+	}
+
+	let errors = {};
+
+	defaultErrors.map((item) => {
+		let code = item.replace(/\.sexy$/, '');
+		errors[`error-${code}`] = path.resolve(paths.root, './pages/errors', item);
+	});
+
+	customErrors.map((item) => {
+		let code = item.replace(/\.sexy$/, '');
+		errors[`error-${code}`] = path.resolve(paths.routes, './errors', item);
+	});
+
+	return Object.keys(errors).map(function(key, index) {
+		let item = errors[key];
+		return {
+			id: key,
+			route: '/' + key,
+			component: item,
+		}
+	});
+}
+
+
+export function routes(paths)
+{
+	let regexp = new RegExp(paths.routes);
+	let files = walk(paths.routes);
+	let techRoutes = technicalRoutes(paths);
+
+	let routes = files.map(component => {
+		let route = ('/' + path.relative(paths.routes, component))
 			.replace(regexp, '')
 			.replace(/\_/g, ':')
 			.replace(/([^\/]+)\.sexy/g, '$1')
 			.replace(/\/index\/?/g, '/')
 			
 
-		let id = path.relative(routesPath, component)
+		let id = path.relative(paths.routes, component)
 			.replace(/([^\/]+)\.sexy/g, '$1')
 			.replace(/([^\w])/g, '.')
 
@@ -37,4 +77,6 @@ export function routes(routesPath)
 			component,
 		}
 	});
+
+	return Object.assign(routes, techRoutes);
 };
