@@ -12,6 +12,7 @@ global.window = window
 global.document = document;
 
 global.templatePath = process.argv[2] || '/';
+global.buildPath = process.argv[3] || '/';
 
 process.on('message', ({ route }) => {
 	build({ route }, (html) => {

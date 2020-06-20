@@ -84,7 +84,8 @@ function start()
 	// let args = ['-P', 'asd'];
 
 	proc = child_process.fork(paths.app('./server/server.js'), [
-		paths.internal('./')
+		paths.internal('./'),
+		paths.rootBuild('./'),
 	]);
 }
 
@@ -116,7 +117,8 @@ function startRender()
 	let file = paths.serverBuild('index.js');
 
 	proc = child_process.fork(file, [
-		paths.internal('./')
+		paths.internal('./'),
+		paths.rootBuild('./'),
 	]);
 }
 
