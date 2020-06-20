@@ -50,7 +50,4 @@ export function build({ route }, callback)
 	});
 }
 
-export function routes()
-{
-	return Object.keys(APP_ROUTES);
-}
+export const routes = APP_ROUTES;

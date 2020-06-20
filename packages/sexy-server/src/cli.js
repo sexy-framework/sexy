@@ -24,22 +24,7 @@ const prog = sade('sexy');
 
 import child_process from 'child_process';
 
-
-// - routes_manifest (for client middleware)
-
-// watcher
-// 	routes = GetRoutes
-// 	middleware = middleware(routes)
-
-// 	bundle(middleware)
-// 	proc = startCompiler();
-
-// server
-// 	find(routes)
-// 	template = render(proc)
-
-
-export function cleanup()
+function cleanup()
 {
 	let paths = envPaths();
 	fs.rmdirSync(paths.rootBuild(''), { recursive: true });
@@ -53,7 +38,7 @@ let entrypoints = [];
 /**
  * Watch and start dev server
  */
-export function dev()
+function dev()
 {
 	cleanup();
 	console.log(c.green().bold('Sexy server has started'));
@@ -70,13 +55,13 @@ export function dev()
 	});
 
 	
-	start();
+	startDevServer();
 }
 
 /**
  * Build project
  */
-export function build()
+function build()
 {
 	cleanup();
 
@@ -92,7 +77,14 @@ export function build()
 	});
 }
 
-export function bundle(mode, callback = () => {})
+function start()
+{
+	console.log(c.green('Server has started'));
+	
+	proc = child_process.fork(paths.app('./server/server.js'));
+}
+
+function bundle(mode, callback = () => {})
 {
 	createBundles({ paths, mode }, (entrypoints) => {
 
@@ -109,7 +101,7 @@ export function bundle(mode, callback = () => {})
 
 }
 
-export function startRender()
+function startRender()
 {
 	if(proc) {
 		proc.kill();
@@ -122,7 +114,7 @@ export function startRender()
 	proc = child_process.fork(file);
 }
 
-export function start()
+function startDevServer()
 {
 	// startRender();
 

@@ -1,16 +1,20 @@
-const routes = require('@sexy/routes');
-const middleware = require('@sexy/middleware');
-
+const sexy = require('../.sexy/server/index.js');
 
 const fastify = require('fastify')({
 	logger: true
 })
 
-// routes
-// Declare a route
-fastify.get('/', (request, reply) => {
-	reply.send({ hello: 'world' })
-})
+for(let path in sexy.routes) {
+	console.log(path, sexy.routes[path]);
+	fastify.get(path, (request, reply) => {
+		sexy.build({
+			route: path
+		}, (page) => {
+			reply.send(page);
+		});
+		
+	})
+}
 
 // Run the server!
 fastify.listen(3000, (err, address) => {
