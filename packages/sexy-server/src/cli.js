@@ -81,7 +81,11 @@ function start()
 {
 	console.log(c.green('Server has started'));
 	
-	proc = child_process.fork(paths.app('./server/server.js'));
+	// let args = ['-P', 'asd'];
+
+	proc = child_process.fork(paths.app('./server/server.js'), [
+		paths.internal('./')
+	]);
 }
 
 function bundle(mode, callback = () => {})
@@ -111,7 +115,9 @@ function startRender()
 	
 	let file = paths.serverBuild('index.js');
 
-	proc = child_process.fork(file);
+	proc = child_process.fork(file, [
+		paths.internal('./')
+	]);
 }
 
 function startDevServer()
@@ -120,18 +126,18 @@ function startDevServer()
 
 	let http = createHttp((req, res) => {
 
-		let manifest = getManifest(paths);
+		// let manifest = getManifest(paths);
 
-		let templateData = { base: '', styles: '', head: '', html: 'not set', scripts: getScripts(manifest.entrypoints) };
+		// let templateData = { base: '', styles: '', head: '', html: 'not set', scripts: getScripts(manifest.entrypoints) };
 
-		let template = createTemplate(paths, { req, res, templateData });
+		// let template = createTemplate(paths, { req, res, templateData });
 
 		if(!proc) {
-			return template.building();
+			res.writeHead(200);
+			return res.end('page is building...');
 		}
 
 		let { url, params, pathname } = parseUrl(req.url);
-
 
 		if(findClientAsset(paths, { req, res })) {
 			return false;
@@ -144,13 +150,16 @@ function startDevServer()
  		})
 
  		if(!route) {
- 			return template.notFound();
+ 			return proc.send({
+				route: '__not_found',
+			});
  		}
 
  		proc.send({ route });
 
-		proc.on('message', ({ code }) => {
-			template.compile(code);
+		proc.on('message', ({ html }) => {
+			res.writeHead(200);
+			res.end(html);
 		});
 	});
 }

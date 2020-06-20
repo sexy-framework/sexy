@@ -1,6 +1,7 @@
 import { JSDOM } from 'jsdom';
 import { render } from 'sexy-framework/render';
 import APP_ROUTES from 'sexy-routes';
+import template from './template';
 
 const dom = new JSDOM('<div id="_layout"></div>');
 
@@ -10,10 +11,12 @@ const document = window.document;
 global.window = window
 global.document = document;
 
+global.templatePath = process.argv[2] || '/';
+
 process.on('message', ({ route }) => {
-	build({ route }, (code) => {
+	build({ route }, (html) => {
 		process.send({
-			code,
+			html,
 		});
 	})
 });
@@ -28,7 +31,7 @@ function make(module)
 		console.log('[ ERROR ]', err);
 	}
 
-	return root.innerHTML;
+	return template(root.innerHTML);
 }
 
 let cache = {};
@@ -50,4 +53,9 @@ export function build({ route }, callback)
 	});
 }
 
-export const routes = APP_ROUTES;
+export function routes(handler)
+{
+	for(let path in APP_ROUTES) {
+		handler(path, APP_ROUTES[path]);
+	}
+}

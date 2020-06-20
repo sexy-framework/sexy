@@ -23,6 +23,7 @@
     "babel-loader": "^8.1.0",
     "chokidar": "^3.4.0",
     "css-loader": "^3.6.0",
+    "eta": "^1.1.1",
     "fs": "^0.0.1-security",
     "http": "^0.0.1-security",
     "ignore-emit-webpack-plugin": "^2.0.2",
