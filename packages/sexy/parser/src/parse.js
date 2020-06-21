@@ -1,7 +1,7 @@
 import { prepare } from './prepare';
 import { isComponent } from './utils';
 
-import { Expression, Text, Node, Slot, Component } from './types';
+import { Expression, Text, Node, Slot, Component, Dynamic } from './types';
 
 import { Parser as HTMLParser } from 'htmlparser2';
 
@@ -74,6 +74,8 @@ export function parse(html)
 				entity = new Expression(attrs);
 			} else if(name === 'slot') {
 				entity = new Slot(attrs);
+			} else if(name === 'dynamic') {
+				entity = new Dynamic(attrs);
 			} else if (isComponent(name)) {
 				entity = new Component(name, attrs);
 			} else {

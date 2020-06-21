@@ -1,5 +1,5 @@
 import { parse } from './parse';
 
-import { Expression, Text, Node, Slot, Component } from './types';
+import { Expression, Text, Node, Slot, Component, Dynamic } from './types';
 
-export { Expression, Text, Node, Slot, Component, parse }
+export { Expression, Text, Node, Slot, Component, Dynamic, parse }
