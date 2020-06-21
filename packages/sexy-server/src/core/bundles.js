@@ -31,12 +31,13 @@ export function createBundles({ paths, mode = 'development' }, callback)
 			entrypoints = entrypoints.concat(chunk.files);
 		})
 
-		callback(entrypoints);
-		
+		// console.log(stats.stats[0])
 		// console.log(stats.stats[0].toString({
 		// 	chunks: false,  // Makes the build much quieter
 		// 	colors: true    // Shows colors in the console
 		// }));
+
+		callback(entrypoints);
 	});
 }
 
@@ -45,7 +46,7 @@ function client({ mode, webpackConfig, routesConfig, externals, })
 {
 	let isProduction = mode === 'production'
 	let cssExtractLoader = isProduction ? MiniCssExtractPlugin.loader : 'style-loader';
-
+	// console.log(isProduction, cssExtractLoader)
 	return  {
 		mode,
 
@@ -60,6 +61,8 @@ function client({ mode, webpackConfig, routesConfig, externals, })
 
 		optimization: {
 			splitChunks: {
+				chunks: 'all',
+        		name: false,
 				cacheGroups: {
 					styles: {
 						name: 'styles',

@@ -1,4 +1,4 @@
-import c from 'kleur';
+import c from 'chalk';
 import sade from 'sade';
 
 import path from 'path';
@@ -44,7 +44,7 @@ let entrypoints = [];
 function dev()
 {
 	cleanup();
-	// console.log(c.green().bold('Sexy dev-server has started'));
+	console.log(c.green('Started to watch file changes'));
 
 	watcher(paths.cwd, () => {
 		routes = api.routes(paths);
@@ -83,8 +83,7 @@ function build()
 
 function start()
 {
-	consola.info('Server has started');
-	
+	box([c.rgb(170, 170, 170)('Listening:'), `http://localhost:3000`]);
 	// let args = ['-P', 'asd'];
 
 	proc = child_process.fork(paths.app('./server/server.js'), [

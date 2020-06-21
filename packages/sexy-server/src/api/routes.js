@@ -78,5 +78,7 @@ export function routes(paths)
 		}
 	});
 
-	return Object.assign(routes, techRoutes);
+	// console.log(routes, techRoutes)
+
+	return routes.concat(techRoutes)
 };

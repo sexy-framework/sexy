@@ -68,8 +68,6 @@ export function createHttp(handler)
 			const host = server.address().address;
 			const port = server.address().port;
 
-			let text = ['Server listening', `${host}:${port}`];
-
 			box([c.rgb(170, 170, 170)('Listening:'), `http://localhost:${port}`]);
 		}
 	});
