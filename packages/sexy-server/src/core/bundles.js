@@ -5,9 +5,9 @@ import { routes } from './routes';
 import WebpackBar from 'webpackbar';
 // Plugins
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import IgnoreEmitPlugin from 'ignore-emit-webpack-plugin';
-// import { MiniCssExtractPluginCleanup } from '../webpack/styles_cleanup.js';
-  
+import TerserJSPlugin from 'terser-webpack-plugin';
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';  
+
 export function createBundles({ paths, mode = 'development' }, callback)
 {
 	let webpackConfig = createConfig(paths);
@@ -47,6 +47,14 @@ function client({ mode, webpackConfig, routesConfig, externals, })
 	let isProduction = mode === 'production'
 	let cssExtractLoader = isProduction ? MiniCssExtractPlugin.loader : 'style-loader';
 	// console.log(isProduction, cssExtractLoader)
+	let minimizer = [];
+	if(isProduction) {
+		minimizer = [
+			new TerserJSPlugin(),
+			new OptimizeCSSAssetsPlugin()
+		];
+	}
+
 	return  {
 		mode,
 
@@ -60,6 +68,7 @@ function client({ mode, webpackConfig, routesConfig, externals, })
 		},
 
 		optimization: {
+			minimizer,
 			splitChunks: {
 				chunks: 'all',
         		name: false,
