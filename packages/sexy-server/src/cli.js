@@ -4,6 +4,8 @@ import sade from 'sade';
 import path from 'path';
 import fs from 'fs';
 
+import consola from 'consola';
+
 import * as api from './api';
 import {
 	watcher,
@@ -41,15 +43,15 @@ let entrypoints = [];
 function dev()
 {
 	cleanup();
-	console.log(c.green().bold('Sexy server has started'));
+	console.log(c.green().bold('Sexy dev-server has started'));
 
 	watcher(paths.cwd, () => {
 		routes = api.routes(paths);
 		// generate routes config
 		createRoutes({ paths, routes });
 
-		console.log('');
-		console.log(c.green('Sexy has changed...'));
+		// console.log('');
+		// consola.info(c.green('Sexy has changed...'));
 
 		bundle('development');
 	});
@@ -66,7 +68,7 @@ function build()
 	cleanup();
 
 	console.log('');
-	console.log(c.green().bold('Sexy started building'));
+	consola.info(c.green().bold('Sexy started building'));
 
 	routes = api.routes(paths);
 	// generate routes config
@@ -79,7 +81,7 @@ function build()
 
 function start()
 {
-	console.log(c.green('Server has started'));
+	consola.info('Server has started');
 	
 	// let args = ['-P', 'asd'];
 
@@ -96,8 +98,6 @@ function bundle(mode, callback = () => {})
 		createManifest(paths, {
 			entrypoints,
 		});
-
-		console.log(c.green('Bundle is ready'));
 		
 		startRender();
 
@@ -127,12 +127,6 @@ function startDevServer()
 	// startRender();
 
 	let http = createHttp((req, res) => {
-
-		// let manifest = getManifest(paths);
-
-		// let templateData = { base: '', styles: '', head: '', html: 'not set', scripts: getScripts(manifest.entrypoints) };
-
-		// let template = createTemplate(paths, { req, res, templateData });
 
 		if(!proc) {
 			res.writeHead(200);

@@ -2,7 +2,7 @@ import createConfig from '../webpack/config';
 import webpack from 'webpack';
 import path from 'path';
 import { routes } from './routes';
-
+import WebpackBar from 'webpackbar';
 // Plugins
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import IgnoreEmitPlugin from 'ignore-emit-webpack-plugin';
@@ -33,10 +33,10 @@ export function createBundles({ paths, mode = 'development' }, callback)
 
 		callback(entrypoints);
 		
-		console.log(stats.stats[0].toString({
-			chunks: false,  // Makes the build much quieter
-			colors: true    // Shows colors in the console
-		}));
+		// console.log(stats.stats[0].toString({
+		// 	chunks: false,  // Makes the build much quieter
+		// 	colors: true    // Shows colors in the console
+		// }));
 	});
 }
 
@@ -70,66 +70,6 @@ function client({ mode, webpackConfig, routesConfig, externals, })
 				},
 			},
 		},
-
-		// optimization: {
-		// 	// runtimeChunk: 'single',
-		// 	splitChunks: {
-
-		// 		// chunks: 'async',
-		// 		// minSize: 10000,
-		// 		// maxSize: 150000,
-		// 		// minChunks: 2,
-		// 		// maxAsyncRequests: 6,
-		// 		// maxInitialRequests: 4,
-		// 		// automaticNameDelimiter: '~',
-
-		// 		cacheGroups: {
-
-		// 			// default: false,
-
-		// 			// vendor: {
-		// 			// 	test: /[\\/](packages|node_modules)[\\/]/,
-		// 			// 	name: 'vendors',
-		// 			// 	enforce: true,
-		// 			// 	chunks: 'all'
-		// 			// },
-					
-		// 			styles: {
-		// 				name: 'styles',
-		// 				test: /\.s?css$/,
-		// 				chunks: 'all',
-		// 				// minChunks: 1,
-		// 				// reuseExistingChunk: true,
-		// 				enforce: true,
-		// 			},
-		// 		}
-		// 	}
-		// },
-
-		// optimization: {
-		// 	splitChunks: {
-				// chunks: 'async',
-				// minSize: 50000,
-				// // minRemainingSize: 0,
-				// maxSize: 150000,
-				// minChunks: 2,
-				// maxAsyncRequests: 6,
-				// maxInitialRequests: 4,
-				// automaticNameDelimiter: '~',
-		// 		cacheGroups: {
-		// 			defaultVendors: {
-  //        				reuseExistingChunk: true,
-		// 				test: /[\\/](node_modules|packages)[\\/]/,
-		// 				priority: -10
-		// 			},
-		// 			default: {
-		// 				minChunks: 2,
-		// 				priority: -20,
-		// 				reuseExistingChunk: true
-		// 			}
-		// 		}
-		// 	}
-		// },
 
 		module: {
 			rules: [
@@ -172,13 +112,14 @@ function client({ mode, webpackConfig, routesConfig, externals, })
 
 		plugins: [
 
+			new WebpackBar({
+				name: 'Client',
+			}),
+
 			new MiniCssExtractPlugin({
 				filename: '[name].css',
       			chunkFilename: '[id].css',
 			}),
-
-			// new IgnoreEmitPlugin('styles.js'),
-			// new MiniCssExtractPluginCleanup([/\.css\.js(\.map)?$/])
 
 		]
 
@@ -226,6 +167,11 @@ function server({ mode, webpackConfig, routesConfig, externals, }) {
 		},
 
 		plugins: [
+
+			new WebpackBar({
+				name: 'Server',
+				color: 'orange',
+			}),
 
 			new webpack.optimize.LimitChunkCountPlugin({
 				maxChunks: 1

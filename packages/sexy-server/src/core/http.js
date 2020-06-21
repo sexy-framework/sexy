@@ -2,6 +2,7 @@ import url from 'url';
 import http from 'http';
 import fs from 'fs';
 import path from 'path';
+import boxen from 'boxen';
 
 const mediaTypes = {
 	zip: 'application/zip',
@@ -66,6 +67,13 @@ export function createHttp(handler)
 			const host = server.address().address;
 			const port = server.address().port;
 			console.log(`Server listening on ${host}:${port}`);
+
+			let text = ['Server listening', `${host}:${port}`];
+
+			console.log(boxen(text.join('\n'), {
+				borderColor: 'green',
+				padding: 1
+			}));
 		}
 	});
 

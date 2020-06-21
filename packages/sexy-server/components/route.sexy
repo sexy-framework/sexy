@@ -1,7 +1,26 @@
-<div>
-	link
-</div>
+<dynamic :is="tag" to="/home">
+	Any
+</dynamic>
 
 <script>
-	
+/*
+
+lastNode
+subscribe([tag], () => {
+	if(isComponent(tag)) {
+		loadComponent(tag, render);
+	} else {
+		
+		if(render) {
+			let e = createTag(tag);
+			lastNode.replaceWith(e);
+			lastNode = e;
+		}
+
+		lastNode.makeAttrs
+	}
+});
+
+
+ */	
 </script>

@@ -18,10 +18,13 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@babel/core": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.10.1",
     "@babel/preset-env": "^7.10.2",
     "babel-loader": "^8.1.0",
+    "boxen": "^4.2.0",
     "chokidar": "^3.4.0",
+    "consola": "^2.13.0",
     "css-loader": "^3.6.0",
     "eta": "^1.1.1",
     "fs": "^0.0.1-security",
@@ -38,7 +41,8 @@
     "sexy-loader": "^0.2.0",
     "style-loader": "^1.2.1",
     "url": "^0.11.0",
-    "webpack": "^4.43.0"
+    "webpack": "^4.43.0",
+    "webpackbar": "^4.0.0"
   },
   "devDependencies": {
     "webpack-manifest-plugin": "^2.2.0"
