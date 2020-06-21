@@ -20,6 +20,7 @@ import {
 	getScripts,
 	createManifest,
 	getManifest,
+	box,
 } from './core';
 
 const prog = sade('sexy');
@@ -43,7 +44,7 @@ let entrypoints = [];
 function dev()
 {
 	cleanup();
-	console.log(c.green().bold('Sexy dev-server has started'));
+	// console.log(c.green().bold('Sexy dev-server has started'));
 
 	watcher(paths.cwd, () => {
 		routes = api.routes(paths);
@@ -67,14 +68,15 @@ function build()
 {
 	cleanup();
 
-	console.log('');
-	consola.info(c.green().bold('Sexy started building'));
+	// console.log('');
+	// consola.info(c.green().bold('Sexy started building'));
 
 	routes = api.routes(paths);
 	// generate routes config
 	createRoutes({ paths, routes });
 
 	bundle('production', () => {
+		box('Bundle is ready')
 		process.exit();
 	});
 }
@@ -112,7 +114,7 @@ function startRender()
 		proc.kill();
 	}
 
-	console.log(c.green('Sexy-server-render has started'));
+	// console.log(c.green('Sexy-server-render has started'));
 	
 	let file = paths.serverBuild('index.js');
 

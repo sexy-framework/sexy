@@ -2,7 +2,8 @@ import url from 'url';
 import http from 'http';
 import fs from 'fs';
 import path from 'path';
-import boxen from 'boxen';
+import { box } from './box';
+import c from 'chalk';
 
 const mediaTypes = {
 	zip: 'application/zip',
@@ -66,14 +67,10 @@ export function createHttp(handler)
 		} else {
 			const host = server.address().address;
 			const port = server.address().port;
-			console.log(`Server listening on ${host}:${port}`);
 
 			let text = ['Server listening', `${host}:${port}`];
 
-			console.log(boxen(text.join('\n'), {
-				borderColor: 'green',
-				padding: 1
-			}));
+			box([c.rgb(170, 170, 170)('Listening:'), `http://localhost:${port}`]);
 		}
 	});
 

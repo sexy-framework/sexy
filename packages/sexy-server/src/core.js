@@ -5,4 +5,5 @@ export { createHttp, parseUrl, findClientAsset } from './core/http';
 export { createTemplate, getScripts } from './core/template';
 export { createManifest, getManifest } from './core/manifest';
 export { envPaths } from './core/env';
+export { box } from './core/box';
 
