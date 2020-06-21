@@ -1,6 +1,9 @@
 <div>
 	<h1>Index 2page</h1>
-	<menu>2f asd as</menu>
+	<nav.menu>
+		2
+		<logo></logo>
+	</nav.menu>
 	<div @click="alert(1)">12</div>
 	<div>1</div>
 	<div>2</div>
@@ -517,6 +520,9 @@ let items = o(Array.from({ length: 200 }, (_, i) => i));
 </script>
 
 <style>
+body {
+	color: red;
+}
 /*.fade*/
 .fade-enter-active,
 .fade-leave-active {
