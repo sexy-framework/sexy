@@ -52,7 +52,8 @@ Benchmark was made with 10 000 components with loop function. (Without loop its 
 - [ ] Client ssr-first mode (if there is huge page then render it on server, cache and transfer to client instead of render on client directly)
 - [ ] Recursive components
 - [ ] Dynamic components !!
-- [ ] Boilerplate generation
+- [ ] Docs !!
+- [ ] Boilerplate generation !!
 - [ ] Benchmarks for hydration most popular frameworks
 
 Expression generation should be fixed and tested more
