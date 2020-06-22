@@ -2,7 +2,7 @@ import { loadComponent } from './load';
 import { subscribe, root, value } from 'sexy-framework/observable';
 import { add, persistent, diffable, castNode } from './utils.js';
 import { cleanupFragment } from './statement';
-
+import { isManualComponent }  from 'sexy-framework/parser';
 // dynamic(computed, node)
 
 
@@ -97,8 +97,10 @@ export function dynamic(tag, node, render, options)
 		let shouldRender = !(!render && prev === null);
 		let dynamicTag = value(tag);
 		let fn_name = getName(dynamicTag);
-		let isComponent = false; // fn_name !== undefined;
+		let isComponent = isManualComponent(dynamicTag); // fn_name !== undefined;
 		let n;
+
+		console.log(dynamicTag);
 
 		if(shouldRender) {
 			cleanup();
@@ -107,7 +109,7 @@ export function dynamic(tag, node, render, options)
 		if(isComponent) {
 			n = root(dispose => {
 				disposer = dispose;
-				return loadComponent(dynamicTag, node, shouldRender, options);
+				return loadComponent(dynamicTag, dynamicTag, node, shouldRender, options);
 			});
 		} else {
 			let dynamicNode;

@@ -1,6 +1,7 @@
-import { castNode } from './utils.js';
+// import { castNode } from './utils';
 
-import { manualPersistent } from './utils.js';
+import { castNode, manualPersistent } from './utils';
+import { getComponent } from './components';
 
 export function isLazy(component)
 {
@@ -24,8 +25,10 @@ export function lazy(component, callback)
 	);
 }
 
-export function loadComponent(component, node, render, options = {})
+export function loadComponent(component, name, node, render, options = {})
 {
+	component = getComponent(name, component);
+
 	let endMark = castNode('');
 	let startMark = castNode('');
 

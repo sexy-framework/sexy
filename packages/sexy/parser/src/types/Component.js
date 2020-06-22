@@ -2,6 +2,7 @@ import Type from './Type';
 import { attrs as parseAttrs } from '../attrs';
 
 import { Node } from '../types';
+import { isManualComponent } from '../utils';
 
 export default class Component extends Type {
 
@@ -28,11 +29,19 @@ export default class Component extends Type {
 			name = this.name;
 		}
 
+		if(isManualComponent(name)) {
+			return name;
+		}
+
 		return `_component_${ name.replace(/[^0-9a-z]/gi, '') }$`;
 	}
 
 	getImport(path, delimeter)
 	{
+		if(isManualComponent(this.name)) {
+			return `let ${ this.getName() };`;
+		}
+
 		let name = this.name.replace(/[^0-9a-z]/gi, '/');
 
 		if(this.attrs.lazy !== undefined) {

@@ -147,6 +147,7 @@ export default function component(context, options)
 		return new callExpression(
 			id('loadComponent'), [
 				id(this.getName()),
+				stringLiteral(this.name),
 				l,
 				id('render'),
 				getConfig(this, context, options)

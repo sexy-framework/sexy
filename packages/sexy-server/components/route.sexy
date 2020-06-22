@@ -3,6 +3,12 @@
 </dynamic>
 
 <script>
+let to = p(null);
+
+function mounted()
+{
+	console.log(to());
+}
 /*
 
 lastNode

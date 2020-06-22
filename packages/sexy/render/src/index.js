@@ -5,7 +5,7 @@ export { getNode, parseContext, getProp, setRef, setKey, createHooks } from './t
 export { statement } from './statement'
 export { map } from './map'
 export { directive } from './directive'
-export { createComponent, DOM_HOOK_ATTR } from './createComponent'
+export { createComponent, registerComponent, DOM_HOOK_ATTR } from './components'
 export { emit } from './emit'
 export { call } from './call'
 export { dynamic } from './dynamic'

@@ -1,6 +1,7 @@
 <div>
 	<h1> index </h1>
 	<dynamic :is="tag" href="/test" @click="alert(1)">1</dynamic>
+	<Static>asd</Static>
 </div>
 
 <script>

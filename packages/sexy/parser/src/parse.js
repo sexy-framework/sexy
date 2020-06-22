@@ -108,7 +108,10 @@ export function parse(html)
 			let removed = stack.pop();
 	    }
 
-	}, { decodeEntities: true })
+	}, {
+		decodeEntities: true,
+		lowerCaseTags: false,
+	});
 	
 	parse.write(html);
 	parse.end();

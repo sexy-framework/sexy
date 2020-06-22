@@ -179,7 +179,7 @@ export function compile(loaderOptions, blocks)
 			templates: getTemplates(),
 			script: script(codeAnalyse, blocks.script),
 			imports: imports.code,
-			components: components(entity)(loaderOptions.path, loaderOptions.delimeter),
+			components: components(entity, codeAnalyse.imports)(loaderOptions.path, loaderOptions.delimeter),
 		}),
 		styles: blocks.style,
 	}

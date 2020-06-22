@@ -12,9 +12,16 @@ const HTMLTags = [
 	"tr", "track", "tt", "u", "ul", "var", "video", "wbr", "template"
 ];
 
+export function isManualComponent(name)
+{
+	return /[A-Z]/.test(name[0]);
+	// !HTMLTags.includes(name);
+}
+
 export function isComponent(name)
 {
-	return !HTMLTags.includes(name);
+	return isManualComponent(name) || !HTMLTags.includes(name);
+	// !HTMLTags.includes(name);
 }
 
 export function makeMap(str, expectsLowerCase)

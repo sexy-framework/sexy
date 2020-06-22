@@ -1,6 +1,6 @@
 <div>
 	<h1> index </h1>
-	
+	<Route to="/home"></Route>
 </div>
 
 <script>

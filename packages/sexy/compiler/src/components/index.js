@@ -9,7 +9,7 @@ function handle(components, entity)
 	}
 }
 
-export function components(entity)
+export function components(entity, imports)
 {
 	let components = [];
 
@@ -18,11 +18,24 @@ export function components(entity)
 		children: [entity],
 	});
 
+	let declaratedVars = new Set();
+
+	for(let imp of imports) {
+		declaratedVars.add(imp.specifiers[0].local.name);
+	}
+
 	return (path, delimeter) => {
 		let imports = new Set();
 
 		for(let component of components) {
-			imports.add(component.getImport(path, delimeter));
+			if(declaratedVars.has(component.getName())) {
+				continue;
+			}
+			
+			let i = component.getImport(path, delimeter);
+			if(i !== null) {
+				imports.add(i);
+			}
 		}
 
 		return Array.from(imports).join('\n');
