@@ -19,7 +19,7 @@ process.on('message', ({ route }) => {
 		process.send({
 			html,
 		});
-	})
+	}, false)
 });
 
 function make(module)
@@ -39,22 +39,14 @@ function make(module)
 	return template(root.innerHTML);
 }
 
-let cache = {};
-
-export function build({ route }, callback)
+export function build({ route }, callback, isProduction = true)
 {
 	if(APP_ROUTES[route] === undefined) {
 		throw new Error(`There is no page:${ route } ready`);
 	}
 
-	if(cache[route]) {
-		callback(cache[route]);
-		return;
-	}
-
 	APP_ROUTES[route]().then(module => {
-		cache[route] = make(module);
-		callback(cache[route])
+		callback(make(module))
 	});
 }
 

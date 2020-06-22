@@ -37,6 +37,7 @@ let proc = null;
 let routes = [];
 let paths = envPaths();
 let entrypoints = [];
+let HTTP_RES;
 
 /**
  * Watch and start dev server
@@ -123,13 +124,18 @@ function startRender()
 		paths.internal('./'),
 		paths.rootBuild('./'),
 	]);
+
+	proc.on('message', ({ html }) => {
+		HTTP_RES.writeHead(200);
+		HTTP_RES.end(html);
+	});
 }
 
 function startDevServer()
 {
-	// startRender();
-
 	let http = createHttp((req, res) => {
+		
+		HTTP_RES = res;
 
 		if(!proc) {
 			res.writeHead(200);
@@ -141,11 +147,6 @@ function startDevServer()
 		if(findClientAsset(paths, { req, res })) {
 			return false;
 		}
-
-		proc.on('message', ({ html }) => {
-			res.writeHead(200);
-			res.end(html);
-		});
 
 		let route = findRoute({
  			routes,
@@ -163,6 +164,11 @@ function startDevServer()
 	});
 }
 
+function generate()
+{
+	console.log(1);
+	process.exit();
+}
 /**
  * CLI commands
  * @return {[type]} [description]
@@ -192,6 +198,14 @@ export function cli()
 		.example('build app public -o main.js')
 		.action((opts) => {
 			build();
+		});
+
+	prog
+		.command('generate')
+		.describe('start the source directory. Expects an `index.js` entry file.')
+		.example('start app public -o main.js')
+		.action((opts) => {
+			generate();
 		});
 
 	prog

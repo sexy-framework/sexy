@@ -2,15 +2,17 @@ import createConfig from '../webpack/config';
 import webpack from 'webpack';
 import path from 'path';
 import { routes } from './routes';
+import { getConfig } from './config';
 import WebpackBar from 'webpackbar';
-import relative from 'require-relative';
 // Plugins
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TerserJSPlugin from 'terser-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';  
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';  
+import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
 
 let procKillable = true;
+
 
 export async function createBundles({ paths, mode = 'development' }, callback)
 {
@@ -18,12 +20,10 @@ export async function createBundles({ paths, mode = 'development' }, callback)
 
 	let webpackConfig = createConfig(paths);
 	let routesConfig = paths.rootBuild('routes.js');
+
 	let externals = Object.keys(require('../../package.json').dependencies)
 
-	const appConfig = relative(
-		paths.app('./sexy.config.js'),
-		path.resolve(paths.root, './components/a/'),
-	);
+	const appConfig = getConfig(paths);
 
 	const isProduction = mode === 'production';
 
@@ -44,7 +44,7 @@ export async function createBundles({ paths, mode = 'development' }, callback)
 			entrypoints = entrypoints.concat(chunk.files);
 		})
 
-		// console.log(stats.stats[0])
+		// console.log(entrypoints)
 		// console.log(stats.stats[0].toString({
 		// 	chunks: false,  // Makes the build much quieter
 		// 	colors: true    // Shows colors in the console
@@ -76,8 +76,7 @@ function client({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 		resolve: {
 			alias: {
 				'sexy-routes': routesConfig,
-				'@': paths.root,
-				'component-route': paths.components('route.sexy'),
+				'sexy-styles': paths.rootBuild('styles.js'),
 			}
 		},
 
@@ -139,14 +138,15 @@ function client({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 		plugins: [
 
 			new WebpackBar({
-				name: 'Client',
+				name: 'Client'
 			}),
 
 			new MiniCssExtractPlugin({
-				filename: '[name].css',
-      			chunkFilename: '[id].css',
+				filename: '[hash].css',
+      			chunkFilename: '[chunkhash].css',
 			}),
 
+			new FriendlyErrorsWebpackPlugin(),
 		]
 
 	}
@@ -170,8 +170,6 @@ function server({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 		resolve: {
 			alias: {
 				'sexy-routes': routesConfig,
-				'@': paths.root,
-				'component-route': paths.components('route.sexy'),
 			}
 		},
 
@@ -206,7 +204,9 @@ function server({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 
 			new webpack.optimize.LimitChunkCountPlugin({
 				maxChunks: 1
-			})
+			}),
+
+			new FriendlyErrorsWebpackPlugin()
 		]
 
 	}

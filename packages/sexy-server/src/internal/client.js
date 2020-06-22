@@ -1,3 +1,4 @@
+import 'sexy-styles';
 import APP_ROUTES from 'sexy-routes';
 import { router } from './router';
 import { render, hydrate, registerComponent } from 'sexy-framework/render';

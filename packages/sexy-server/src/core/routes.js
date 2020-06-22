@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { ensureDirectoryExistence } from './utils';
+import { getConfig } from './config';
 import parse from 'regexparam';
 
 
@@ -38,8 +39,30 @@ export function findRoute({ routes, params, pathname })
 	return foundRoute;
 }
 
+export function createStyles(paths)
+{
+	let config = getConfig(paths);
+
+	let importStyles = [];
+
+	for(let style of config.styles) {
+		importStyles.push(`import("${ style }");`);
+	}
+
+	let stylesPath = paths.rootBuild('styles.js');
+
+	ensureDirectoryExistence(stylesPath);
+
+	fs.writeFileSync(stylesPath, `
+		${ importStyles.join('\n') }
+	`);
+}
+
+
 export function createRoutes({ paths, routes })
 {
+	createStyles(paths);
+
 	// paths.rootBuild
 	let routesPath = paths.rootBuild('routes.js');
 

@@ -1,9 +1,7 @@
-export default {
+module.exports = {
 	
-	analyze: true,
-
 	styles: [
-		'./css/a.scss'
+		'./assets/styles/main.scss'
 	],
 
 }

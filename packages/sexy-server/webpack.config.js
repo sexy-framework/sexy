@@ -2,6 +2,8 @@ const path = require('path');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
+console.log(Object.keys(require('./package.json').dependencies).concat(Object.keys(require('./package.json').devDependencies)));
+
 module.exports = {
 
 	mode: isProduction ? 'production' : 'development',
@@ -28,7 +30,7 @@ module.exports = {
 		__dirname: false
 	},
 	
-	externals: Object.keys(require('./package.json').dependencies),
+	externals: Object.keys(require('./package.json').dependencies).concat(Object.keys(require('./package.json').devDependencies)),
 
 	/**
 	 * Module

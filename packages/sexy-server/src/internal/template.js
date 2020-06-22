@@ -28,23 +28,24 @@ function getManifest()
 function getScripts(files = ['vendors.js', 'app.js'])
 {
 	return files.map(file => {
-		return {
-			tag: 'script',
-			src: `/${ file }`,
-			defer: true
-		}
+		return `<script src="/${ file }" defer></script>`
+		// return {
+		// 	tag: 'script',
+		// 	src: ``,
+		// 	defer: true
+		// }
 	});
 }
 
 export default function template(html)
 {
-	// getManifest();
+	let manifest = getManifest();
 
 	return Eta.render(getPageTemplate(), {
 		base: '',
 		styles: '',
 		head: '',
-		scripts: '',
+		scripts: getScripts(manifest.entrypoints),
 		html,
 	})
 }

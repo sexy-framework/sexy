@@ -19,8 +19,8 @@ export default function config(paths)
 				return {
 					path: paths.clientBuild(''),
 					publicPath: '/',
-					filename: '[name].js',
-					chunkFilename: '[name].js', // [hash]/[name].[id].js
+					filename: '[hash].js',
+					chunkFilename: 'sexy.[chunkhash].js', // [hash]/[name].[id].js
 				};
 			}
 		},
