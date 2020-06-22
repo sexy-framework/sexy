@@ -4,7 +4,7 @@ export function envPaths()
 {
 	let cwd = process.cwd();
 	let root = path.resolve(__dirname, '../');
-
+	
 	return {
 		cwd,
 		root,
@@ -17,6 +17,7 @@ export function envPaths()
 		app: (src) => path.resolve(cwd, './', src),
 
 		internal: (src) => path.resolve(root, './src/internal/', src),
+		components: (src) => path.resolve(root, './components/', src),
 
 		middleware: 'middleware.js',
 	}

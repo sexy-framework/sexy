@@ -15,8 +15,8 @@ export function createBundles({ paths, mode = 'development' }, callback)
 	let externals = Object.keys(require('../../package.json').dependencies)
 
 	const compiler = webpack([
-		client({ mode, webpackConfig, routesConfig, externals }),
-		server({ mode, webpackConfig, routesConfig, externals })
+		client({ paths, mode, webpackConfig, routesConfig, externals }),
+		server({ paths, mode, webpackConfig, routesConfig, externals })
 	]);
 
 	compiler.run((err, stats) => {
@@ -42,7 +42,7 @@ export function createBundles({ paths, mode = 'development' }, callback)
 }
 
 
-function client({ mode, webpackConfig, routesConfig, externals, })
+function client({ paths, mode, webpackConfig, routesConfig, externals, })
 {
 	let isProduction = mode === 'production'
 	let cssExtractLoader = isProduction ? MiniCssExtractPlugin.loader : 'style-loader';
@@ -64,6 +64,8 @@ function client({ mode, webpackConfig, routesConfig, externals, })
 		resolve: {
 			alias: {
 				'sexy-routes': routesConfig,
+				'@': paths.root,
+				'component-route': paths.components('route.sexy'),
 			}
 		},
 
@@ -139,7 +141,7 @@ function client({ mode, webpackConfig, routesConfig, externals, })
 
 }
 
-function server({ mode, webpackConfig, routesConfig, externals, }) {
+function server({ paths, mode, webpackConfig, routesConfig, externals, }) {
 	return  {
 		mode,
 		externals,
@@ -153,6 +155,8 @@ function server({ mode, webpackConfig, routesConfig, externals, }) {
 		resolve: {
 			alias: {
 				'sexy-routes': routesConfig,
+				'@': paths.root,
+				'component-route': paths.components('route.sexy'),
 			}
 		},
 

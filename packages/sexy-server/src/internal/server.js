@@ -24,6 +24,10 @@ process.on('message', ({ route }) => {
 
 function make(module)
 {
+	const components = require('./components');
+	// console.log(components)
+	components.register();
+
 	let root = document.getElementById('_layout');
 
 	try {

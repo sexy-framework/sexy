@@ -1,8 +1,9 @@
 import APP_ROUTES from 'sexy-routes';
-import navigo from 'navigo';
-import { render, hydrate } from 'sexy-framework/render';
+import { router } from './router';
+import { render, hydrate, registerComponent } from 'sexy-framework/render';
+import * as components from './components';
 
-var router = new navigo(location.protocol + "//" + location.host, false);
+components.register();
 
 const root = document.getElementById('_layout');
 

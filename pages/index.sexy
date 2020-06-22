@@ -2,9 +2,12 @@
 	<h1> index </h1>
 	<dynamic :is="tag" href="/test" @click="alert(1)">1</dynamic>
 	<Static>asd</Static>
+	<Route to="/home">Test</Route>
 </div>
 
 <script>
+import Static from '../components/static.sexy';
+
 let counter = o(1);
 let items = o(Array.from({ length: 200 }, (_, i) => i));
 let test = '/test';
