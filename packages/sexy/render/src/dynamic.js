@@ -46,7 +46,6 @@ export function hydrateTag(node, options, render)
 
 	if(options.$customInit) {
 		call(options.$customInit, [], node, render)
-		// options.$customInit([], node, render);
 	}
 
 	return node;

@@ -1,5 +1,5 @@
-export default {
-
-	test: 1
+module.exports = {
+	
+	analyzer: true,
 
 }

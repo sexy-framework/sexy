@@ -67,6 +67,8 @@ export function getConfig(entity, context, options)
 	
 	if(entity.inheritable()) {
 		customInit.push(id('$customInit[1]'))
+	} else {
+		customInit.push(id('null'))
 	}
 
 	if(callbackContext.length > 0) {

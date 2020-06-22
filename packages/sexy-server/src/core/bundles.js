@@ -3,20 +3,33 @@ import webpack from 'webpack';
 import path from 'path';
 import { routes } from './routes';
 import WebpackBar from 'webpackbar';
+import relative from 'require-relative';
 // Plugins
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TerserJSPlugin from 'terser-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';  
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';  
 
-export function createBundles({ paths, mode = 'development' }, callback)
+let procKillable = true;
+
+export async function createBundles({ paths, mode = 'development' }, callback)
 {
+	procKillable = true;
+
 	let webpackConfig = createConfig(paths);
 	let routesConfig = paths.rootBuild('routes.js');
 	let externals = Object.keys(require('../../package.json').dependencies)
 
+	const appConfig = relative(
+		paths.app('./sexy.config.js'),
+		path.resolve(paths.root, './components/a/'),
+	);
+
+	const isProduction = mode === 'production';
+
 	const compiler = webpack([
-		client({ paths, mode, webpackConfig, routesConfig, externals }),
-		server({ paths, mode, webpackConfig, routesConfig, externals })
+		client({ paths, isProduction, appConfig, webpackConfig, routesConfig, externals }),
+		server({ paths, isProduction, appConfig, webpackConfig, routesConfig, externals })
 	]);
 
 	compiler.run((err, stats) => {
@@ -37,14 +50,13 @@ export function createBundles({ paths, mode = 'development' }, callback)
 		// 	colors: true    // Shows colors in the console
 		// }));
 
-		callback(entrypoints);
+		callback(entrypoints, procKillable);
 	});
 }
 
 
-function client({ paths, mode, webpackConfig, routesConfig, externals, })
+function client({ paths, isProduction, appConfig, webpackConfig, routesConfig, externals, })
 {
-	let isProduction = mode === 'production'
 	let cssExtractLoader = isProduction ? MiniCssExtractPlugin.loader : 'style-loader';
 	// console.log(isProduction, cssExtractLoader)
 	let minimizer = [];
@@ -56,7 +68,7 @@ function client({ paths, mode, webpackConfig, routesConfig, externals, })
 	}
 
 	return  {
-		mode,
+		mode: isProduction ? 'production' : 'development',
 
 		entry: webpackConfig.client.entry(),
 		output: webpackConfig.client.output(),
@@ -93,7 +105,7 @@ function client({ paths, mode, webpackConfig, routesConfig, externals, })
 					use: [{
 						loader: 'sexy-loader',
 						options: {
-							path: '../components',
+							path: paths.app('./components'),
 							styles: true
 						}
 					}]
@@ -141,9 +153,12 @@ function client({ paths, mode, webpackConfig, routesConfig, externals, })
 
 }
 
-function server({ paths, mode, webpackConfig, routesConfig, externals, }) {
-	return  {
-		mode,
+function server({ paths, isProduction, appConfig, webpackConfig, routesConfig, externals, }) {
+
+	let config = {
+		
+		mode: isProduction ? 'production' : 'development',
+
 		externals,
 		target: 'node',
 
@@ -168,7 +183,7 @@ function server({ paths, mode, webpackConfig, routesConfig, externals, }) {
 					use: [{
 						loader: 'sexy-loader',
 						options: {
-							path: '../components',
+							path: paths.app('./components'),
 							styles: false
 						}
 					}]
@@ -195,4 +210,11 @@ function server({ paths, mode, webpackConfig, routesConfig, externals, }) {
 		]
 
 	}
+
+	if(appConfig.analyzer && isProduction) {
+		procKillable = false;
+		config.plugins.push(new BundleAnalyzerPlugin());
+	}
+
+	return config;
 }

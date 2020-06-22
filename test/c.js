@@ -1,18 +1,23 @@
 
 const APP_ROUTES = {
-	'/blog/:article': import('../pages/blog/_article.sexy'),
-	'/blog/': import('../pages/blog/index.sexy'),
-	'/home': import('../pages/home.sexy'),
+	// '/blog/:article': import('../pages/blog/_article.sexy'),
+	// '/blog/': import('../pages/blog/index.sexy'),
+	// '/home': import('../pages/home.sexy'),
 	'/': import('../pages/index.sexy')
 };
 
 import { render, hydrate, refresh, registerComponent } from 'sexy-framework/render';
-import s from '../components/static.sexy'
+import Static from '../components/static.sexy'
+import PageComponent from '../pages/index.sexy'
+import Route from '../packages/sexy-server/src/components/route.sexy'
 
-registerComponent('Static', s);
 
 
-let PageComponent = APP_ROUTES['/'];
+registerComponent('Static', Static);
+registerComponent('Route', Route);
+
+
+// let PageComponent = APP_ROUTES['/'];
 
 let layout = document.getElementById('layout');
 

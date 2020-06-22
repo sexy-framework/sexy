@@ -44,7 +44,7 @@ let entrypoints = [];
 function dev()
 {
 	cleanup();
-	console.log(c.green('Started to watch file changes'));
+	console.log(c.green(`Started to watch files: ${ paths.cwd }`));
 
 	watcher(paths.cwd, () => {
 		routes = api.routes(paths);
@@ -75,9 +75,11 @@ function build()
 	// generate routes config
 	createRoutes({ paths, routes });
 
-	bundle('production', () => {
+	bundle('production', (kill) => {
 		box('Bundle is ready')
-		process.exit();
+		if(kill) {
+			process.exit();
+		}
 	});
 }
 
@@ -94,7 +96,7 @@ function start()
 
 function bundle(mode, callback = () => {})
 {
-	createBundles({ paths, mode }, (entrypoints) => {
+	createBundles({ paths, mode }, (entrypoints, killable) => {
 
 		createManifest(paths, {
 			entrypoints,
@@ -102,7 +104,7 @@ function bundle(mode, callback = () => {})
 		
 		startRender();
 
-		callback();
+		callback(killable);
 	});
 
 }
