@@ -23,6 +23,13 @@ export default class Component extends Type {
 		return Object.keys(this.option.attributes).length > 0
 	}
 
+	// TODO
+	// Check each/if 
+	inheritable()
+	{
+		return this.parent.isRoot();
+	}
+
 	getName(name = null)
 	{
 		if(name === null) {

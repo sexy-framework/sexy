@@ -13,23 +13,21 @@ function gett() {
 	
 
 	let html = `
-	<dynamic :is="tag" @click="navigate">
-		<slot></slot>
-	</dynamic>
+	<Route class="s">
+		2
+	</Route>
 
 	<script>
+	import { router } from '../internal/router';
+
 	let tag = p('a');
 	let to = p(null);
 
 	function navigate() {
-		alert(1)
-	}
-
-	function mounted()
-	{
-		console.log(tag, to);
+		router.navigate(to());
 	}
 	</script>
+
 
 	`
 	let blocks = parse(html);

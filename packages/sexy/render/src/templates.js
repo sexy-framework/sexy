@@ -67,7 +67,7 @@ export function parseContext(context) {
 
 	let $props = context.$props || {};
 	let $slots = context.$slots || {};
-	let $customInit = context.$customInit || null;
+	let $customInit = context.$customInit || [null, null];
 	
 	return {
 		$props,

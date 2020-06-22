@@ -5,6 +5,8 @@
 <script>
 import { router } from '../internal/router';
 
+console.log($customInit);
+
 let tag = p('a');
 let to = p(null);
 

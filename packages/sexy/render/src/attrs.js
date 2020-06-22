@@ -73,6 +73,7 @@ export function makeStyles(node, value, render)
 
 export function attrs(node, render, attrs)
 {
+	// console.log('start attr', node, render, attrs)
 	for(let name in attrs)
 	{
 		let value = attrs[name];

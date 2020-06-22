@@ -2,6 +2,7 @@ import { loadComponent } from './load';
 import { subscribe, root, value } from 'sexy-framework/observable';
 import { add, persistent, diffable, castNode } from './utils.js';
 import { cleanupFragment } from './statement';
+import { call } from './call';
 // import { isManualComponent }  from 'sexy-framework/parser';
 // dynamic(computed, node)
 
@@ -44,7 +45,8 @@ export function hydrateTag(node, options, render)
 	}
 
 	if(options.$customInit) {
-		options.$customInit([], node, render);
+		call(options.$customInit, [], node, render)
+		// options.$customInit([], node, render);
 	}
 
 	return node;

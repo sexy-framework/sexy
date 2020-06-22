@@ -12,6 +12,7 @@ import {
 	conditionalExpression,
 	assignmentExpression,
 	IfStatement,
+	arrayExpression,
 } from "@babel/types";
 
 import { attrs } from '../dynamic';
@@ -62,17 +63,31 @@ export function getConfig(entity, context, options)
 		);
 	}
 
+	let customInit = [];
+	
+	if(entity.inheritable()) {
+		customInit.push(id('$customInit[1]'))
+	}
+
 	if(callbackContext.length > 0) {
+		customInit.push(
+			arrowFunctionExpression([
+				id('$hooks'),
+				id('node'),
+				id('render'),
+			], blockStatement(callbackContext))
+		);
+	} else {
+		customInit.push(id('null'))
+	}
+
+	if(customInit.length > 0) {
 		obj.push(
 			objectProperty(
 				id('$customInit'),
-				arrowFunctionExpression([
-					id('$hooks'),
-					id('node'),
-					id('render'),
-				], blockStatement(callbackContext))
+				arrayExpression(customInit)
 			)
-		)
+		);
 	}
 
 	// create slots

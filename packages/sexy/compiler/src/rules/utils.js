@@ -51,13 +51,13 @@ export function getFirstTemplateNode(entity, context, options)
 			)
 		);
 
-		// id
+		// props
 		// context.push(expressionStatement(
 		// 	assignmentExpression(
 		// 		'=',
-		// 		id('$id'),
+		// 		id('$props'),
 		// 		callExpression(
-		// 			id('_createComponent$'), [
+		// 			id('_setProps$'), [
 		// 			pointer.name,
 		// 			id('render'),
 		// 		])

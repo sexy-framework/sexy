@@ -83,10 +83,11 @@ export function attrs(obj, isComponent = false)
 			continue;
 		}
 		
-		if(isDomAttr(name, isComponent)) {
-			result.staticAttrs[name] = value;
+		if(isDomAttr(name) && isComponent) {
+			result.attributes[name] = makeValue(value, false);
+		}
 		// transitions
-		} else if(name.match(/^transition\:/g)) {
+		if(name.match(/^transition\:/g)) {
 			name = name.replace(/^transition\:/g, '');
 			
 			let settings = {
@@ -136,8 +137,6 @@ export function attrs(obj, isComponent = false)
 			// console.error(`Attr ${name} doesnt registered. Cant understand type.`)
 		}
 	}
-
-	// console.log(result)
 
 	return result;
 }
