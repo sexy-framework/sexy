@@ -39,6 +39,8 @@ export function attrs(attributes, point, context, options, returnObject = false)
 		return objectExpression(props);
 	}
 
+	// console.log(point)
+
 	let expression = new expressionStatement(
 		new callExpression(
 			id('_makeAttrs$'), [

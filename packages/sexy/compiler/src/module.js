@@ -24,6 +24,7 @@ export function module({ imports, components, templates, script, render })
 			call as _call$,
 			createComponent as _createComponent$,
 			createHooks as _createHooks$,
+			dynamic as _dynamic$,
 			parseContext,
 			loadComponent,
 		} from 'sexy-framework/render';

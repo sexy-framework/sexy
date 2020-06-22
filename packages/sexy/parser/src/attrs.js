@@ -117,10 +117,11 @@ export function attrs(obj, isComponent = false)
 		} else if(name.match(/^\:/g)) {
 			name = name.replace(/^\:/g, '');
 			value = makeValue(value, true);
+			// console.log(isComponent, name, isDomAttr(name, isComponent))
 			
 			if(isRootAttr(name)) {
 				result[name] = value;
-			} else if(isDomAttr(name, isComponent)) {
+			} else if(isDomAttr(name)) {
 				result.attributes[name] = value;
 			} else {
 				result.props[name] = value;

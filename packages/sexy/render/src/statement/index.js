@@ -45,16 +45,20 @@ export function getInitValue(args, render)
 	return index;
 }
 
+export function cleanupFragment(parent, startMark, endMark)
+{
+	let cleanNodes = createInitFragment(startMark, endMark);
+	parent.removeChild(diffable(cleanNodes, -1));
+}
+
 export function statement(node, render, deps, ...args)
 {
 	// let 
 	let parent;
 	let endMark, startMark;
 
-	function cleanup()
-	{
-		let cleanNodes = createInitFragment(startMark, endMark);
-		parent.removeChild(diffable(cleanNodes, -1));
+	function cleanup() {
+		return cleanupFragment(parent, startMark, endMark);
 	}
 	
 	if(render) {

@@ -62,7 +62,8 @@ export default class Type
 	hasAloneTemplate()
 	{
 		let alone = true;
-
+		// let children = this.children || [];
+		// console.log(children)
 		for(let child of this.children) {
 			if(!child.isTemplate()) {
 				alone = false;
@@ -95,7 +96,7 @@ export default class Type
 		
 		template += `</${this.tag}>`;
 
-		if(['statement', 'each', 'component'].includes(this.type) && !onlyChildren) {
+		if(['statement', 'each', 'component', 'dynamic'].includes(this.type) && !onlyChildren) {
 			return '<!---->';
 		}
 

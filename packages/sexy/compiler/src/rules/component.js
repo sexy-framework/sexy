@@ -43,9 +43,7 @@ export function getConfig(entity, context, options)
 	// create refs
 	options.dynamic.ref(entity, id('node'), callbackContext, options);
 	// create attrs
-	options.dynamic.attrs(entity.option.attributes, {
-		name: id('node')
-	}, callbackContext, options);
+	options.dynamic.attrs(entity.option.attributes, id('node'), callbackContext, options);
 	// create events
 	options.dynamic.events(entity, id('node'), callbackContext, options);
 
@@ -116,6 +114,7 @@ export function getConfig(entity, context, options)
 
 			// body.push(returnPointer);
 
+			// console.log(slot, slot.attrs)
 			slots.push(
 				objectProperty(
 					stringLiteral(slot.attrs.slot),

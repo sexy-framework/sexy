@@ -37,6 +37,8 @@ export function directives(directives, pointer, context, options)
 
 		options = objectExpression(options);
 
+		let value = directive.value == '' ? 'null' : directive.value;
+
 		context.push(
 			expressionStatement(
 				callExpression(
@@ -45,7 +47,7 @@ export function directives(directives, pointer, context, options)
 						id(name),
 						pointer,
 						options,
-						id(directive.value),
+						id(value),
 						id('render'),
 					]
 				)

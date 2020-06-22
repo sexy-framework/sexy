@@ -1,9 +1,9 @@
-import Type from './Type';
+import Component from './Component';
 import { attrs as parseAttrs } from '../attrs';
 
-export default class Dynamic extends Type
+export default class Dynamic extends Component
 {
-	constructor(tag, attrs)
+	constructor(attrs)
 	{
 		super();
 
@@ -16,8 +16,8 @@ export default class Dynamic extends Type
 		this.execDirectives();
 	}
 
-	hasAttributes()
-	{
-		return Object.keys(this.option.attributes).length > 0
-	}
+	// hasAttributes()
+	// {
+	// 	return Object.keys(this.option.attributes).length > 0
+	// }
 }
