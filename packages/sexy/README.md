@@ -49,8 +49,9 @@ Benchmark was made with 10 000 components with loop function. (Without loop its 
 - [x] Dependencies (SFC)
 - [ ] Store (Vuex, Mobx...)
 - [x] SSR
+- [x] Simple router
 - [ ] Static site generation
-- [ ] Project config for SSR (styles entry, bundle analyzer...)
+- [x] Project config for SSR (styles entry, bundle analyzer...)
 - [ ] Client ssr-first mode (if there is huge page then render it on server, cache and transfer to client instead of render on client directly)
 - [ ] Recursive components
 - [ ] Dynamic components !! (tags complete)
