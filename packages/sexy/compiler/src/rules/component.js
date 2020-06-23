@@ -101,37 +101,94 @@ export function getConfig(entity, context, options)
 
 			let body = [];
 
-			let template = options.createVariable(body, (n, l) => {
-				return memberExpression(id('node'), id('firstChild'))
-			});
+			let isEmptyTag = slot.attrs.tag == 'null';
+			
+			let template;
 
-			body.push(
-				IfStatement(
-					id('render'),
-					blockStatement([
-						expressionStatement(
-							assignmentExpression('=', 
-								memberExpression(id('node'), id('innerHTML')),
-								stringLiteral(slot.makeTemplate(true))
+			if(isEmptyTag) {
+				template = options.createVariable(body, (n, l) => {
+					return id('node');
+				});
+
+				body.push(template.value);
+
+				body.push(
+					IfStatement(
+						id('render'),
+						blockStatement([
+							expressionStatement(
+								assignmentExpression('=', 
+									template.name,
+									callExpression(
+										memberExpression(id('document'), id('createElement')), [
+											stringLiteral('template')
+										]
+									)
+								)
+							),
+							expressionStatement(
+								assignmentExpression('=', 
+									memberExpression(template.name, id('innerHTML')),
+									stringLiteral(slot.makeTemplate(true))
+								)
 							)
-						)
-					])
-				)
-			);
+						])
+					)
+				);
 
-			body.push(template.value);
+				let firstChildFix = options.createVariable(body, (n, l) => {
+					return conditionalExpression(
+						id('render'),
+						memberExpression(
+							memberExpression(template.name, id('content')),
+							id('firstChild')
+						),
+						template.name
+					)
+				});
+
+				body.push(firstChildFix.value);
+
+				// body.push(template.value);
+			} else {
+				template = options.createVariable(body, (n, l) => {
+					return memberExpression(id('node'), id('firstChild'))
+				});
+
+				body.push(
+					IfStatement(
+						id('render'),
+						blockStatement([
+							expressionStatement(
+								assignmentExpression('=', 
+									memberExpression(id('node'), id('innerHTML')),
+									stringLiteral(slot.makeTemplate(true))
+								)
+							)
+						])
+					)
+				);
+
+				body.push(template.value);
+			}
 
 			let lastChild = children(slot, body, options, () => {});
 
-			// let returnPointer = new returnStatement(
-			// 	new conditionalExpression(
-			// 		id('render'), template.name, lastChild
-			// 	)
-			// );
+			if(isEmptyTag) {
+				// console.log(template.name)
+				body.push(
+					expressionStatement(
+						callExpression(
+							id('_slot$templateRender'), [
+								id('node'),
+								template.name,
+								id('render'),
+							]
+						)
+					)
+				);
+			}
 
-			// body.push(returnPointer);
-
-			// console.log(slot, slot.attrs)
 			slots.push(
 				objectProperty(
 					stringLiteral(slot.attrs.slot),

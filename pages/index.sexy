@@ -1,7 +1,13 @@
 <div>
 	<h1> index </h1>
 	<dynamic :is="tag" href="/test" @click="alert(1)">1</dynamic>
-	<Static>asd</Static>
+	<Static>
+		<template slot="default" tag="null">
+			test 1
+			<span @click="alert(1)">test 2</span>
+			test 3
+		</template>
+	</Static>
 	<Route to="/home" class="1">Test</Route>
 </div>
 

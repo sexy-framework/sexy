@@ -19,6 +19,8 @@ export function prepare(blocks, html)
 		// each
 		.replace(/@each\((.*)\)/g, '<expr type="each" value="$1">')
 		.replace(/@endeach/g, '</expr>')
+		// Sexy slot for server layouts
+		.replace(/\<sexy(\s*)\/\>/g, '<slot name="sexy" tag="null"></slot>')
 
 	return prepareHTML(html);
 }

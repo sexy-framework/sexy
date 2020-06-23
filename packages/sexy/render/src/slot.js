@@ -13,3 +13,10 @@ export function slot($slots, name, node, render, callback) {
 	
 	return node;
 }
+
+export function slotReplaceTemplate(node, template, render)
+{
+	if(render) {
+		node.replaceWith(template.content)
+	}
+}

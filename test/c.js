@@ -42,15 +42,15 @@ time('render');
 
 
 
-// setTimeout(() => {
-// 	unmount();
-// 	refresh(layout);
+setTimeout(() => {
+	unmount();
+	refresh(layout);
 
-// 	console.log('start hydration');
-// 	time('hydrate');
+	console.log('start hydration');
+	time('hydrate');
 	
-// 	unmount = hydrate(PageComponent, layout);
+	unmount = hydrate(PageComponent, layout);
 	
-// 	time('hydrate');
-// }, 300)
+	time('hydrate');
+}, 300)
 

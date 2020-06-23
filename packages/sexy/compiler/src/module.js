@@ -1,4 +1,4 @@
-export function module({ imports, components, templates, script, render })
+export function module({ imports, exportnames, components, templates, script, render })
 {
 	return ({
 		afterImport = '',
@@ -13,6 +13,7 @@ export function module({ imports, components, templates, script, render })
 			attrs as _makeAttrs$,
 			events as _makeEvents$,
 			slot as _slot$,
+			slotReplaceTemplate as _slot$templateRender,
 			map as _each$,
 			statement as _statement$,
 			directive as _directive$,
@@ -51,6 +52,8 @@ export function module({ imports, components, templates, script, render })
 			// render
 			${ render }
 		}
+		
+		${ exportnames }
 
 		export default render;
 		`;

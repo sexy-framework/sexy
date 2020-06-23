@@ -1,6 +1,6 @@
 export { attrs } from './attrs'
 export { events } from './events'
-export { slot } from './slot'
+export { slot, slotReplaceTemplate } from './slot'
 export { getNode, parseContext, getProp, setRef, setKey, createHooks } from './templates'
 export { statement } from './statement'
 export { map } from './map'

@@ -14,11 +14,17 @@ function gett() {
 
 	let html = `
 	<Route class="s">
-		2
+		<template slot="default" tag="null">
+			test 1
+			<span @click="alert(1)">test 2</span>
+			test 3
+		</template>
 	</Route>
 
 	<script>
 	import { router } from '../internal/router';
+	
+	export const layout = 'app';
 
 	let tag = p('a');
 	let to = p(null);
