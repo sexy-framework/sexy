@@ -14,15 +14,43 @@ fastify.register(require('fastify-static'), {
   prefix: '/', // optional: default '/'
 })
 
+// Route caching
+fastify.register(
+	require('fastify-caching'), {},  (err) => {
+		if (err) throw err
+	}
+)
+
 // URL data
 fastify.register(require('fastify-url-data'));
-
-let cache = {};
 
 function showPage(reply, page) {
 	reply
 		.type('text/html')
 		.send(page);
+}
+
+function cache(key, getValue, callback)
+{
+	let cache = fastify.cache.get(key, (err, result) => {
+		if(result) {
+			return result.item
+		}
+
+		return null;
+	})
+
+	if(cache) {
+		callback(cache);
+	} else {
+		cache = getValue((html) => {
+			fastify.cache.set(key, html, 10000, (err, result) => {
+				if (err) return reply.send(err)
+				callback(html);
+			});
+		});
+		
+	}
 }
 
 sexy.routes((path, route) => {
@@ -31,16 +59,14 @@ sexy.routes((path, route) => {
 		const url = request.urlData();
 		const uid = url.path + url.query;
 
-		if(cache[uid]) {
-			return showPage(reply, cache[uid]);
-		}
-
-		sexy.build({
-			route: path
+		cache(uid, (callback) => {
+			sexy.build({ route: path }, (html) => {
+				callback(html);
+			});
 		}, (page) => {
-			cache[uid] = page;
 			showPage(reply, page);
-		});
+		})
+
 	})
 });
 

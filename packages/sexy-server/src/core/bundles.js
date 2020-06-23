@@ -8,7 +8,7 @@ import WebpackBar from 'webpackbar';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TerserJSPlugin from 'terser-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';  
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';  
+// import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';  
 import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
 
 let procKillable = true;
@@ -57,7 +57,12 @@ export async function createBundles({ paths, mode = 'development' }, callback)
 
 function client({ paths, isProduction, appConfig, webpackConfig, routesConfig, externals, })
 {
-	let cssExtractLoader = isProduction ? MiniCssExtractPlugin.loader : 'style-loader';
+	let cssExtractLoader = isProduction ? MiniCssExtractPlugin.loader : {
+		loader: 'style-loader',
+		options: {
+			attributes: { 'data-to-remove': '' }
+		}
+	};
 	// console.log(isProduction, cssExtractLoader)
 	let minimizer = [];
 	if(isProduction) {
@@ -146,7 +151,7 @@ function client({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
       			chunkFilename: '[chunkhash].css',
 			}),
 
-			new FriendlyErrorsWebpackPlugin(),
+			// new FriendlyErrorsWebpackPlugin(),
 		]
 
 	}
@@ -206,15 +211,15 @@ function server({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 				maxChunks: 1
 			}),
 
-			new FriendlyErrorsWebpackPlugin()
+			// new FriendlyErrorsWebpackPlugin()
 		]
 
 	}
 
-	if(appConfig.analyzer && isProduction) {
-		procKillable = false;
-		config.plugins.push(new BundleAnalyzerPlugin());
-	}
+	// if(appConfig.analyzer && isProduction) {
+	// 	procKillable = false;
+	// 	config.plugins.push(new BundleAnalyzerPlugin());
+	// }
 
 	return config;
 }

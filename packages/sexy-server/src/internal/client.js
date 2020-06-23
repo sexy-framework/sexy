@@ -33,5 +33,22 @@ for(let route in APP_ROUTES) {
 	});
 }
 
+
+
+// router.hooks({
+// 	before(done, params) {
+// 		// cleanup
+// 		let toRemove = document.querySelectorAll('[data-to-remove]');
+
+// 		console.log(toRemove)
+// 		toRemove.forEach((node) => {
+// 			node.parentNode.removeChild(node);
+// 		});
+		
+// 		done();
+// 	}
+// });
+
 router.resolve();
+
 
