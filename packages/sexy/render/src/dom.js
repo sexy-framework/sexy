@@ -1,13 +1,13 @@
 import { root, getRoot } from 'sexy-framework/observable';
 import { lazy } from './load';
 
-export function render(component, rootNode)
+export function render(component, rootNode, context = null)
 {
 	let root = getRoot();
 	
 	lazy(component, (component) => {
 
-		let c = component();
+		let c = component(context);
 
 		rootNode.innerHTML = '';
 		rootNode.appendChild(c.node);
@@ -28,12 +28,12 @@ export function refresh(rootNode)
 	rootNode.innerHTML = tmp;
 }
 
-export function hydrate(component, rootNode)
+export function hydrate(component, rootNode, context = null)
 {
 	let root = getRoot();
 
 	lazy(component, (component) => {
-		let c = component(null, rootNode.firstChild);
+		let c = component(context, rootNode.firstChild);
 
 		if(c.hooks && c.hooks.mounted) {
 			c.hooks.mounted();

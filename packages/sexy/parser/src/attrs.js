@@ -83,8 +83,12 @@ export function attrs(obj, isComponent = false)
 			continue;
 		}
 		
-		if(isDomAttr(name) && isComponent) {
-			result.attributes[name] = makeValue(value, false);
+		if(isDomAttr(name)) {
+			if(isComponent) {
+				result.attributes[name] = makeValue(value, false);	
+			} else {
+				result.staticAttrs[name] = value;
+			}
 		}
 		// transitions
 		if(name.match(/^transition\:/g)) {

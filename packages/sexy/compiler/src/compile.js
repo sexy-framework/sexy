@@ -27,6 +27,20 @@ import {
 
 import generate from "@babel/generator";
 
+
+function genCode(body) {
+	return generate(program(
+		body, 
+		[],
+		'module'
+	), {
+		retainLines: false,
+		compact: false,
+		minified: false,
+		concise: false,
+		quotes: "double",
+	}).code;
+}
 /**
  * Compile template to DOM expressions
  */
@@ -41,7 +55,7 @@ export function compile(loaderOptions, blocks)
 	 */
 	let Templates = new Set();
 
-	let codeAnalyse = analyse(blocks.script);
+	let codeAnalyse = analyse(blocks.script, loaderOptions);
 	let dynamicExpressions = dynamic(codeAnalyse);
 
 	function createTemplate(program)
@@ -149,49 +163,13 @@ export function compile(loaderOptions, blocks)
 	 * Generate code
 	 * @type {[type]}
 	 */
-	let code = generate(program(
-		body, 
-		[],
-		'module'
-	), {
-		retainLines: false,
-		compact: false,
-		minified: false,
-		concise: false,
-		quotes: "double",
-	});
-
-	let imports = generate(program(
-		codeAnalyse.imports, 
-		[],
-		'module'
-	), {
-		retainLines: false,
-		compact: false,
-		minified: false,
-		concise: false,
-		quotes: "double",
-	});
-
-	let exportnames = generate(program(
-		codeAnalyse.exportnames, 
-		[],
-		'module'
-	), {
-		retainLines: false,
-		compact: false,
-		minified: false,
-		concise: false,
-		quotes: "double",
-	});
-
 	return {
 		module: module({
-			render: code.code,
+			render: genCode(body),
 			templates: getTemplates(),
 			script: script(codeAnalyse, blocks.script),
-			imports: imports.code,
-			exportnames: exportnames.code,
+			imports: genCode(codeAnalyse.imports),
+			exportnames: genCode(codeAnalyse.exportnames),
 			components: components(entity, codeAnalyse.imports)(loaderOptions.path, loaderOptions.delimeter),
 		}),
 		styles: blocks.style,

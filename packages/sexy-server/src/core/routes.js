@@ -75,6 +75,6 @@ export function createRoutes({ paths, routes })
 	ensureDirectoryExistence(routesPath);
 
 	fs.writeFileSync(routesPath, `
-		export default { ${ imports.join(',') } };
+		export const Routes = { ${ imports.join(',') } };
 	`);
 }

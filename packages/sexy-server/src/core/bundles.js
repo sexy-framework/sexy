@@ -82,6 +82,7 @@ function client({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 			alias: {
 				'sexy-routes': routesConfig,
 				'sexy-styles': paths.rootBuild('styles.js'),
+				'@layouts': paths.app('./layouts'),
 			}
 		},
 
@@ -110,6 +111,8 @@ function client({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 						loader: 'sexy-loader',
 						options: {
 							path: paths.app('./components'),
+							pages: paths.app('./pages'),
+							layouts: paths.app('./layouts'),
 							styles: true
 						}
 					}]
@@ -175,6 +178,7 @@ function server({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 		resolve: {
 			alias: {
 				'sexy-routes': routesConfig,
+				'@layouts': paths.app('./layouts'),
 			}
 		},
 
@@ -187,6 +191,8 @@ function server({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 						loader: 'sexy-loader',
 						options: {
 							path: paths.app('./components'),
+							pages: paths.app('./pages'),
+							layouts: paths.app('./layouts'),
 							styles: false
 						}
 					}]

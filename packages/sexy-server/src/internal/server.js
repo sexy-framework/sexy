@@ -1,7 +1,8 @@
 import { JSDOM } from 'jsdom';
 import { render } from 'sexy-framework/render';
-import APP_ROUTES from 'sexy-routes';
+import { Routes } from 'sexy-routes';
 import template from './template';
+import { serverLayout, Layout } from './layout';
 
 const dom = new JSDOM('<div id="_layout"></div>');
 
@@ -22,7 +23,7 @@ process.on('message', ({ route }) => {
 	}, false)
 });
 
-function make(module)
+function make(page)
 {
 	const components = require('./components');
 	// console.log(components)
@@ -31,7 +32,7 @@ function make(module)
 	let root = document.getElementById('_layout');
 
 	try {
-		render(module.default, root);
+		serverLayout(render, page, root);
 	} catch(err) {
 		console.log('[ ERROR ]', err);
 	}
@@ -41,18 +42,18 @@ function make(module)
 
 export function build({ route }, callback, isProduction = true)
 {
-	if(APP_ROUTES[route] === undefined) {
+	if(Routes[route] === undefined) {
 		throw new Error(`There is no page:${ route } ready`);
 	}
 
-	APP_ROUTES[route]().then(module => {
-		callback(make(module))
+	Routes[route]().then(page => {
+		callback(make(page))
 	});
 }
 
 export function routes(handler)
 {
-	for(let path in APP_ROUTES) {
-		handler(path, APP_ROUTES[path]);
+	for(let path in Routes) {
+		handler(path, Routes[path]);
 	}
 }

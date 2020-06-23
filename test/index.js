@@ -23,8 +23,7 @@ function gett() {
 
 	<script>
 	import { router } from '../internal/router';
-	
-	export const layout = 'app';
+	export { Layout2 } from '@layouts/app.sexy';
 
 	let tag = p('a');
 	let to = p(null);
@@ -41,6 +40,8 @@ function gett() {
 	let d = compile({
 		path: '../components',
         delimeter: '-',
+        isPage: false,
+        isLayout: true,
 	}, blocks);
 
 	let i = d.module({

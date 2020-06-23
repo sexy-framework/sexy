@@ -11,7 +11,7 @@ module.exports = {
 	mode: 'development',
 
 	entry: [
-		'./test/c.js'
+		'./test/index.js'
 	],
 
 	output: {
@@ -64,6 +64,8 @@ module.exports = {
 						path: '../components',
 						delimeter: '-',
 						styles: true,
+						pages: '../pages',
+						layouts: '../layouts',
 					}
 				}]
 			},

@@ -1,0 +1,9 @@
+<div>
+	<h1> Home </h1>
+	<nav.menu></nav.menu>
+</div>
+
+<script>
+export { Layout } from '@layouts/app.sexy';
+
+</script>

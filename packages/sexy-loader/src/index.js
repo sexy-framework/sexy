@@ -76,6 +76,21 @@ export default function(source) {
 	const options = loaderUtils.getOptions(loaderContext) || {};
 	
 	options.styles = options.styles === undefined ? true : options.styles;
+	options.layouts = options.layouts === undefined ? false : options.layouts;
+	options.pages = options.pages === undefined ? false : options.pages;
+	options.resourcePath = resourcePath;
+	
+	options.isPage = false;
+	options.isLayout = false;
+
+	if(options.pages) {
+		options.isPage = /(^\.\.\/)/g.test(path.relative(options.pages, options.resourcePath)) === false;
+	}
+
+	if(options.layouts) {
+		options.isLayout = /(^\.\.\/)/g.test(path.relative(options.layouts, options.resourcePath)) === false;
+	}
+
 	/**
 	 * Compiler
 	 */
