@@ -25,16 +25,11 @@ function getManifest()
 	));
 }
 
-function getScripts(files = ['vendors.js', 'app.js'])
+function getScripts(files = [])
 {
 	return files.map(file => {
-		return `<script src="/${ file }" defer></script>`
-		// return {
-		// 	tag: 'script',
-		// 	src: ``,
-		// 	defer: true
-		// }
-	});
+		return `<script src="/${ file }" defer></script>`;
+	}).join('');
 }
 
 export default function template(html)
