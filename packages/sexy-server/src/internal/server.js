@@ -1,8 +1,10 @@
 import { JSDOM } from 'jsdom';
+import fs from 'fs';
 import { render } from 'sexy-framework/render';
-import { Routes } from 'sexy-routes';
+import { Routes, RouteChunks } from 'sexy-routes';
 import template from './template';
 import { serverLayout, Layout } from './layout';
+import relative from 'require-relative';
 
 const dom = new JSDOM('<div id="_layout"></div>');
 
@@ -15,6 +17,8 @@ global.document = document;
 global.templatePath = process.argv[2] || '/';
 global.buildPath = process.argv[3] || '/';
 
+const chunks = relative('./chunks.js', buildPath);
+
 process.on('message', ({ route }) => {
 	build({ route }, (html) => {
 		process.send({
@@ -23,7 +27,9 @@ process.on('message', ({ route }) => {
 	}, false)
 });
 
-function make(page)
+// stats -> namedChunkGroups | chunks | assetsByChunkName , for proload per page
+
+function make(route, page)
 {
 	const components = require('./components');
 	// console.log(components)
@@ -37,7 +43,13 @@ function make(page)
 		console.log('[ ERROR ]', err);
 	}
 
-	return template(root.innerHTML);
+
+	// console.log(buildPath, '/chunks.js');
+
+	return template(root.innerHTML, [
+		chunks['app'],
+		chunks[RouteChunks[route]]
+	]);
 }
 
 export function build({ route }, callback, isProduction = true)
@@ -47,7 +59,7 @@ export function build({ route }, callback, isProduction = true)
 	}
 
 	Routes[route]().then(page => {
-		callback(make(page))
+		callback(make(route, page))
 	});
 }
 

@@ -1,15 +1,17 @@
 import createConfig from '../webpack/config';
 import webpack from 'webpack';
 import path from 'path';
+import fs from 'fs';
 import { routes } from './routes';
 import { getConfig } from './config';
 import WebpackBar from 'webpackbar';
 // Plugins
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import MiniCssExtractPlugin from 'extract-css-chunks-webpack-plugin';
 import TerserJSPlugin from 'terser-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';  
 // import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';  
 import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
+import statsPlugin from 'stats-webpack-plugin'
 
 let procKillable = true;
 
@@ -44,6 +46,8 @@ export async function createBundles({ paths, mode = 'development' }, callback)
 			entrypoints = entrypoints.concat(chunk.files);
 		})
 
+		getDeps(paths, stats.stats[0]);
+
 		// console.log(entrypoints)
 		// console.log(stats.stats[0].toString({
 		// 	chunks: false,  // Makes the build much quieter
@@ -54,6 +58,30 @@ export async function createBundles({ paths, mode = 'development' }, callback)
 	});
 }
 
+function getDeps(paths, clientStats)
+{
+	let deps = {};
+
+	clientStats.compilation.namedChunkGroups.forEach((item, name) => {
+		/*
+		namedChunkGroups
+		namedChunks
+		chunks
+
+		assetsInfo
+		 */
+		let files = [];
+		for(let chunk of item.chunks) {
+			files = files.concat(chunk.files);
+		}
+
+		deps[name] = {
+			preload: files,
+		};
+	});
+
+	fs.writeFileSync(paths.rootBuild('./chunks.js'), `module.exports = ${ JSON.stringify(deps) }`);
+}
 
 function client({ paths, isProduction, appConfig, webpackConfig, routesConfig, externals, })
 {
@@ -154,6 +182,14 @@ function client({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
       			chunkFilename: '[chunkhash].css',
 			}),
 
+			// new statsPlugin('stats.json', {
+			// 	// stats: {
+			// 	all: undefined,
+			// 	moduleTrace: true,
+			// 	moduleAssets: false,
+			// 	source: false,
+			// 	// },
+			// })
 			// new FriendlyErrorsWebpackPlugin(),
 		]
 
@@ -216,6 +252,8 @@ function server({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 			new webpack.optimize.LimitChunkCountPlugin({
 				maxChunks: 1
 			}),
+
+			
 
 			// new FriendlyErrorsWebpackPlugin()
 		]

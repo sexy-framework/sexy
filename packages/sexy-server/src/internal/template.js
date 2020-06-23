@@ -25,19 +25,41 @@ function getManifest()
 	));
 }
 
+function isScript(file)
+{
+	return file.substr(-3) === '.js';
+}
+
 function getScripts(files = [])
 {
 	return files.map(file => {
-		return `<script src="/${ file }" defer></script>`;
+		if(isScript(file)) {
+			return `<script src="/${ file }" defer></script>`;
+		} else {
+			return `<link rel="stylesheet" type="text/css" href="/${ file }">`;
+		}
 	}).join('');
 }
 
-export default function template(html)
+function getPreload(chunks = [])
+{
+	let result = '';
+
+	for(let chunk of chunks) {
+		for(let file of chunk.preload) {
+			result += `<link rel="preload" href="/${ file }" as="${ isScript(file) ? 'script' : 'style' }">`;
+		}
+	}
+
+	return result;
+}
+
+export default function template(html, chunks)
 {
 	let manifest = getManifest();
 
 	return Eta.render(getPageTemplate(), {
-		base: '',
+		base: getPreload(chunks),
 		styles: '',
 		head: '',
 		scripts: getScripts(manifest.entrypoints),

@@ -46,7 +46,7 @@ export function createStyles(paths)
 	let importStyles = [];
 
 	for(let style of config.styles) {
-		importStyles.push(`import("${ style }");`);
+		importStyles.push(`import "${ style }";`);
 	}
 
 	let stylesPath = paths.rootBuild('styles.js');
@@ -66,15 +66,20 @@ export function createRoutes({ paths, routes })
 	// paths.rootBuild
 	let routesPath = paths.rootBuild('routes.js');
 
-	let imports = [];
+	let Routes = [];
+	let RouteChunks = [];
 
 	for (let page of routes) {
-		imports.push(`'${page.route}': () => { return import(/* webpackChunkName: "page.${ page.id }" */ '${ page.component }'); }`)
+		let chunkName = `"page.${ page.id }"`;
+
+		RouteChunks.push(`'${page.route}': ${ chunkName }`)
+		Routes.push(`'${page.route}': () => { return import(/* webpackChunkName: ${ chunkName } */ '${ page.component }'); }`)
 	}
 
 	ensureDirectoryExistence(routesPath);
 
 	fs.writeFileSync(routesPath, `
-		export const Routes = { ${ imports.join(',') } };
+		export const RouteChunks = { ${ RouteChunks.join(',') } };
+		export const Routes = { ${ Routes.join(',') } };
 	`);
 }

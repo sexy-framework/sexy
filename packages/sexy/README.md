@@ -175,3 +175,11 @@ function unmounted()
 }
 </script>
 ```
+
+## Contributors
+
+Burkhanov Kirill (kir.burkhanov@gmail.com)
+
+## License
+
+Copyright (c) 2020 Burkhanov Kirill. This is free software, and may be redistributed under the terms specified in the LICENSE file.
