@@ -1,6 +1,6 @@
 import * as parser from "@babel/parser";
 
-import { context, dependencies, imports } from './types';
+import { context, dependencies, imports, exportnames } from './types';
 
 export function analyse(script)
 {
@@ -18,10 +18,12 @@ export function analyse(script)
 	let data = context(ast);
 	let deps = dependencies(ast, data.observables);
 	let importsData = imports(ast);
+	let exportsData = exportnames(ast);
 	
 	return {
 		context: data,
 		deps: deps,
 		imports: importsData,
+		exportnames: exportsData,
 	};
 }

@@ -173,12 +173,25 @@ export function compile(loaderOptions, blocks)
 		quotes: "double",
 	});
 
+	let exportnames = generate(program(
+		codeAnalyse.exportnames, 
+		[],
+		'module'
+	), {
+		retainLines: false,
+		compact: false,
+		minified: false,
+		concise: false,
+		quotes: "double",
+	});
+
 	return {
 		module: module({
 			render: code.code,
 			templates: getTemplates(),
 			script: script(codeAnalyse, blocks.script),
 			imports: imports.code,
+			exportnames: exportnames.code,
 			components: components(entity, codeAnalyse.imports)(loaderOptions.path, loaderOptions.delimeter),
 		}),
 		styles: blocks.style,
