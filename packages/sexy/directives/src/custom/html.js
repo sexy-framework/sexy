@@ -1,11 +1,11 @@
-import { value } from 'sexy-framework/observable';
+import { value, subscribe } from 'sexy-framework/observable';
 
 
 export function html(node, options, html, render)
 {
-	if(render) {
+	subscribe(html, () => {
 		node.innerHTML = value(html);
-	}
+	}, !render);
 
 	return () => {
 		// node.removeEventListener('input', updateValue);

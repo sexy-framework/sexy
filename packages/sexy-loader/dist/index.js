@@ -4666,7 +4666,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"html\", function() { return html; });\n/* harmony import */ var sexy_framework_observable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sexy-framework/observable */ \"../sexy/observable/src/index.js\");\n\nfunction html(node, options, html, render) {\n  if (render) {\n    node.innerHTML = Object(sexy_framework_observable__WEBPACK_IMPORTED_MODULE_0__[\"value\"])(html);\n  }\n\n  return () => {// node.removeEventListener('input', updateValue);\n  };\n}\n\n//# sourceURL=webpack:///../sexy/directives/src/custom/html.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"html\", function() { return html; });\n/* harmony import */ var sexy_framework_observable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sexy-framework/observable */ \"../sexy/observable/src/index.js\");\n\nfunction html(node, options, html, render) {\n  Object(sexy_framework_observable__WEBPACK_IMPORTED_MODULE_0__[\"subscribe\"])(html, () => {\n    node.innerHTML = Object(sexy_framework_observable__WEBPACK_IMPORTED_MODULE_0__[\"value\"])(html);\n  }, !render);\n  return () => {// node.removeEventListener('input', updateValue);\n  };\n}\n\n//# sourceURL=webpack:///../sexy/directives/src/custom/html.js?");
 
 /***/ }),
 
