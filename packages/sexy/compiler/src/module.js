@@ -1,4 +1,4 @@
-export function module({ imports, exportnames, components, templates, script, render })
+export function module({ imports, exportnames, components, templates, script, render, loaderOptions })
 {
 	return ({
 		afterImport = '',
@@ -8,6 +8,7 @@ export function module({ imports, exportnames, components, templates, script, re
 		${ imports }
 		${ components }
 		${ afterImport }
+		${ loaderOptions.prependCode }
 
 		import {
 			attrs as _makeAttrs$,

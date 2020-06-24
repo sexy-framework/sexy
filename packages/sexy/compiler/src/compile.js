@@ -171,6 +171,7 @@ export function compile(loaderOptions, blocks)
 			imports: genCode(codeAnalyse.imports),
 			exportnames: genCode(codeAnalyse.exportnames),
 			components: components(entity, codeAnalyse.imports)(loaderOptions.path, loaderOptions.delimeter),
+			loaderOptions,
 		}),
 		styles: blocks.style,
 	}

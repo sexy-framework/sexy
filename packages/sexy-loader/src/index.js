@@ -78,6 +78,7 @@ export default function(source) {
 	options.styles = options.styles === undefined ? true : options.styles;
 	options.layouts = options.layouts === undefined ? false : options.layouts;
 	options.pages = options.pages === undefined ? false : options.pages;
+	options.prependCode = options.prependCode === undefined ? '' : options.prependCode;
 	options.resourcePath = resourcePath;
 	
 	options.isPage = false;
