@@ -89,7 +89,7 @@ export function compile(loaderOptions, blocks)
 	function createContext(init = false)
 	{
 		return contextStack.push({
-			LastVariableId: init ? id('node') : getLastVariableId(),
+			LastVariableId: init ? id('$node') : getLastVariableId(),
 		});
 	}
 
@@ -171,6 +171,7 @@ export function compile(loaderOptions, blocks)
 			imports: genCode(codeAnalyse.imports),
 			exportnames: genCode(codeAnalyse.exportnames),
 			components: components(entity, codeAnalyse.imports)(loaderOptions.path, loaderOptions.delimeter),
+			emptyComponent: codeAnalyse.emptyComponent,
 			loaderOptions,
 		}),
 		styles: blocks.style,

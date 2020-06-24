@@ -3,7 +3,8 @@
 	<nav.menu></nav.menu>
 </div>
 
-<script>
+<script ssr-only>
 export { Layout } from '@layouts/app.sexy';
 
+console.log(1)
 </script>

@@ -163,6 +163,7 @@ function client({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 							pages: paths.app('./pages'),
 							layouts: paths.app('./layouts'),
 							prependCode: getPrependCode(paths),
+							client: true,
 							styles: true
 						}
 					}]

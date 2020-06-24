@@ -30,7 +30,7 @@ export default function slot(context, options)
 
 	params.push(
 		new arrowFunctionExpression([
-				id('node')
+				id('$node')
 			],
 			new blockStatement(body)
 		)

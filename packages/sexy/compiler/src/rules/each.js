@@ -98,7 +98,7 @@ export default function each(context, options)
 	let template = options.createVariable(body, (n, l) => {
 		let index = options.createTemplate(this);
 		return new callExpression(
-			id('getNode'), [index, id('node'), id('$render')]
+			id('getNode'), [index, id('$node'), id('$render')]
 		);
 	});
 
@@ -116,7 +116,7 @@ export default function each(context, options)
 
 	params.push(
 		new arrowFunctionExpression(
-			[ id('node'), id('$render'), id(CUR_EACH_LOOP_KEY) ].concat(loop.args.map(item => id(item))),
+			[ id('$node'), id('$render'), id(CUR_EACH_LOOP_KEY) ].concat(loop.args.map(item => id(item))),
 			new blockStatement(body),
 		)
 	);

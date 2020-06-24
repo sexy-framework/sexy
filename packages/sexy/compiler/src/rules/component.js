@@ -38,15 +38,15 @@ export function getConfig(entity, context, options)
 	let callbackContext = [];
 
 	// create transition
-	options.dynamic.transition(entity.option.transition, id('node'), callbackContext, options);
+	options.dynamic.transition(entity.option.transition, id('$node'), callbackContext, options);
 	// create directives
-	options.dynamic.directives(entity.option.directives, id('node'), callbackContext, options);
+	options.dynamic.directives(entity.option.directives, id('$node'), callbackContext, options);
 	// create refs
-	options.dynamic.ref(entity, id('node'), callbackContext, options);
+	options.dynamic.ref(entity, id('$node'), callbackContext, options);
 	// create attrs
-	options.dynamic.attrs(entity.option.attributes, id('node'), callbackContext, options);
+	options.dynamic.attrs(entity.option.attributes, id('$node'), callbackContext, options);
 	// create events
-	options.dynamic.events(entity, id('node'), callbackContext, options);
+	options.dynamic.events(entity, id('$node'), callbackContext, options);
 
 	if(entity.option.key) {
 		callbackContext.push(
@@ -55,7 +55,7 @@ export function getConfig(entity, context, options)
 					id('_setKey$'),
 					[
 						id(CUR_EACH_LOOP_KEY),
-						id('node'),
+						id('$node'),
 						id('$render'),
 					]
 				)
@@ -75,7 +75,7 @@ export function getConfig(entity, context, options)
 		customInit.push(
 			arrowFunctionExpression([
 				id('$hooks'),
-				id('node'),
+				id('$node'),
 				id('$render'),
 			], blockStatement(callbackContext))
 		);
@@ -107,7 +107,7 @@ export function getConfig(entity, context, options)
 
 			if(isEmptyTag) {
 				template = options.createVariable(body, (n, l) => {
-					return id('node');
+					return id('$node');
 				});
 
 				body.push(template.value);
@@ -152,7 +152,7 @@ export function getConfig(entity, context, options)
 				// body.push(template.value);
 			} else {
 				template = options.createVariable(body, (n, l) => {
-					return memberExpression(id('node'), id('firstChild'))
+					return memberExpression(id('$node'), id('firstChild'))
 				});
 
 				body.push(
@@ -161,7 +161,7 @@ export function getConfig(entity, context, options)
 						blockStatement([
 							expressionStatement(
 								assignmentExpression('=', 
-									memberExpression(id('node'), id('innerHTML')),
+									memberExpression(id('$node'), id('innerHTML')),
 									stringLiteral(slot.makeTemplate(true))
 								)
 							)
@@ -180,7 +180,7 @@ export function getConfig(entity, context, options)
 					expressionStatement(
 						callExpression(
 							id('_slot$templateRender'), [
-								id('node'),
+								id('$node'),
 								template.name,
 								id('$render'),
 							]
@@ -193,7 +193,7 @@ export function getConfig(entity, context, options)
 				objectProperty(
 					stringLiteral(slot.attrs.slot),
 					arrowFunctionExpression([
-						id('node'),
+						id('$node'),
 						id('$render'),
 					], blockStatement(body)),
 				)

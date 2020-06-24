@@ -12,7 +12,7 @@ export function parseAttrs(str)
 	str.trim().replace(/([^\s]*)=["'](.*?)["']|([\w\-]+)/g, function(src2, name, value) {
         if (!src2) return;
         name = name || src2;
-        value = value;
+        value = value || true;
         attrs[name] = value;
     });
 

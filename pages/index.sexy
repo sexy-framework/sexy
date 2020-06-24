@@ -5,7 +5,7 @@
 	<Static name="Test2"></Static>
 </div>
 
-<script>
+<script ssr-only>
 import Static from '../components/static.sexy';
 
 let counter = o(1);

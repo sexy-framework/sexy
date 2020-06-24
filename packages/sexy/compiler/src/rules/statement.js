@@ -21,7 +21,7 @@ export default function statement(context, options)
 		let body = [];
 
 		this.children[i].handle(body, {
-			nodeVariable: id('node'),
+			nodeVariable: id('$node'),
 			...options
 		});
 
@@ -38,7 +38,7 @@ export default function statement(context, options)
 		itemParams.push(value);
 		itemParams.push(
 			new arrowFunctionExpression([
-				id('node'),
+				id('$node'),
 				id('$render')
 			], new blockStatement(body))
 		);

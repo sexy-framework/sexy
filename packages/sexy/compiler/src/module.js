@@ -1,9 +1,38 @@
-export function module({ imports, exportnames, components, templates, script, render, loaderOptions })
+export function module({
+	imports,
+	exportnames,
+	components,
+	templates,
+	script,
+	render,
+	emptyComponent,
+	loaderOptions
+})
 {
 	return ({
 		afterImport = '',
 		componentScope = ''
-	}) => `
+	}) => {
+
+		let exportComponent = `
+		${ exportnames }
+		export default render;
+		`;
+
+		if(emptyComponent && loaderOptions.client) {
+			return `
+			function render(c, $node) {
+				return {
+					node: $node,
+					hooks: {},
+				}
+			}
+
+			${ exportComponent }
+			`
+		}
+
+		return `
 		import { observable, computed, subscribe, watch } from 'sexy-framework/observable';
 		${ imports }
 		${ components }
@@ -41,16 +70,9 @@ export function module({ imports, exportnames, components, templates, script, re
 		${ componentScope }
 		
 		// component function
-		function render($context, $hydrateNode = false) {
+		function render($context, $node = false) {
 			let $el;
-			let $render = $hydrateNode === false;
-
-			if(SSR_ONLY && !$render) {
-				return {
-					node: $el,
-					hooks: {},
-				};
-			}
+			let $render = $node === false;
 
 			let { $props, $slots, $refs, $customInit } = parseContext($context);
 			
@@ -58,13 +80,11 @@ export function module({ imports, exportnames, components, templates, script, re
 			// code
 			${ script }
 			
-			let node = $el;
 			// render
 			${ render }
 		}
 		
-		${ exportnames }
-
-		export default render;
+		${ exportComponent }
 		`;
+	}
 }
