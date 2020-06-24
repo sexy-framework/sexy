@@ -149,7 +149,5 @@ export function attrs(obj, isComponent = false)
 		}
 	}
 
-	console.log(result)
-
 	return result;
 }
