@@ -31,7 +31,7 @@ export default function dynamic(context, options)
 			id('_dynamic$'), [
 				expr,
 				l,
-				id('render'),
+				id('$render'),
 				getConfig(this, context, options)
 			]
 		);

@@ -48,7 +48,7 @@ export function directives(directives, pointer, context, options)
 						pointer,
 						options,
 						id(value),
-						id('render'),
+						id('$render'),
 					]
 				)
 			)

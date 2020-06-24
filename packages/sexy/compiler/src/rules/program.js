@@ -21,7 +21,7 @@ export default function program(context, options)
 		let nodeVariable = options.nodeVariable ? options.nodeVariable : options.getLastVariableId()
 
 		return new callExpression(
-			id('getNode'), [index, nodeVariable, id('render')]
+			id('getNode'), [index, nodeVariable, id('$render')]
 		);
 	});
 
@@ -35,7 +35,7 @@ export default function program(context, options)
 				objectProperty(
 					id('node'),
 					conditionalExpression(
-						id('render'), template.name, lastChild
+						id('$render'), template.name, lastChild
 					)
 				),
 				objectProperty(
@@ -47,7 +47,7 @@ export default function program(context, options)
 	} else {
 		context.push(returnStatement(
 			conditionalExpression(
-				id('render'), template.name, lastChild
+				id('$render'), template.name, lastChild
 			)
 		));
 	}

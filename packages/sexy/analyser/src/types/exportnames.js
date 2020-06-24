@@ -15,6 +15,7 @@ export function exportnames(ast, options)
 
 	let isExportDeclaration = false;
 	let hasLayout = false;
+	let hasSSROnly = false;
 
 	traverse(ast, {
 		ExportNamedDeclaration: {
@@ -36,6 +37,10 @@ export function exportnames(ast, options)
 			if(path.node.name === 'Layout') {
 				hasLayout = true;
 			}
+
+			if(path.node.name === 'SSR_ONLY') {
+				hasSSROnly = true;
+			}
 		}
 	});
 
@@ -48,6 +53,22 @@ export function exportnames(ast, options)
 					id('Layout'),
 				)],
 				StringLiteral(options.layouts + '/default.sexy')
+			)
+		)
+	}
+
+	
+	if(!hasSSROnly) {
+		exportnames.push(
+			ExportNamedDeclaration(
+				variableDeclaration(
+					'const', [
+						variableDeclarator(
+							id('SSR_ONLY'),
+							id('false'),
+						)
+					]
+				), []
 			)
 		)
 	}

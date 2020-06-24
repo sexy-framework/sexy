@@ -45,7 +45,7 @@ export function attrs(attributes, point, context, options, returnObject = false)
 		new callExpression(
 			id('_makeAttrs$'), [
 				point,
-				id('render'),
+				id('$render'),
 				new objectExpression(props),
 			]
 		)

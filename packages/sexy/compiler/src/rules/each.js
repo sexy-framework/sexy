@@ -98,7 +98,7 @@ export default function each(context, options)
 	let template = options.createVariable(body, (n, l) => {
 		let index = options.createTemplate(this);
 		return new callExpression(
-			id('getNode'), [index, id('node'), id('render')]
+			id('getNode'), [index, id('node'), id('$render')]
 		);
 	});
 
@@ -108,7 +108,7 @@ export default function each(context, options)
 
 	let returnPointer = new returnStatement(
 		new conditionalExpression(
-			id('render'), template.name, lastChild
+			id('$render'), template.name, lastChild
 		)
 	);
 
@@ -116,12 +116,12 @@ export default function each(context, options)
 
 	params.push(
 		new arrowFunctionExpression(
-			[ id('node'), id('render'), id(CUR_EACH_LOOP_KEY) ].concat(loop.args.map(item => id(item))),
+			[ id('node'), id('$render'), id(CUR_EACH_LOOP_KEY) ].concat(loop.args.map(item => id(item))),
 			new blockStatement(body),
 		)
 	);
 
-	params.push(id('render'));
+	params.push(id('$render'));
 
 	let expression = options.createVariable(context, (n, l) => {
 		return new callExpression(id('_each$'), params);

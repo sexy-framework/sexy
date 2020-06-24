@@ -41,15 +41,23 @@ export function module({ imports, exportnames, components, templates, script, re
 		${ componentScope }
 		
 		// component function
-		function render(context, node = false) {
-			let render = node === false;
+		function render($context, $el = false) {
+			let $render = $el === false;
 
-			let { $props, $slots, $refs, $customInit } = parseContext(context);
+			if(SSR_ONLY && !$render) {
+				return {
+					node: $el,
+					hooks: {},
+				};
+			}
+
+			let { $props, $slots, $refs, $customInit } = parseContext($context);
 			
-			let $emit, $id;
+			let $emit;
 			// code
 			${ script }
 			
+			let node = $el;
 			// render
 			${ render }
 		}

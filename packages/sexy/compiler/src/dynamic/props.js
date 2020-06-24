@@ -42,7 +42,7 @@ export function props(entity, point, context, options)
 		new callExpression(
 			id('_makeAttrs$'), [
 				point,
-				id('render'),
+				id('$render'),
 				new objectExpression(props),
 			]
 		)

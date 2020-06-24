@@ -17,7 +17,7 @@ export default function slot(context, options)
 		id('$slots'),
 		stringLiteral(this.name),
 		options.getLastVariableId(),
-		id('render'),
+		id('$render'),
 	];
 
 	let expression = new expressionStatement(

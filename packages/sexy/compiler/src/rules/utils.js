@@ -15,7 +15,7 @@ export function getFirstTemplateNode(entity, context, options)
 {
 	let pointer = options.createVariable(context, (n, l) => {
 		return new conditionalExpression(
-			id('render'),
+			id('$render'),
 			new memberExpression(l, id('firstChild')),
 			l
 		)
@@ -45,7 +45,7 @@ export function getFirstTemplateNode(entity, context, options)
 						id('$customInit'),
 						id('$hooks'),
 						pointer.name,
-						id('render'),
+						id('$render'),
 					]
 				)
 			)
@@ -59,7 +59,7 @@ export function getFirstTemplateNode(entity, context, options)
 		// 		callExpression(
 		// 			id('_setProps$'), [
 		// 			pointer.name,
-		// 			id('render'),
+		// 			id('$render'),
 		// 		])
 		// 	)
 		// ));

@@ -56,7 +56,7 @@ export function getConfig(entity, context, options)
 					[
 						id(CUR_EACH_LOOP_KEY),
 						id('node'),
-						id('render'),
+						id('$render'),
 					]
 				)
 			)
@@ -76,7 +76,7 @@ export function getConfig(entity, context, options)
 			arrowFunctionExpression([
 				id('$hooks'),
 				id('node'),
-				id('render'),
+				id('$render'),
 			], blockStatement(callbackContext))
 		);
 	} else {
@@ -114,7 +114,7 @@ export function getConfig(entity, context, options)
 
 				body.push(
 					IfStatement(
-						id('render'),
+						id('$render'),
 						blockStatement([
 							expressionStatement(
 								assignmentExpression('=', 
@@ -138,7 +138,7 @@ export function getConfig(entity, context, options)
 
 				let firstChildFix = options.createVariable(body, (n, l) => {
 					return conditionalExpression(
-						id('render'),
+						id('$render'),
 						memberExpression(
 							memberExpression(template.name, id('content')),
 							id('firstChild')
@@ -157,7 +157,7 @@ export function getConfig(entity, context, options)
 
 				body.push(
 					IfStatement(
-						id('render'),
+						id('$render'),
 						blockStatement([
 							expressionStatement(
 								assignmentExpression('=', 
@@ -182,7 +182,7 @@ export function getConfig(entity, context, options)
 							id('_slot$templateRender'), [
 								id('node'),
 								template.name,
-								id('render'),
+								id('$render'),
 							]
 						)
 					)
@@ -194,7 +194,7 @@ export function getConfig(entity, context, options)
 					stringLiteral(slot.attrs.slot),
 					arrowFunctionExpression([
 						id('node'),
-						id('render'),
+						id('$render'),
 					], blockStatement(body)),
 				)
 			)
@@ -223,7 +223,7 @@ export default function component(context, options)
 				id(this.getName()),
 				stringLiteral(this.name),
 				l,
-				id('render'),
+				id('$render'),
 				getConfig(this, context, options)
 			]
 		);

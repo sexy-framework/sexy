@@ -12,7 +12,7 @@ export default function statement(context, options)
 	let params = [];
 
 	params.push(options.getLastVariableId())
-	params.push(id('render'))
+	params.push(id('$render'))
 
 	let itemParams = [];
 	let dependencies = [];
@@ -39,7 +39,7 @@ export default function statement(context, options)
 		itemParams.push(
 			new arrowFunctionExpression([
 				id('node'),
-				id('render')
+				id('$render')
 			], new blockStatement(body))
 		);
 	}
