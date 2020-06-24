@@ -1,6 +1,6 @@
 {
   "name": "sexy-loader",
-  "version": "0.3.10",
+  "version": "0.3.11",
   "description": "Support assets list input file type",
   "module": "src/index.js",
   "main": "dist/index.js",
