@@ -14,14 +14,8 @@ function gett() {
 
 	let html = `
 	<li>
-		<a>{{ name }}</a>
-		@if(items.length > 0)
-		<ul :class="HiddenClass">
-			@each(item, key in items)
-	    	<li :key="key"><a>{{ item }}</a></li>
-	    	@endeach
-		</ul>
-		@endif
+		<asd.a code="123" :name="asd"></asd.a>
+		<docs.code :code="codeExamples.get('test')"></docs.code>
 	</li>
 
 	<script>

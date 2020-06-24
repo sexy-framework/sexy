@@ -20,11 +20,19 @@ var isAttr = makeMap(
 );
 
 var isDomAttr = (name, isComponent) => {
-	return (!isComponent && isAttr(name) && !isRootAttr(name)) || name.match(/^data\-/g);
+	if(isComponent) {
+		return isCSSAttr(name) || name.match(/^data\-/g);
+	}
+
+	return (isAttr(name) && !isRootAttr(name)) || name.match(/^data\-/g);
 }
 
 var isRootAttr = makeMap(
 	'key,ref'
+);
+
+var isCSSAttr = makeMap(
+	'style', 'class'
 );
 
 var isReservedAttr = makeMap(
@@ -83,15 +91,10 @@ export function attrs(obj, isComponent = false)
 			continue;
 		}
 		
-		if(isDomAttr(name)) {
-			if(isComponent) {
-				result.attributes[name] = makeValue(value, false);	
-			} else {
-				result.staticAttrs[name] = value;
-			}
-		}
+		if(isDomAttr(name, isComponent)) {
+			result.staticAttrs[name] = value;
 		// transitions
-		if(name.match(/^transition\:/g)) {
+		} else if(name.match(/^transition\:/g)) {
 			name = name.replace(/^transition\:/g, '');
 			
 			let settings = {
@@ -126,7 +129,7 @@ export function attrs(obj, isComponent = false)
 			
 			if(isRootAttr(name)) {
 				result[name] = value;
-			} else if(isDomAttr(name)) {
+			} else if(isDomAttr(name, isComponent)) {
 				result.attributes[name] = value;
 			} else {
 				result.props[name] = value;
