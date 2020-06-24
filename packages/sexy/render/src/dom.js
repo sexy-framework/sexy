@@ -32,8 +32,8 @@ export function hydrate(component, rootNode, context = null)
 {
 	let root = getRoot();
 
-	lazy(component, (component) => {
-		let c = component(context, rootNode.firstChild);
+	lazy(component, async (component) => {
+		let c = await component(context, rootNode.firstChild);
 
 		if(c.hooks && c.hooks.mounted) {
 			c.hooks.mounted();

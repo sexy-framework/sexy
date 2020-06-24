@@ -44,8 +44,8 @@ export function loadComponent(component, name, node, render, options = {})
 
 	// let c = component(options, render ? false : node);
 
-	lazy(component, (component) => {
-		let c = component(options, render ? false : node);
+	lazy(component, async (component) => {
+		let c = await component(options, render ? false : node);
 
 		let componentNode = c.node;
 
