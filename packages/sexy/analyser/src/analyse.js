@@ -5,11 +5,15 @@ import { context, dependencies, imports, exportnames } from './types';
 export function analyse(script, options)
 {
 	let source = '';
-	let emptyComponent = false;
+	let scriptOptions = {
+		empty: false,
+		async: false,
+	};
 
 	if(script) {
 		source = script.source
-		emptyComponent = script.options['ssr-only'] || false;
+		scriptOptions.empty = script.options['ssr-only'] || false;
+		scriptOptions.async = script.options.async || false;
 	}
 	
 	const ast = parser.parse(source, {
@@ -27,6 +31,6 @@ export function analyse(script, options)
 		deps: deps,
 		imports: importsData,
 		exportnames: exportsData,
-		emptyComponent,
+		scriptOptions,
 	};
 }

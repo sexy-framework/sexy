@@ -19,7 +19,7 @@ if($render) {
 		let h = module.default;
 		let value = 'inserted';
 
-		console.log(value);
+		$el.firstChild.innerHTML = value;
 
 		highlightedCode(value);
 	})

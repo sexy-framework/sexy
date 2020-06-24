@@ -5,7 +5,7 @@ export function module({
 	templates,
 	script,
 	render,
-	emptyComponent,
+	scriptOptions,
 	loaderOptions
 })
 {
@@ -14,14 +14,16 @@ export function module({
 		componentScope = ''
 	}) => {
 
+		let renderFunction = scriptOptions.async ? 'async function render' : 'function render';
+
 		let exportComponent = `
 		${ exportnames }
 		export default render;
 		`;
 
-		if(emptyComponent && loaderOptions.client) {
+		if(scriptOptions.empty && loaderOptions.client) {
 			return `
-			function render(c, $node) {
+			${ renderFunction }(c, $node) {
 				return {
 					node: $node,
 					hooks: {},
@@ -70,7 +72,7 @@ export function module({
 		${ componentScope }
 		
 		// component function
-		function render($context, $node = false) {
+		${ renderFunction }($context, $node = false) {
 			let $el;
 			let $render = $node === false;
 
