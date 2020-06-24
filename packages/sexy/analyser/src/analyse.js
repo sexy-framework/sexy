@@ -11,7 +11,7 @@ export function analyse(script, options)
 	};
 
 	if(script) {
-		source = `${script.source}`;
+		source = script.source;
 		scriptOptions.empty = script.options['ssr-only'] || false;
 		scriptOptions.async = script.options.async || false;
 	}
