@@ -29,9 +29,11 @@ export async function createBundles({ paths, mode = 'development' }, callback)
 
 	const isProduction = mode === 'production';
 
+	let customErrorHandler =  errorHandler();
+
 	const compiler = webpack([
-		client({ paths, isProduction, appConfig, webpackConfig, routesConfig, externals }),
-		server({ paths, isProduction, appConfig, webpackConfig, routesConfig, externals })
+		client({ paths, isProduction, appConfig, webpackConfig, routesConfig, externals, customErrorHandler }),
+		server({ paths, isProduction, appConfig, webpackConfig, routesConfig, externals, customErrorHandler })
 	]);
 
 	compiler.run((err, stats) => {
@@ -83,7 +85,19 @@ function getDeps(paths, clientStats)
 	fs.writeFileSync(paths.rootBuild('./chunks.js'), `module.exports = ${ JSON.stringify(deps) }`);
 }
 
-function client({ paths, isProduction, appConfig, webpackConfig, routesConfig, externals, })
+function errorHandler()
+{
+	let plugin = new FriendlyErrorsWebpackPlugin({
+		clearConsole: false,
+	});
+
+	plugin.displaySuccess = function() {}
+	// console.log(plugin.displaySuccess);
+
+	return plugin;
+}
+
+function client({ paths, isProduction, appConfig, webpackConfig, routesConfig, externals, customErrorHandler })
 {
 	let cssExtractLoader = isProduction ? MiniCssExtractPlugin.loader : {
 		loader: 'style-loader',
@@ -182,22 +196,15 @@ function client({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
       			chunkFilename: '[chunkhash].css',
 			}),
 
-			// new statsPlugin('stats.json', {
-			// 	// stats: {
-			// 	all: undefined,
-			// 	moduleTrace: true,
-			// 	moduleAssets: false,
-			// 	source: false,
-			// 	// },
-			// })
-			// new FriendlyErrorsWebpackPlugin(),
+			customErrorHandler,
+
 		]
 
 	}
 
 }
 
-function server({ paths, isProduction, appConfig, webpackConfig, routesConfig, externals, }) {
+function server({ paths, isProduction, appConfig, webpackConfig, routesConfig, externals, customErrorHandler }) {
 
 	let config = {
 		
@@ -253,9 +260,7 @@ function server({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 				maxChunks: 1
 			}),
 
-			
-
-			// new FriendlyErrorsWebpackPlugin()
+			customErrorHandler,
 		]
 
 	}
