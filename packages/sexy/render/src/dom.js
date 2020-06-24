@@ -5,9 +5,9 @@ export function render(component, rootNode, context = null)
 {
 	let root = getRoot();
 	
-	lazy(component, (component) => {
+	lazy(component, async (component) => {
 
-		let c = component(context);
+		let c = await component(context);
 
 		rootNode.innerHTML = '';
 		rootNode.appendChild(c.node);

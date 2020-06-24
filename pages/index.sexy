@@ -15,13 +15,9 @@ let highlightedCode = o(1);
 
 async function highlight()
 {
-	const hljs = await import('highlight.js');
+	const hljs = await import('../components/static.sexy');
 
-	// let h = module.default;
-	let value = hljs.highlight(type(), code()).value;
-
-	console.log(type(), code(), value);
-	$el.firstChild.innerHTML = value;
+	let value = type()
 
 	highlightedCode(value);
 }
