@@ -55,11 +55,13 @@ function make(route, page)
 export function build({ route }, callback, isProduction = true)
 {
 	if(Routes[route] === undefined) {
-		throw new Error(`There is no page:${ route } ready`);
+		callback(null, new Error(`There is no page:${ route } ready`))
+		return;
+		throw ;
 	}
 
 	Routes[route]().then(page => {
-		callback(make(route, page))
+		callback(make(route, page), null)
 	});
 }
 
