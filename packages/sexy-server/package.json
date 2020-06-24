@@ -1,6 +1,6 @@
 {
   "name": "sexy-server",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "description": "SSR for sexy framework",
   "bin": {
     "sexy": "./sexy"
@@ -42,8 +42,8 @@
     "sade": "^1.7.3",
     "sass": "^1.26.8",
     "sass-loader": "^8.0.2",
-    "sexy-framework": "^0.3.8",
-    "sexy-loader": "^0.3.5",
+    "sexy-framework": "^0.3.9",
+    "sexy-loader": "^0.3.9",
     "stats-webpack-plugin": "^0.7.0",
     "style-loader": "^1.2.1",
     "terser-webpack-plugin": "^3.0.6",
