@@ -1,4 +1,4 @@
-import * as parser from "@babel/parser";
+import { parse } from "./parse";
 
 import { context, dependencies, imports, exportnames } from './types';
 
@@ -11,15 +11,12 @@ export function analyse(script, options)
 	};
 
 	if(script) {
-		source = script.source
+		source = `${script.source}`;
 		scriptOptions.empty = script.options['ssr-only'] || false;
 		scriptOptions.async = script.options.async || false;
 	}
 	
-	const ast = parser.parse(source, {
-		sourceType: "unambiguous",
-		strictMode: false,
-	});
+	const ast = parse(source);
 
 	let data = context(ast);
 	let deps = dependencies(ast, data.observables);

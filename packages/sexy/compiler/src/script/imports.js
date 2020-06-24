@@ -1,6 +1,4 @@
-
 import traverse from "@babel/traverse";
-import * as parser from "@babel/parser";
 import generate from "@babel/generator";
 
 import {

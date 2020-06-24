@@ -1,3 +1,3 @@
-import { analyse } from './analyse';
+export { analyse } from './analyse';
+export { parse } from './parse';
 
-export { analyse }

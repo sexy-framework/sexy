@@ -4174,7 +4174,7 @@ eval("module.exports = function(module) {\n\tif (!module.webpackPolyfill) {\n\t\
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"analyse\", function() { return analyse; });\n/* harmony import */ var _babel_parser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/parser */ \"../../node_modules/@babel/parser/lib/index.js\");\n/* harmony import */ var _babel_parser__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_parser__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./types */ \"../sexy/analyser/src/types/index.js\");\n\n\nfunction analyse(script, options) {\n  let source = '';\n  let scriptOptions = {\n    empty: false,\n    async: false\n  };\n\n  if (script) {\n    source = script.source;\n    scriptOptions.empty = script.options['ssr-only'] || false;\n    scriptOptions.async = script.options.async || false;\n  }\n\n  const ast = _babel_parser__WEBPACK_IMPORTED_MODULE_0__[\"parse\"](source, {\n    sourceType: \"unambiguous\",\n    strictMode: false\n  });\n  let data = Object(_types__WEBPACK_IMPORTED_MODULE_1__[\"context\"])(ast);\n  let deps = Object(_types__WEBPACK_IMPORTED_MODULE_1__[\"dependencies\"])(ast, data.observables);\n  let importsData = Object(_types__WEBPACK_IMPORTED_MODULE_1__[\"imports\"])(ast);\n  let exportsData = Object(_types__WEBPACK_IMPORTED_MODULE_1__[\"exportnames\"])(ast, options);\n  return {\n    context: data,\n    deps: deps,\n    imports: importsData,\n    exportnames: exportsData,\n    scriptOptions\n  };\n}\n\n//# sourceURL=webpack:///../sexy/analyser/src/analyse.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"analyse\", function() { return analyse; });\n/* harmony import */ var _parse__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./parse */ \"../sexy/analyser/src/parse.js\");\n/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./types */ \"../sexy/analyser/src/types/index.js\");\n\n\nfunction analyse(script, options) {\n  let source = '';\n  let scriptOptions = {\n    empty: false,\n    async: false\n  };\n\n  if (script) {\n    source = script.source;\n    scriptOptions.empty = script.options['ssr-only'] || false;\n    scriptOptions.async = script.options.async || false;\n  }\n\n  const ast = Object(_parse__WEBPACK_IMPORTED_MODULE_0__[\"parse\"])(source);\n  let data = Object(_types__WEBPACK_IMPORTED_MODULE_1__[\"context\"])(ast);\n  let deps = Object(_types__WEBPACK_IMPORTED_MODULE_1__[\"dependencies\"])(ast, data.observables);\n  let importsData = Object(_types__WEBPACK_IMPORTED_MODULE_1__[\"imports\"])(ast);\n  let exportsData = Object(_types__WEBPACK_IMPORTED_MODULE_1__[\"exportnames\"])(ast, options);\n  return {\n    context: data,\n    deps: deps,\n    imports: importsData,\n    exportnames: exportsData,\n    scriptOptions\n  };\n}\n\n//# sourceURL=webpack:///../sexy/analyser/src/analyse.js?");
 
 /***/ }),
 
@@ -4187,6 +4187,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _analyse__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./analyse */ \"../sexy/analyser/src/analyse.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"analyse\", function() { return _analyse__WEBPACK_IMPORTED_MODULE_0__[\"analyse\"]; });\n\n\n\n\n//# sourceURL=webpack:///../sexy/analyser/src/index.js?");
+
+/***/ }),
+
+/***/ "../sexy/analyser/src/parse.js":
+/*!*************************************!*\
+  !*** ../sexy/analyser/src/parse.js ***!
+  \*************************************/
+/*! exports provided: parse */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"parse\", function() { return parse; });\n/* harmony import */ var _babel_parser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/parser */ \"../../node_modules/@babel/parser/lib/index.js\");\n/* harmony import */ var _babel_parser__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_parser__WEBPACK_IMPORTED_MODULE_0__);\n\nfunction parse(source) {\n  return _babel_parser__WEBPACK_IMPORTED_MODULE_0__[\"parse\"](source, {\n    sourceType: \"unambiguous\",\n    strictMode: false,\n    allowAwaitOutsideFunction: true,\n    allowReturnOutsideFunction: true,\n    allowImportExportEverywhere: true,\n    allowSuperOutsideMethod: true,\n    allowUndeclaredExports: true,\n    plugins: ['topLevelAwait']\n  });\n}\n\n//# sourceURL=webpack:///../sexy/analyser/src/parse.js?");
 
 /***/ }),
 

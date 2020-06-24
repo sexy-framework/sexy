@@ -5,24 +5,28 @@
 	</div>
 </figure>
 
-<script>
+<script async>
 import { html } from 'sexy-framework/directives'
 
 let code = p('No code');
 let type = p('html');
 
-let highlightedCode = o(code());
+let highlightedCode = o(1);
+
+async function highlight()
+{
+	const hljs = await import('highlight.js');
+
+	// let h = module.default;
+	let value = hljs.highlight(type(), code()).value;
+
+	console.log(type(), code(), value);
+	$el.firstChild.innerHTML = value;
+
+	highlightedCode(value);
+}
 
 if($render) {
-	const hljs = import('../components/static.sexy');
-	hljs.then(module => {
-		let h = module.default;
-		let value = 'inserted';
-
-		$el.firstChild.innerHTML = value;
-
-		highlightedCode(value);
-	})
-	
+	await highlight();
 }
 </script>

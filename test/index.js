@@ -13,17 +13,39 @@ function gett() {
 	
 
 	let html = `
-	<li>
-		<asd.a code="123" :name="asd"></asd.a>
-		<docs.code class="d" :code="codeExamples.get('test')"></docs.code>
-	</li>
+	<figure class="highlight">
+		<pre (html)="highlightedCode"></pre>
+		<div class="label">
+			<div class="tag">{{ type }}</div>	
+		</div>
+	</figure>
 
-	<script>
-	let name = p([]);
-	let items = p([]);
-	let HiddenClass = 'is-hidden';
+	<script async>
+	import { html } from 'sexy-framework/directives'
 
+	let code = p('No code');
+	let type = p('html');
+
+	let highlightedCode = o(1);
+
+	async function highlight()
+	{
+		const hljs = await import('highlight.js');
+
+		// let h = module.default;
+		let value = hljs.highlight(type(), code()).value;
+
+		console.log(type(), code(), value);
+		$el.firstChild.innerHTML = value;
+
+		highlightedCode(value);
+	}
+
+	if($render) {
+		await highlight();
+	}
 	</script>
+
 
 
 	`

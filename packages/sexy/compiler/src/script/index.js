@@ -1,5 +1,5 @@
 import traverse from "@babel/traverse";
-import * as parser from "@babel/parser";
+import { parse } from 'sexy-framework/analyser';
 import generate from "@babel/generator";
 
 import { props } from "./props";
@@ -35,10 +35,7 @@ export function script(analyse, script)
 		source = script.source
 	}
 	
-	const ast = parser.parse(source, {
-		sourceType: "unambiguous",
-		strictMode: false,
-	});
+	const ast = parse(source);
 
 	props(ast);
 	observables(ast);
