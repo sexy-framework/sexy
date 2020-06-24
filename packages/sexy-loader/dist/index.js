@@ -4782,11 +4782,11 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /*!*************************************!*\
   !*** ../sexy/parser/src/prepare.js ***!
   \*************************************/
-/*! exports provided: prepare */
+/*! exports provided: preparePre, prepare */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"prepare\", function() { return prepare; });\nfunction prepareHTML(html) {\n  return html.replace(/\\t/g, ' ').replace(/\\s\\s+/g, ' ').trim();\n}\n\nfunction prepare(blocks, html) {\n  for (let key in blocks) {\n    let regexp = new RegExp(`<${key}.*>((.|\\\\s)*)<\\\\/${key}>`, 'g');\n    html = html.replace(regexp, '');\n  }\n\n  html = html // if\n  .replace(/@if\\((.*)\\)/g, '<expr type=\"statement\"><expr type=\"program\" value=\"$1\">').replace(/@elseif\\((.*)\\)/g, '</expr><expr type=\"program\" value=\"$1\">').replace(/@else/g, '</expr><expr type=\"program\" value=\"true\">').replace(/@endif/g, '</expr></expr>') // each\n  .replace(/@each\\((.*)\\)/g, '<expr type=\"each\" value=\"$1\">').replace(/@endeach/g, '</expr>') // Sexy slot for server layouts\n  .replace(/\\<sexy(\\s*)\\/\\>/g, '<slot name=\"sexy\" tag=\"null\"></slot>');\n  return prepareHTML(html);\n}\n\n//# sourceURL=webpack:///../sexy/parser/src/prepare.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"preparePre\", function() { return preparePre; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"prepare\", function() { return prepare; });\nfunction prepareHTML(html) {\n  return html.replace(/\\t/g, ' ').replace(/\\s\\s+/g, ' ').trim();\n}\n\nfunction preparePre(html) {\n  return html;\n}\nfunction prepare(blocks, html) {\n  for (let key in blocks) {\n    let regexp = new RegExp(`<${key}.*>((.|\\\\s)*)<\\\\/${key}>`, 'g');\n    html = html.replace(regexp, '');\n  }\n\n  html = preparePre(html);\n  html = html // if\n  .replace(/@if\\((.*)\\)/g, '<expr type=\"statement\"><expr type=\"program\" value=\"$1\">').replace(/@elseif\\((.*)\\)/g, '</expr><expr type=\"program\" value=\"$1\">').replace(/@else/g, '</expr><expr type=\"program\" value=\"true\">').replace(/@endif/g, '</expr></expr>') // each\n  .replace(/@each\\((.*)\\)/g, '<expr type=\"each\" value=\"$1\">').replace(/@endeach/g, '</expr>') // Sexy slot for server layouts\n  .replace(/\\<sexy(\\s*)\\/\\>/g, '<slot name=\"sexy\" tag=\"null\"></slot>');\n  return prepareHTML(html);\n}\n\n//# sourceURL=webpack:///../sexy/parser/src/prepare.js?");
 
 /***/ }),
 

@@ -1,3 +1,17 @@
-<div>
-	<slot></slot>
-</div>
+<li>
+	<a>{{ name }}</a>
+	<!-- @if(items.length > 0) -->
+	<ul :class="HiddenClass">
+		@each(item, key in items)
+    	<li :key="key"><a>{{ item }}</a></li>
+    	@endeach
+	</ul>
+	<!-- @endif -->
+</li>
+
+<script>
+let name = p([]);
+let items = p([]);
+let HiddenClass = 'is-hidden';
+
+</script>

@@ -56,13 +56,14 @@ export function statement(node, render, deps, ...args)
 	// let 
 	let parent;
 	let endMark, startMark;
+	let placeholder;
 
 	function cleanup() {
 		return cleanupFragment(parent, startMark, endMark);
 	}
 	
 	if(render) {
-		let placeholder = document.createComment('');
+		placeholder = document.createComment('');
 
 		parent = document.createDocumentFragment();
 		
@@ -73,10 +74,8 @@ export function statement(node, render, deps, ...args)
 		node.replaceWith(parent);
 
 		node = placeholder;
-		
-		parent = endMark.parentNode;
 
-		cleanup();
+		parent = endMark.parentNode;
 	} else {
 		parent = node.parentNode;
 		startMark = castNode('');
@@ -152,6 +151,10 @@ export function statement(node, render, deps, ...args)
 			return;
 		}
 
+		if(placeholder) {
+			parent.removeChild(placeholder);
+			placeholder = null;
+		}
 		// add new nodes
 		parent.insertBefore(diffable(n, 1), endMark);
 	});

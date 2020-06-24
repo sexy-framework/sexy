@@ -3,12 +3,19 @@ function prepareHTML(html)
 	return html.replace(/\t/g, ' ').replace(/\s\s+/g, ' ').trim();
 }
 
+export function preparePre(html)
+{
+	return html;
+}
+
 export function prepare(blocks, html)
 {
 	for(let key in blocks) {
 		let regexp = new RegExp(`<${key}.*>((.|\\s)*)<\\/${key}>`, 'g');
 		html = html.replace(regexp, '');
 	}
+
+	html = preparePre(html);
 
 	html = html
 		// if

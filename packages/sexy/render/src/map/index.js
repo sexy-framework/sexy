@@ -29,6 +29,7 @@ export function map(bindNode, items, keyExpr, expr, render)
 	const toRemove = new Set();
 	const defaultA = [];
 
+	let placeholder;
 
 	// hydration prepare 
 	if(render) {
@@ -40,6 +41,10 @@ export function map(bindNode, items, keyExpr, expr, render)
 		let _items = value(items);
 		let node = bindNode;
 		let lastNode = null;
+
+		if(node.nodeType === 8) {
+			placeholder = node;
+		}
 		// return;
 		for (let key in _items) {
 			let item = _items[key];
@@ -89,6 +94,15 @@ export function map(bindNode, items, keyExpr, expr, render)
 		);
 
 		toRemove.forEach(dispose);
+
+		// set placeholder
+		if(b.length === 0 && !placeholder) {
+			placeholder = document.createComment('');
+			endMark.parentNode.insertBefore(placeholder, endMark)
+		} else if(placeholder) {
+			endMark.parentNode.removeChild(placeholder)
+			placeholder = null;
+		}
 
 		return content;
 		// });

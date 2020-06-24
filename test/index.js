@@ -13,24 +13,22 @@ function gett() {
 	
 
 	let html = `
-	<Route class="s">
-		<template slot="default" tag="null">
-			test 1
-			<span @click="alert(1)">test 2</span>
-			test 3
-		</template>
-	</Route>
+	<li>
+		<a>{{ name }}</a>
+		@if(items.length > 0)
+		<ul :class="HiddenClass">
+			@each(item, key in items)
+	    	<li :key="key"><a>{{ item }}</a></li>
+	    	@endeach
+		</ul>
+		@endif
+	</li>
 
 	<script>
-	import { router } from '../internal/router';
-	export { Layout2 } from '@layouts/app.sexy';
+	let name = p([]);
+	let items = p([]);
+	let HiddenClass = 'is-hidden';
 
-	let tag = p('a');
-	let to = p(null);
-
-	function navigate() {
-		router.navigate(to());
-	}
 	</script>
 
 
