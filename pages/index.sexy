@@ -3,6 +3,7 @@
 	<div class="label">
 		<div class="tag">{{ type }}</div>	
 	</div>
+	Components are a powerful way to write re-usable code with Vue. If you’re adding Vue to your page via direct include, you define a component like this
 </figure>
 
 <script async>
@@ -10,6 +11,8 @@ import { html } from 'sexy-framework/directives'
 
 let code = p('No code');
 let type = p('html');
+
+console.log(1)
 
 let highlightedCode = o(1);
 
