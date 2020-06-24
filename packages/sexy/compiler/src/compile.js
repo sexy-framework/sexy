@@ -75,7 +75,7 @@ export function compile(loaderOptions, blocks)
 		for(let tpl of Templates) {
 			let index = ++i;
 			code += `let _tpl$${ index } = document.createElement("template");\n`;
-			code += `_tpl$${ index }.innerHTML = '${ tpl }';\n\n`;
+			code += `_tpl$${ index }.innerHTML = \`${ tpl }\`;\n\n`;
 		}
 
 		return code;
