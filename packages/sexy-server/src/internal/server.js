@@ -57,7 +57,6 @@ export function build({ route }, callback, isProduction = true)
 	if(Routes[route] === undefined) {
 		callback(null, new Error(`There is no page:${ route } ready`))
 		return;
-		throw ;
 	}
 
 	Routes[route]().then(page => {
