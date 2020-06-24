@@ -14,7 +14,10 @@ export default class Text extends Type
 
 	makeTemplate()
 	{
-		return this.value;
+		return this.value
+				.replace(/\&/g, "&amp;")
+				.replace(/\"/g, "&quot;")
+				.replace(/\'/g, "&apos;");
 	}
 
 }
