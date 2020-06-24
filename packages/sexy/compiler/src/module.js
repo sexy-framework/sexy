@@ -41,8 +41,9 @@ export function module({ imports, exportnames, components, templates, script, re
 		${ componentScope }
 		
 		// component function
-		function render($context, $el = false) {
-			let $render = $el === false;
+		function render($context, $hydrateNode = false) {
+			let $el;
+			let $render = $hydrateNode === false;
 
 			if(SSR_ONLY && !$render) {
 				return {

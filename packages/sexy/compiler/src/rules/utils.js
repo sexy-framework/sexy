@@ -22,6 +22,13 @@ export function getFirstTemplateNode(entity, context, options)
 	});
 
 	context.push(pointer.value);
+	
+	context.push(expressionStatement(
+		assignmentExpression('=',
+			id('$el'),
+			pointer.name,
+		)
+	));
 
 	// console.log(entity, entity.parent.isRoot())
 	if(entity.parent.isRoot()) {
