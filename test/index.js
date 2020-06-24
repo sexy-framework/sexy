@@ -15,7 +15,7 @@ function gett() {
 	let html = `
 	<li>
 		<asd.a code="123" :name="asd"></asd.a>
-		<docs.code :code="codeExamples.get('test')"></docs.code>
+		<docs.code class="d" :code="codeExamples.get('test')"></docs.code>
 	</li>
 
 	<script>

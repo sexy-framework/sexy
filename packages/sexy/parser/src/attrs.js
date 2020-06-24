@@ -32,7 +32,7 @@ var isRootAttr = makeMap(
 );
 
 var isCSSAttr = makeMap(
-	'style', 'class'
+	'style,class'
 );
 
 var isReservedAttr = makeMap(
@@ -90,9 +90,13 @@ export function attrs(obj, isComponent = false)
 		if(isReservedAttr(name)) {
 			continue;
 		}
-		
+
 		if(isDomAttr(name, isComponent)) {
-			result.staticAttrs[name] = value;
+			if(isComponent) {
+				result.attributes[name] = makeValue(value, false);	
+			} else {
+				result.staticAttrs[name] = value;
+			}
 		// transitions
 		} else if(name.match(/^transition\:/g)) {
 			name = name.replace(/^transition\:/g, '');
@@ -144,6 +148,8 @@ export function attrs(obj, isComponent = false)
 			// console.error(`Attr ${name} doesnt registered. Cant understand type.`)
 		}
 	}
+
+	console.log(result)
 
 	return result;
 }
