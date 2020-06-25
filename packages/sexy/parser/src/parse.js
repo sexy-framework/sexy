@@ -40,7 +40,7 @@ export function parseBlocks(blocks, html)
 		html = html.replace(regexp, '');
 	}
 
-	res.html = html;
+	res.template = html;
 
 	return res;
 }
@@ -56,7 +56,7 @@ export function parse(html)
 	}, html);
 
 	// clean up html and replace expression with tag-expression
-	html = prepare(blocks.html);
+	let template = prepare(blocks.template);
 
 	// Parse TAGs
 	let stack = [
@@ -118,7 +118,7 @@ export function parse(html)
 		lowerCaseTags: false,
 	});
 	
-	parse.write(html);
+	parse.write(template);
 	parse.end();
 
 	blocks.template = stack[0];
