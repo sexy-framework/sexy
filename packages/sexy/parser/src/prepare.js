@@ -16,7 +16,7 @@ export function prepare(html)
 		.replace(/([^\\])\@endeach/g, '</expr>')
 		// Sexy slot for server layouts
 		.replace(/\<sexy(\s*)\/\>/g, '<slot name="sexy"></slot>')
-		.replace(/([^\\])\@/g, '@');
-		
+		.replace(/\\@/g, '@');
+
 	return prepareHTML(html);
 }
