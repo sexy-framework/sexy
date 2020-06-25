@@ -1,6 +1,8 @@
 import { rules } from 'sexy-framework/compiler';
 import { parser } from 'sexy-framework/directives';
 
+const SELF_CLOSED_TAGS = ['br', 'hr', 'input'];
+
 export default class Type
 {
 	constructor()
@@ -78,8 +80,19 @@ export default class Type
 		return false;//this.type === 'program' || this.type === 'slot';
 	}
 
+	selfClosed()
+	{
+		if(this.type === 'component') {
+			return this.children.length === 0;
+		}
+
+		return SELF_CLOSED_TAGS.includes(this.tag);
+	}
+
 	makeTemplate(onlyChildren = true)
 	{
+		let selfClosed = this.selfClosed();
+
 		let template = `<${this.tag}`;
 		
 		let attrs = this.option ? this.option.staticAttrs : {};
@@ -88,13 +101,19 @@ export default class Type
 			template += ` ${key}="${attrs[key]}"`;
 		}
 
-		template += '>';
+		if(!selfClosed) {
+			template += '>';
+		}
 
 		let childTemplate = this.children.map(child => child.makeTemplate(false)).join('');
 
 		template += childTemplate;
-		
-		template += `</${this.tag}>`;
+
+		if(!selfClosed) {
+			template += `</${this.tag}>`;
+		} else {
+			template += ` />`;
+		}
 
 		if(['statement', 'each', 'component', 'dynamic'].includes(this.type) && !onlyChildren) {
 			return '<!---->';

@@ -3,6 +3,9 @@
 	<div class="label">
 		<div class="tag">{{ type }}</div>	
 	</div>
+	<br>
+	<static name="a" />
+	<br><br>
 	Components are a powerful way to write re-usable code with Vue. If you’re adding Vue to your page via direct include, you define a component like this
 </figure>
 
