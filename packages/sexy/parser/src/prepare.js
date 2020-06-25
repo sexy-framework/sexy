@@ -18,7 +18,5 @@ export function prepare(html)
 		.replace(/\<sexy(\s*)\/\>/g, '<slot name="sexy"></slot>')
 		.replace(/\\@/g, '@');
 
-		console.log(html);
-
 	return prepareHTML(html);
 }
