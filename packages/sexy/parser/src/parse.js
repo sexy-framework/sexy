@@ -28,6 +28,7 @@ export function parseBlocks(blocks, html)
 
 		let regexp = new RegExp(`<${key}(.*)>((.|\\s)*)<\\/${key}>`, 'g');
 		let matches = regexp.exec(html);
+		
 		if(matches) {
 
 			res[key] = {
@@ -35,7 +36,11 @@ export function parseBlocks(blocks, html)
 				source: matches[2],
 			}
 		}
+
+		html = html.replace(regexp, '');
 	}
+
+	res.html = html;
 
 	return res;
 }
@@ -51,7 +56,7 @@ export function parse(html)
 	}, html);
 
 	// clean up html and replace expression with tag-expression
-	html = prepare(blocks, html);
+	html = prepare(blocks.html);
 
 	// Parse TAGs
 	let stack = [
