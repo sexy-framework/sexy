@@ -101,7 +101,7 @@ export function getConfig(entity, context, options)
 
 			let body = [];
 
-			let isEmptyTag = slot.attrs.tag == 'null';
+			let isEmptyTag = slot.attrs['save-tag'] === undefined || slot.attrs['save-tag'] === false;
 			
 			let template;
 

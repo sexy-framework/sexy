@@ -1,34 +1,16 @@
-<figure class="highlight">
-	<pre (html)="highlightedCode"></pre>
-	<div class="label">
-		<div class="tag">{{ type }}</div>	
-	</div>
-	<br>
-	<static name="a" />
-	<br><br>
-	Components are a powerful way to write re-usable code with Vue. If you’re adding Vue to your page via direct include, you define a component like this
-</figure>
+<static>
+	<template slot="default" >
+		test
+	</template>
+</static>
 
-<script async>
-import { html } from 'sexy-framework/directives'
+<script>
+function focus(node, options, value, render) {
+	// mounted
+	node.focus();
+	// unmounted
+	return () => {
 
-let code = p('No code');
-let type = p('html');
-
-console.log(1)
-
-let highlightedCode = o(1);
-
-async function highlight()
-{
-	const hljs = await import('../components/static.sexy');
-
-	let value = type()
-
-	highlightedCode(value);
-}
-
-if($render) {
-	await highlight();
+	}
 }
 </script>
