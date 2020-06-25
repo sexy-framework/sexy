@@ -14,59 +14,38 @@ function gett() {
 	let html = `
 	<div class="container content">
 		<p>
-			Компоненты – это отличный способ писать переиспользуемый код. Из-за того, что Sexy фреймворк действительно нативный, он практически не тратит время на гидратацию статических элементов.
+			Блок \\@if / \\@endif используется для рендеринга блока по условию. Блок будет отображаться только в том случае, если выражение условия возвращает значение, приводимое к true.
 		</p>
+		<docs.code type="html" :code="codeExamples.get('if')"></docs.code>
 		<p>
-			Теперь вы можете писать вообще все элементы с помощью компонентного подхода: кнопки, меню, разметку и так далее. Производительность не просядет!
+			Также можно добавить блок «иначе», используя директиву \\@else или \\@elseif:
 		</p>
-		<p>
-			Однофайловые компоненты позволяют использовать компоненты в самом удобном способе: шаблон, javascript и стили в одном файле.
-		</p>
-		<p>
-			Sexy framework позволяет регистрировать компоненты глобально, но очень против такого подхода. Вместо этого мы создали авто-импорт и регистрацию компонентов, из-за этого компоненты должны храниться в в одной директории, например, components (настраивается в настройках sexy-loader).
-		</p>
+		<docs.code type="html" :code="codeExamples.get('if-else')"></docs.code>
 
-		<docs.code type="html" :code="codeExamples.get('example')"></docs.code>
-		
+		<br>
 		<h2 class="title">
-			Использование препроцессоров
+			Условный рендеринг группы элементов
 		</h2>
 		<p>
-			Sexy позволяет использовать препроцессоры для обработки CSS стилей. Для этого необходимо использовать атрибут lang для тега style, в котором указать нужное расширения файла.
+			Условный рендеринг поддерживает множество элментов
 		</p>
+		<docs.code type="html" :code="codeExamples.get('if-group')"></docs.code>
+		
+		<br>
+		<h2 class="title">
+			Смешанный рендеринг
+		</h2>
+		<p>
+			Вы можете группировать использование условной отрисовки с отрисовкой списков:
+		</p>
+		<docs.code type="html" :code="codeExamples.get('if-mixed')"></docs.code>
 
-		<docs.code type="html" :code="codeExamples.get('scss')"></docs.code>
 	</div>
-
-	<script>
-	export { Layout } from '@layouts/docs.sexy';
-
-	let codeExamples = new Map();
-
-	codeExamples.set('example', \`
-	// Multi node root
-	<div>1</div>
-	<div>2</div>
-	<div>3</div>
-
-	// Javascript код компонента
-	<script></script>
-
-	// Styles
-	<style></style>
-	\`);
-
-	codeExamples.set('scss', \`
-	<style lang="scss">
-	$body-color: 'red';
-	</style> 
-	\`);
-
-	</script>
 
 
 
 	`
+
 	let blocks = parse(html);
 
 	let d = compile({

@@ -1,16 +1,29 @@
-<static>
-	<template slot="default" >
-		test
-	</template>
-</static>
+<div class="container content">
+	<p>
+		Блок \@if / \@endif используется для рендеринга блока по условию. Блок будет отображаться только в том случае, если выражение условия возвращает значение, приводимое к true.
+	</p>
+	<!-- <docs.code type="html" :code="codeExamples.get('if')"></docs.code> -->
+	<p>
+		Также можно добавить блок «иначе», используя директиву \@else или \@elseif:
+	</p>
+	<!-- <docs.code type="html" :code="codeExamples.get('if-else')"></docs.code> -->
 
-<script>
-function focus(node, options, value, render) {
-	// mounted
-	node.focus();
-	// unmounted
-	return () => {
+	<br>
+	<h2 class="title">
+		Условный рендеринг группы элементов
+	</h2>
+	<p>
+		Условный рендеринг поддерживает множество элментов
+	</p>
+	<!-- <docs.code type="html" :code="codeExamples.get('if-group')"></docs.code> -->
+	
+	<br>
+	<h2 class="title">
+		Смешанный рендеринг
+	</h2>
+	<p>
+		Вы можете группировать использование условной отрисовки с отрисовкой списков:
+	</p>
+	<!-- <docs.code type="html" :code="codeExamples.get('if-mixed')"></docs.code> -->
 
-	}
-}
-</script>
+</div>
