@@ -33,6 +33,13 @@ Best choice for mobile web apps development.
 
 Benchmark was made with 10 000 components with loop function. (Without loop its much more faster).
 
+## Performance TODO
+- [x] Cache value
+- [ ] Class and style optimiztion
+- [ ] Render to string (remove JSDOM to speed up server render)
+
+Attribute speed test with MarkoJS benchmark showed 19000 ops/sec for sexy framework and x5 hydration speed
+
 ## Features
 
 - [x] Single file components
