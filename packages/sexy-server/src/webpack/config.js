@@ -1,4 +1,5 @@
 import path from 'path';
+import TerserPlugin from 'terser-webpack-plugin';
 
 export default function config(paths)
 {
@@ -7,6 +8,22 @@ export default function config(paths)
 
 	return {
 		
+		optimization: (minimizer = [], obj = {}) => {
+			minimizer.push(new TerserPlugin({
+				terserOptions: {
+					output: {
+						inline_script: false,
+					},
+				},
+			}));
+			
+			return Object.assign(obj, {
+				minimize: true,
+				minimizer: minimizer,
+			})
+		},
+
+
 		client: {
 
 			entry: () => {

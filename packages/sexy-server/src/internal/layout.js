@@ -1,5 +1,7 @@
 import {
 	loadComponent,
+	slotReplaceTemplate,
+	firstChild
 } from 'sexy-framework/render';
 
 export const Layout = serverLayout;
@@ -8,8 +10,21 @@ export function serverLayout(action, page, root)
 {
 	action(page.Layout, root, {
 		$slots: {
-			sexy: (node, render) => {
-				loadComponent(page.default, '__Page', node, render);
+			sexy: ($node, $render) => {
+				let tmp = $node;
+
+				if ($render) {
+					tmp = document.createElement("template");
+					tmp.innerHTML = "<!---->";
+				}
+
+				let tmp2 = $render ? firstChild(tmp.content) : tmp;
+
+				let _el$6 = loadComponent(page.default, "__Page", tmp2, $render, {
+					$customInit: [null, null]
+				});
+
+				slotReplaceTemplate($node, tmp, $render);
 			}
 		}
 	});

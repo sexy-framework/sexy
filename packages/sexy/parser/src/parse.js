@@ -87,6 +87,8 @@ export function parse(html)
 				entity = new Node(name, attrs);
 			}
 
+			entity.setParent(parent);
+
 			if(parent) {
 				parent.addChild(entity);
 			}
@@ -102,6 +104,9 @@ export function parse(html)
 
 			if(text !== '' && parent) {
 				let node = new Text(text);
+				// console.log('set parent')
+				node.setParent(parent);
+
 				if(parent) {
 					parent.addChild(node);
 				}
@@ -114,7 +119,7 @@ export function parse(html)
 	    }
 
 	}, {
-		decodeEntities: true,
+		// decodeEntities: true,
 		lowerCaseTags: false,
 	});
 	

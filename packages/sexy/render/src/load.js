@@ -25,6 +25,10 @@ export function lazy(component, callback)
 	);
 }
 
+function nothing() {
+
+}
+
 export function loadComponent(component, name, node, render, options = {})
 {
 	component = getComponent(name, component);
@@ -32,20 +36,17 @@ export function loadComponent(component, name, node, render, options = {})
 	let endMark = castNode('');
 	let startMark = castNode('');
 
-	// console.log(node.parentNode.childNodes);
-
 	node.after(endMark);
 
 	if(isLazy(component)) {
 		node.parentNode.insertBefore(startMark, node);
 	}
 
-	// console.log(node.parentNode.childNodes);
+	// component; node; name; render;
+	// console.log(component, name, node, render);
 
-	// let c = component(options, render ? false : node);
-
-	lazy(component, async (component) => {
-		let c = await component(options, render ? false : node);
+	lazy(component, (component) => {
+		let c = component(options, render ? false : node);
 
 		let componentNode = c.node;
 

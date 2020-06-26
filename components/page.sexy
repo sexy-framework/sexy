@@ -1,238 +1,41 @@
-<div>
-	<h1>Index page</h1>
-	<div></div>
-	<static>
-		<div @click="alert(1)">
-			1
-			<static>2</static>
-		</div>
-	</static>
-	<static>2</static>
-	<static>3</static>
-	<static>4</static>
-	<static>5</static>
-	<static>6</static>
-	<static>7</static>
-	<static>8</static>
-	<static>9</static>
-	<static>10</static>
-	<static>11</static>
-	<static>12</static>
-	<static>13</static>
-	<static>14</static>
-	<static>15</static>
-	<static>16</static>
-	<static>17</static>
-	<static>18</static>
-	<static>19</static>
-	<static>20</static>
-	<static>21</static>
-	<static>22</static>
-	<static>23</static>
-	<static>24</static>
-	<static>25</static>
-	<static>26</static>
-	<static>27</static>
-	<static>28</static>
-	<static>29</static>
-	<static>30</static>
-	<static>31</static>
-	<static>32</static>
-	<static>33</static>
-	<static>34</static>
-	<static>35</static>
-	<static>36</static>
-	<static>37</static>
-	<static>38</static>
-	<static>39</static>
-	<static>40</static>
-	<static>41</static>
-	<static>42</static>
-	<static>43</static>
-	<static>44</static>
-	<static>45</static>
-	<static>46</static>
-	<static>47</static>
-	<static>48</static>
-	<static>49</static>
-	<static>50</static>
-	<static>51</static>
-	<static>52</static>
-	<static>53</static>
-	<static>54</static>
-	<static>55</static>
-	<static>56</static>
-	<static>57</static>
-	<static>58</static>
-	<static>59</static>
-	<static>60</static>
-	<static>61</static>
-	<static>62</static>
-	<static>63</static>
-	<static>64</static>
-	<static>65</static>
-	<static>66</static>
-	<static>67</static>
-	<static>68</static>
-	<static>69</static>
-	<static>70</static>
-	<static>71</static>
-	<static>72</static>
-	<static>73</static>
-	<static>74</static>
-	<static>75</static>
-	<static>76</static>
-	<static>77</static>
-	<static>78</static>
-	<static>79</static>
-	<static>80</static>
-	<static>81</static>
-	<static>82</static>
-	<static>83</static>
-	<static>84</static>
-	<static>85</static>
-	<static>86</static>
-	<static>87</static>
-	<static>88</static>
-	<static>89</static>
-	<static>90</static>
-	<static>91</static>
-	<static>92</static>
-	<static>93</static>
-	<static>94</static>
-	<static>95</static>
-	<static>96</static>
-	<static>97</static>
-	<static>98</static>
-	<static>99</static>
-	<static>100</static>
-	<static>101</static>
-	<static>102</static>
-	<static>103</static>
-	<static>104</static>
-	<static>105</static>
-	<static>106</static>
-	<static>107</static>
-	<static>108</static>
-	<static>109</static>
-	<static>110</static>
-	<static>111</static>
-	<static>112</static>
-	<static>113</static>
-	<static>114</static>
-	<static>115</static>
-	<static>116</static>
-	<static>117</static>
-	<static>118</static>
-	<static>119</static>
-	<static>120</static>
-	<static>121</static>
-	<static>122</static>
-	<static>123</static>
-	<static>124</static>
-	<static>125</static>
-	<static>126</static>
-	<static>127</static>
-	<static>128</static>
-	<static>129</static>
-	<static>130</static>
-	<static>1313</static>
-	<static>132</static>
-	<static>133</static>
-	<static>134</static>
-	<static>135</static>
-	<static>136</static>
-	<static>137</static>
-	<static>138</static>
-	<static>139</static>
-	<static>140</static>
-	<static>141</static>
-	<static>142</static>
-	<static>143</static>
-	<static>144</static>
-	<static>145</static>
-	<static>146</static>
-	<static>147</static>
-	<static>148</static>
-	<static>149</static>
-	<static>150</static>
-	<static>151</static>
-	<static>152</static>
-	<static>153</static>
-	<static>154</static>
-	<static>155</static>
-	<static>156</static>
-	<static>157</static>
-	<static>158</static>
-	<static>159</static>
-	<static>160</static>
-	<static>161</static>
-	<static>162</static>
-	<static>163</static>
-	<static>164</static>
-	<static>165</static>
-	<static>166</static>
-	<static>167</static>
-	<static>168</static>
-	<static>169</static>
-	<static>170</static>
-	<static>171</static>
-	<static>172</static>
-	<static>173</static>
-	<static>174</static>
-	<static>175</static>
-	<static>176</static>
-	<static>177</static>
-	<static>178</static>
-	<static>179</static>
-	<static>180</static>
-	<static>181</static>
-	<static>182</static>
-	<static>183</static>
-	<static>184</static>
-	<static>185</static>
-	<static>186</static>
-	<static>187</static>
-	<static>188</static>
-	<static>189</static>
-	<static>190</static>
-	<static>191</static>
-	<static>192</static>
-	<static>193</static>
-	<static>194</static>
-	<static>195</static>
-	<static>196</static>
-	<static>197</static>
-	<static>198</static>
-	<static>199</static>
-	<static>200</static>
+<div class="container content">
+	<p>
+		Так как Sexy нацелен на работу с SSR для достижения максимальной производительности на клиенте, был реализовн фреймворк для реализации серверного рендеринга.
+	</p>
+	<p>
+		Основной задачей этого фреймворка является рендеринг пользовательского интерфейса в условиях абстракции от клиент-серверной архитектуры.
+	</p>
+	<p>
+		Наша цель — создать фреймворк настолько гибкий, чтобы его можно было использовать и как основу, и как дополнение к уже существующим проектам на Node.js.
+	</p>
+	<p>
+		Sexy содержит все необходимые конфигурационные заготовки, позволяющие сделать разработку приложений с серверным рендерингом более приятной.
+	</p>
+	<h3 class="title is-4">
+		Особенности:
+	</h3>
+	<ol type="1">
+		<li>Написание Sexy-компонентов</li>
+		<li>Автоматическое разделение кода</li>
+		<li>Серверный рендеринг</li>
+		<li>Мощная система маршрутизации с Асинхронными данными</li>
+		<li>Обслуживание статических файлов</li>
+		<li>Транспиляция ES2015+</li>
+		<li>Сборка и минификация JS & CSS</li>
+		<li>Управление элементами в блоке head (title, meta и др.)</li>
+		<li>Пре-процессоры: SASS, LESS, Stylus, и др.</li>
+	</ol>
+	<h3 class="title is-4">
+		Sexy-server использует:
+	</h3>
+	<ol type="1">
+		<li>Sexy-framework для компонентов</li>
+		<li>Для роутинга navigo (lightweight router)</li>
+	</ol>
+	<p>
+		Общий размер составляет всего лишь 5.5 kb gzip.
+	</p>
+	<p>
+		Под капотом мы используем webpack с sexy-loader и babel-loader для сборки, разделения и минимизации вашего кода.
+	</p>
 </div>
-
-<script>
-let counter = o(1);
-let items = o(Array.from({ length: 200 }, (_, i) => i));
-// function mounted() {
-// 	setTimeout(() => {
-// 		// console.log('[1] change counter', counter());
-// 		counter(2);
-// 		// console.log('[2] change counter', counter());
-// 	}, 500)
-// }
-</script>
-
-<style>
-/*.fade*/
-.fade-enter-active,
-.fade-leave-active {
-	transition: opacity ease 250ms;
-}
-
-/*.fade-enter-to,
-.fade-leave {
-	opacity: 1;
-}*/
-
-.fade-enter, .fade-leave-to {
-	opacity: 0;
-}
-</style>

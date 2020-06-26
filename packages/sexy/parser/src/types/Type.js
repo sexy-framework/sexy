@@ -22,9 +22,14 @@ export default class Type
 		}
 	}
 
+	setParent(parent)
+	{
+		this.parent = parent;
+	}
+
 	addChild(child)
 	{
-		child.parent = this;
+		// child.parent = this;
 		this.children.push(child);
 	}
 

@@ -7,7 +7,6 @@ import { getConfig } from './config';
 import WebpackBar from 'webpackbar';
 // Plugins
 import MiniCssExtractPlugin from 'extract-css-chunks-webpack-plugin';
-import TerserJSPlugin from 'terser-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';  
 // import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';  
 import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
@@ -116,7 +115,6 @@ function client({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 	let minimizer = [];
 	if(isProduction) {
 		minimizer = [
-			new TerserJSPlugin(),
 			new OptimizeCSSAssetsPlugin()
 		];
 	}
@@ -128,6 +126,7 @@ function client({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 		output: webpackConfig.client.output(),
 
 		resolve: {
+			extensions: [".js", '.sexy', ".json", ".scss"],
 			alias: {
 				'sexy-routes': routesConfig,
 				'sexy-styles': paths.rootBuild('styles.js'),
@@ -135,8 +134,7 @@ function client({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 			}
 		},
 
-		optimization: {
-			minimizer,
+		optimization: webpackConfig.optimization(minimizer, {
 			splitChunks: {
 				chunks: 'all',
         		name: false,
@@ -149,7 +147,7 @@ function client({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 					},
 				},
 			},
-		},
+		}),
 
 		module: {
 			rules: [
@@ -227,7 +225,10 @@ function server({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 		entry: webpackConfig.server.entry(),
 		output: webpackConfig.server.output(),
 
+		optimization: webpackConfig.optimization(),
+
 		resolve: {
+			extensions: [".js", '.sexy', ".json", ".scss"],
 			alias: {
 				'sexy-routes': routesConfig,
 				'@layouts': paths.app('./layouts'),
@@ -254,7 +255,15 @@ function server({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 				{
 					test: /\.js$/,
 					exclude: /node_modules/,
-					use: ['babel-loader'],
+					use: [{
+						loader: 'babel-loader',
+						options: {
+							plugins: [
+								'dynamic-import-webpack',
+								'remove-webpack',
+							]
+						}
+					}],
 				},
 			]
 		},

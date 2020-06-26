@@ -14,7 +14,7 @@ export function module({
 		componentScope = ''
 	}) => {
 
-		let renderFunction = scriptOptions.async ? 'async function render' : 'function render';
+		let renderFunction = 'function render';
 
 		let exportComponent = `
 		${ exportnames }
@@ -60,6 +60,8 @@ export function module({
 			dynamic as _dynamic$,
 			parseContext,
 			loadComponent,
+			firstChild as _firstChild$,
+			nextSibling as _nextSibling$,
 		} from 'sexy-framework/render';
 
 		import {

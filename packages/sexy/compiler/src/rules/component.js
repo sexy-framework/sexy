@@ -139,9 +139,10 @@ export function getConfig(entity, context, options)
 				let firstChildFix = options.createVariable(body, (n, l) => {
 					return conditionalExpression(
 						id('$render'),
-						memberExpression(
-							memberExpression(template.name, id('content')),
-							id('firstChild')
+						callExpression(
+							id(`_firstChild$`), [
+								memberExpression(template.name, id('content'))
+							]
 						),
 						template.name
 					)
@@ -152,7 +153,9 @@ export function getConfig(entity, context, options)
 				// body.push(template.value);
 			} else {
 				template = options.createVariable(body, (n, l) => {
-					return memberExpression(id('$node'), id('firstChild'))
+					return new callExpression(
+						id(`_firstChild$`), [id('$node')]
+					)
 				});
 
 				body.push(

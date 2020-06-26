@@ -19,13 +19,23 @@ import {
 	variableDeclaration,
 } from "@babel/types";
 
-export function imports(ast, script)
+export function imports(ast, loaderOptions)
 {
 	traverse(ast, {
 		ImportDeclaration: {
 			enter(path)
 			{
 				path.remove();
+			}
+		},
+
+		Import: {
+			enter(path)
+			{
+				if(!loaderOptions.client) {
+				// console.log(path)
+					path.replaceWith(id('require'));
+				}
 			}
 		},
 	});

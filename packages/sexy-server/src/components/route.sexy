@@ -9,6 +9,7 @@ let tag = p('a');
 let to = p(null);
 
 function navigate() {
-	router.navigate(to());
+	// router.navigate(to());
+	window.location.href = to();
 }
 </script>

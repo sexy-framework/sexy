@@ -14,9 +14,14 @@ import {
 export function getFirstTemplateNode(entity, context, options)
 {
 	let pointer = options.createVariable(context, (n, l) => {
+
 		return new conditionalExpression(
 			id('$render'),
-			new memberExpression(l, id('firstChild')),
+			callExpression(
+				id(`_firstChild$`), [
+					l
+				]
+			),
 			l
 		)
 	});
@@ -90,9 +95,9 @@ export function getFirstTemplateNode(entity, context, options)
 export function nextNode(context, options, type)
 {
 	let template = options.createVariable(context, (n, l) => {
-		return new memberExpression(
-			l, id(type)
-		);
+		return new callExpression(
+			id(`_${type}$`), [l]
+		)
 	});
 
 	context.push(template.value);

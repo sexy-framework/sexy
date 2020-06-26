@@ -17,6 +17,7 @@ export function prepare(html)
 		// Sexy slot for server layouts
 		.replace(/\<sexy(\s*)\/\>/g, '<slot name="sexy"></slot>')
 		.replace(/\\@/g, '@');
+		
 
 	return prepareHTML(html);
 }

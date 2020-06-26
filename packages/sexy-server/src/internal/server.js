@@ -37,11 +37,11 @@ function make(route, page)
 
 	let root = document.getElementById('_layout');
 
-	try {
+	// try {
 		serverLayout(render, page, root);
-	} catch(err) {
-		console.log('[ ERROR ]', err);
-	}
+	// } catch(err) {
+	// 	console.log('[ ERROR ]', err);
+	// }
 
 
 	// console.log(buildPath, '/chunks.js');

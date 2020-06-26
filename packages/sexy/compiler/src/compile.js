@@ -167,7 +167,7 @@ export function compile(loaderOptions, blocks)
 		module: module({
 			render: genCode(body),
 			templates: getTemplates(),
-			script: script(codeAnalyse, blocks.script),
+			script: script(codeAnalyse, blocks.script, loaderOptions),
 			imports: genCode(codeAnalyse.imports),
 			exportnames: genCode(codeAnalyse.exportnames),
 			components: components(entity, codeAnalyse.imports)(loaderOptions.path, loaderOptions.delimeter),

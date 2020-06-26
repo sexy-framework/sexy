@@ -27,7 +27,7 @@ import {
 	variableDeclaration,
 } from "@babel/types";
 
-export function script(analyse, script)
+export function script(analyse, script, loaderOptions)
 {
 	let source = '';
 
@@ -41,7 +41,7 @@ export function script(analyse, script)
 	observables(ast);
 	computeds(ast, analyse);
 	hooks(ast, analyse);
-	imports(ast);
+	imports(ast, loaderOptions);
 	exportnames(ast);
 
 	let code = generate(ast, {

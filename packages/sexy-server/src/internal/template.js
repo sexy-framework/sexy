@@ -34,7 +34,7 @@ function getScripts(files = [])
 {
 	return files.map(file => {
 		if(isScript(file)) {
-			return `<script src="/${ file }" defer></script>`;
+			return `<script src="/${ file }" charset="utf-8" defer></script>`;
 		} else {
 			return `<link rel="stylesheet" type="text/css" href="/${ file }">`;
 		}
@@ -58,11 +58,13 @@ export default function template(html, chunks)
 {
 	let manifest = getManifest();
 
-	return Eta.render(getPageTemplate(), {
+	let page = Eta.render(getPageTemplate(), {
 		base: getPreload(chunks),
 		styles: '',
 		head: '',
 		scripts: getScripts(manifest.entrypoints),
 		html,
 	})
+
+	return page;
 }
