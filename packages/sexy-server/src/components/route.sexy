@@ -7,9 +7,13 @@ import { router } from '../internal/router';
 
 let tag = p('a');
 let to = p(null);
+let history = p(true);
 
 function navigate() {
-	// router.navigate(to());
-	window.location.href = to();
+	if(history()) {
+		router.navigate(to());
+	} else {
+		window.location.href = to();
+	}
 }
 </script>

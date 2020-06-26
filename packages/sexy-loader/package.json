@@ -1,6 +1,6 @@
 {
   "name": "sexy-loader",
-  "version": "0.4.8",
+  "version": "0.4.9",
   "description": "Support assets list input file type",
   "module": "src/index.js",
   "main": "dist/index.js",
@@ -30,5 +30,5 @@
   "devDepenecies": {
     "sexy-framework": "*"
   },
-  "gitHead": "0acf42b0d3f3c1331691748adc54c6fde41b12f5"
+  "gitHead": "75367b28b89d6b92b2203aecee10e7268cd3f4a0"
 }
