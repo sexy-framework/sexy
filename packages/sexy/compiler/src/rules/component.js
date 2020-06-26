@@ -21,7 +21,7 @@ import { children, getFirstTemplateNode } from './utils';
 
 import { CUR_EACH_LOOP_KEY } from './each';
 
-export function getConfig(entity, context, options)
+export function getConfig(entity, context, options, slotTagFree = true)
 {
 	let obj = [];
 	// create props
@@ -101,7 +101,7 @@ export function getConfig(entity, context, options)
 
 			let body = [];
 
-			let isEmptyTag = slot.attrs['save-tag'] === undefined || slot.attrs['save-tag'] === false;
+			let isEmptyTag = (slot.attrs['save-tag'] === undefined || slot.attrs['save-tag'] === false) && slotTagFree;
 			
 			let template;
 

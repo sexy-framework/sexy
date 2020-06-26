@@ -17,6 +17,11 @@ export function slot($slots, name, node, render, callback) {
 export function slotReplaceTemplate(node, template, render)
 {
 	if(render) {
+		// for(let n of template.content.childNodes) {
+		// 	console.log('insert', n, 'after', node);
+		// 	node.after(n);
+		// }
+		// node.remove();
 		node.replaceWith(template.content)
 	}
 }
