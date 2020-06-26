@@ -37,14 +37,7 @@ function make(route, page)
 
 	let root = document.getElementById('_layout');
 
-	// try {
-		serverLayout(render, page, root);
-	// } catch(err) {
-	// 	console.log('[ ERROR ]', err);
-	// }
-
-
-	// console.log(buildPath, '/chunks.js');
+	serverLayout(render, page, root);
 
 	return template(root.innerHTML, [
 		chunks['app'],

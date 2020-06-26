@@ -160,8 +160,12 @@ export function watch(prop, fn, render = true)
 		return;
 	}
 
-
+	let lastValue;
 	subscribe(prop, () => {
-		fn(prop());
+		let value = prop();
+		if(lastValue === undefined || lastValue !== value) {
+			fn(value);
+			lastValue = value;
+		}
 	}, !render);
 }

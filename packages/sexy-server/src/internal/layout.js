@@ -6,7 +6,7 @@ import {
 
 export const Layout = serverLayout;
 
-export function serverLayout(action, page, root)
+export function serverLayout(action, page, root, $props = {})
 {
 	action(page.Layout, root, {
 		$slots: {
@@ -21,7 +21,8 @@ export function serverLayout(action, page, root)
 				let tmp2 = $render ? firstChild(tmp.content) : tmp;
 
 				let _el$6 = loadComponent(page.default, "__Page", tmp2, $render, {
-					$customInit: [null, null]
+					$customInit: [null, null],
+					$props,
 				});
 
 				slotReplaceTemplate($node, tmp, $render);
