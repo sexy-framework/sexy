@@ -1,7 +1,3 @@
-<static>
-	<page></page>
+<static to="/docs/intro/get-started" class="button is-medium is-success">
+    <span>Начать знакомство</span>
 </static>
-
-<script>
-console.log(1);
-</script>

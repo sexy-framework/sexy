@@ -13,11 +13,10 @@ function gett() {
 
 	let html = `
 
-	<script>
-	import a from '1.sexy';
-	const b = import('1.sexy');
-	const c = require('1.sexy');
-	</script>
+	 <Route to="/docs/intro/get-started" class="button is-medium is-success">
+        <common.icon type="play"></common.icon>
+        <span>Начать знакомство</span>
+    </Route>
 
 	`
 

@@ -17,6 +17,10 @@ export function attrArgToObj(args)
 
 export function attrArgToString(args)
 {
+	if(typeof args === 'string') {
+		return args.split(' ')
+	}
+
 	let result = [];
 	// args = args.concat([]);
 	if(Array.isArray(args)) {
