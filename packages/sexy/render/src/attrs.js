@@ -44,12 +44,25 @@ export function attrArgToString(args)
 export function makeClass(node, value, render)
 {
 	let lastClassAdopted = [];
+
+	if(!render) {
+		lastClassAdopted = attrArgToString(value());
+	}
+
+	let cache;
+
 	watch(value, (v) => {
+
 		let tmp = node.classList;
 
-		let toSet = Array.from(
-			new Set(attrArgToString(v))
-		);
+		let toSet = attrArgToString(v);
+
+		let cacheString = toSet.join(' ');
+
+		if(cache !== undefined && cache === cacheString) {
+			return;
+		}
+
 		let toRemove = lastClassAdopted.filter(x => !toSet.includes(x));
 
 		for(let name of toSet) {
@@ -61,6 +74,7 @@ export function makeClass(node, value, render)
 		}
 
 		lastClassAdopted = toSet;
+		cache = cacheString;
 	}, render);
 }
 

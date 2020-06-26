@@ -1,3 +1,17 @@
-<static to="/docs/intro/get-started" class="button is-medium is-success">
+<static to="/docs/intro/get-started" :class="['class', d ? '1' : '2']">
     <span>Начать знакомство</span>
 </static>
+
+<script>
+let d = o(false);
+
+function mounted() {
+	setTimeout(() => {
+		d(true);
+		d(true);
+		d(true);
+		d(true);
+		d(true);
+	}, 1000)
+}
+</script>
