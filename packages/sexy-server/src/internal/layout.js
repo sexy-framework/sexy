@@ -9,6 +9,7 @@ export const Layout = serverLayout;
 export function serverLayout(action, page, root, $props = {})
 {
 	action(page.Layout, root, {
+		$props,
 		$slots: {
 			sexy: ($node, $render) => {
 				let tmp = $node;
@@ -21,8 +22,8 @@ export function serverLayout(action, page, root, $props = {})
 				let tmp2 = $render ? firstChild(tmp.content) : tmp;
 
 				let _el$6 = loadComponent(page.default, "__Page", tmp2, $render, {
-					$customInit: [null, null],
 					$props,
+					// $customInit: [null, null],
 				});
 
 				slotReplaceTemplate($node, tmp, $render);
@@ -31,9 +32,9 @@ export function serverLayout(action, page, root, $props = {})
 	});
 }
 
-export function clientLayout(action, page, root)
+export function clientLayout(action, page, root, $props = {})
 {
 	page.then(module => {
-		serverLayout(action, module, root);
+		serverLayout(action, module, root, $props);
 	})
 }

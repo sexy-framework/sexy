@@ -16,11 +16,17 @@ global.document = document;
 
 global.templatePath = process.argv[2] || '/';
 global.buildPath = process.argv[3] || '/';
+global.$router = {
+	getPathname: () => {
+		return 'null';
+	}
+};
 
 const chunks = relative('./chunks.js', buildPath);
 
-process.on('message', ({ route }) => {
-	build({ route }, (html) => {
+process.on('message', ({ route, options }) => {
+
+	build(route, options, (html) => {
 		process.send({
 			html,
 		});
@@ -29,7 +35,7 @@ process.on('message', ({ route }) => {
 
 // stats -> namedChunkGroups | chunks | assetsByChunkName , for proload per page
 
-function make(route, page)
+function make(route, page, options = {})
 {
 	const components = require('./components');
 	// console.log(components)
@@ -37,7 +43,7 @@ function make(route, page)
 
 	let root = document.getElementById('_layout');
 
-	serverLayout(render, page, root);
+	serverLayout(render, page, root, options);
 
 	return template(root.innerHTML, [
 		chunks['app'],
@@ -45,15 +51,21 @@ function make(route, page)
 	]);
 }
 
-export function build({ route }, callback, isProduction = true)
+export function build(route, options, callback, isProduction = true)
 {
+	global.$router = {
+		getPathname: () => {
+			return options.request.pathname;
+		}
+	};
+	
 	if(Routes[route] === undefined) {
 		callback(null, new Error(`There is no page:${ route } ready`))
 		return;
 	}
 
 	Routes[route]().then(page => {
-		callback(make(route, page), null)
+		callback(make(route, page, options), null)
 	});
 }
 

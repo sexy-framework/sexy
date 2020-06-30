@@ -28,7 +28,9 @@ function make(page, root)
 
 	isSSR = false;
 
-	return clientLayout(fn, page, root)
+	return clientLayout(fn, page, root, {
+		router,
+	})
 }
 
 router.notFound(function () {

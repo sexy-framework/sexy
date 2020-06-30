@@ -84,8 +84,14 @@ function getDeps(paths, clientStats)
 	fs.writeFileSync(paths.rootBuild('./chunks.js'), `module.exports = ${ JSON.stringify(deps) }`);
 }
 
-function getPrependCode(paths)
+function getPrependCode(paths, isServer = false)
 {
+	if(isServer) {
+		return `
+		const $router = global.$router;
+		`
+	}
+
 	return `
 	import { router as $router } from '${ paths.internal('./router.js') }';
 	`
@@ -160,7 +166,7 @@ function client({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 							path: paths.app('./components'),
 							pages: paths.app('./pages'),
 							layouts: paths.app('./layouts'),
-							prependCode: getPrependCode(paths),
+							prependCode: getPrependCode(paths, false),
 							client: true,
 							styles: true
 						}
@@ -246,7 +252,7 @@ function server({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 							path: paths.app('./components'),
 							pages: paths.app('./pages'),
 							layouts: paths.app('./layouts'),
-							prependCode: getPrependCode(paths),
+							prependCode: getPrependCode(paths, true),
 							styles: false
 						}
 					}]

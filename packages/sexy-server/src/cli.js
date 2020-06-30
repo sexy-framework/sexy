@@ -21,6 +21,7 @@ import {
 	createManifest,
 	getManifest,
 	box,
+	Request,
 } from './core';
 
 const prog = sade('sexy');
@@ -144,6 +145,8 @@ function startDevServer()
 
 		let { url, params, pathname } = parseUrl(req.url);
 
+		let request = new Request(req);
+
 		if(findClientAsset(paths, { req, res })) {
 			return false;
 		}
@@ -157,10 +160,18 @@ function startDevServer()
  		if(!route) {
  			return proc.send({
 				route: '/error-404',
+				options: {
+	 				request,
+	 			}
 			});
  		}
 
- 		proc.send({ route });
+ 		proc.send({
+ 			route,
+ 			options: {
+ 				request,
+ 			}
+ 		});
 	});
 }
 

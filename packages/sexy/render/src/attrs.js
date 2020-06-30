@@ -46,7 +46,11 @@ export function makeClass(node, value, render)
 	let lastClassAdopted = [];
 
 	if(!render) {
-		lastClassAdopted = attrArgToString(value());
+		if(typeof value === 'function') {
+			lastClassAdopted = attrArgToString(value());
+		} else {
+			lastClassAdopted = attrArgToString(value);
+		}
 	}
 
 	let cache;
