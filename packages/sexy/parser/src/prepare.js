@@ -1,6 +1,10 @@
 function prepareHTML(html)
 {
-	return html.replace(/\t/g, ' ').replace(/\s\s+/g, ' ').trim();
+	return html
+		.replace(/(?:\r\n|\r|\n)/g, ' ')
+		.replace(/\t/g, ' ')
+		.replace(/\s\s+/g, ' ')
+		.trim();
 }
 
 export function prepare(html)
@@ -18,6 +22,5 @@ export function prepare(html)
 		.replace(/\<sexy(\s*)\/\>/g, '<slot name="sexy"></slot>')
 		.replace(/\\@/g, '@');
 		
-
 	return prepareHTML(html);
 }

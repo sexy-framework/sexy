@@ -1,6 +1,9 @@
 <static to="/docs/intro/get-started" :class="['class', d ? '1' : '2']">
     <span>Начать знакомство</span>
 </static>
+<div>
+	asdas das dsa1 <span>asdsad2</span> asdas d3
+</div>
 
 <script>
 let d = o(false);

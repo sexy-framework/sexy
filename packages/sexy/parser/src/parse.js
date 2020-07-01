@@ -100,9 +100,7 @@ export function parse(html)
 		{
 			let parent = currentStackNode();
 
-			text = text.trim();
-
-			if(text !== '' && parent) {
+			if(text.trim() !== '' && parent) {
 				let node = new Text(text);
 				// console.log('set parent')
 				node.setParent(parent);
