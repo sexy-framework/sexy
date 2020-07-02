@@ -8481,9 +8481,11 @@ setprototypeof@1.1.1:
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.1.1.tgz#7e95acb24aa92f5885e0abef5ba131330d4ae683"
   integrity sha512-JvdAWfbXeIGaZ9cILp38HntZSFSo3mWg6xGcJJsd+d4aRMOqauag1C63dJfDw7OaMYwEbHMOxEZ1lqVRYP2OAw==
 
-"sexy-framework@link:packages/sexy-framework":
-  version "0.0.0"
-  uid ""
+"sexy-framework@file:packages/sexy":
+  version "0.4.14"
+  dependencies:
+    "@babel/plugin-syntax-top-level-await" "^7.10.1"
+    htmlparser2 "^4.1.0"
 
 "sexy-loader@link:packages/sexy-loader":
   version "0.4.14"
@@ -8493,6 +8495,7 @@ setprototypeof@1.1.1:
     loader-utils "^2.0.0"
     querystring "^0.2.0"
     schema-utils "^2.6.6"
+    sexy-framework "file:packages/sexy"
     webpack "^4.43.0"
     webpack-cli "^3.3.12"
 
