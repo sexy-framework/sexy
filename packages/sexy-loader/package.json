@@ -24,7 +24,7 @@
     "loader-utils": "^2.0.0",
     "querystring": "^0.2.0",
     "schema-utils": "^2.6.6",
-    "sexy-framework": "file:../sexy",
+    "sexy-framework": "^0.4.15",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12"
   },
