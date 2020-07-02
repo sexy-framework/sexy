@@ -24,10 +24,13 @@ global.$router = {
 
 const chunks = relative('./chunks.js', buildPath);
 
-process.on('message', ({ route, options }) => {
+process.on('message', ({ route, generation = false, options = {} }) => {
+
+	options.generation = generation;
 
 	build(route, options, (html) => {
 		process.send({
+			route,
 			html,
 		});
 	}, false)
@@ -55,9 +58,15 @@ export function build(route, options, callback, isProduction = true)
 {
 	global.$router = {
 		getPathname: () => {
-			return options.request.pathname;
+			if(options.request) {
+				return options.request.pathname;
+			}
+
+			return '';
 		}
 	};
+
+	global.window._sexy_generation = options.generation;
 	
 	if(Routes[route] === undefined) {
 		callback(null, new Error(`There is no page:${ route } ready`))

@@ -32,10 +32,10 @@ export default function config(paths)
 				};
 			},
 
-			output: () => {
+			output: ({ publicPath = '/' }) => {
 				return {
 					path: paths.clientBuild(''),
-					publicPath: '/',
+					publicPath,
 					filename: '[hash].js',
 					chunkFilename: 'sexy.[chunkhash].js', // [hash]/[name].[id].js
 				};

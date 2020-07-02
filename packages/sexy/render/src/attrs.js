@@ -105,7 +105,11 @@ export function attrs(node, render, attrs)
 			makeStyles(node, value, render);
 		} else {
 			watch(value, (v) => {
-				node.setAttribute(name, v);
+				if(v === false || v === undefined || v === null) {
+					node.removeAttribute(name);
+				} else {
+					node.setAttribute(name, v);
+				}
 			}, render);
 		}
 	}

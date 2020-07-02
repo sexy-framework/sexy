@@ -24,21 +24,30 @@ import {
 	Request,
 } from './core';
 
-const prog = sade('sexy');
+import { ensureDirectoryExistence } from './core/utils';
 
 import child_process from 'child_process';
 
-function cleanup()
-{
-	let paths = envPaths();
-	fs.rmdirSync(paths.rootBuild(''), { recursive: true });
-}
+const prog = sade('sexy');
 
 let proc = null;
 let routes = [];
 let paths = envPaths();
 let entrypoints = [];
 let HTTP_RES;
+
+/**
+ * Cleanup build folder
+ */
+function cleanup(dir = null)
+{
+	if(dir === null) {
+		dir = paths.rootBuild('');
+	}
+
+	fs.rmdirSync(dir, { recursive: true });
+}
+
 
 /**
  * Watch and start dev server
@@ -77,7 +86,7 @@ function build()
 	// generate routes config
 	createRoutes({ paths, routes });
 
-	bundle('production', (kill) => {
+	bundle('production', {}, (kill) => {
 		box('Bundle is ready')
 		if(kill) {
 			process.exit();
@@ -96,25 +105,34 @@ function start()
 	]);
 }
 
-function bundle(mode, callback = () => {})
+function bundle(mode, options = {}, callback = () => {}, startProc = true)
 {
-	createBundles({ paths, mode }, (entrypoints, killable) => {
+	createBundles({ paths, mode, ...options }, (entrypoints, killable) => {
 
 		createManifest(paths, {
 			entrypoints,
 		});
 		
-		startRender();
+		if(startProc) {
+			startRender();
+		}
 
 		callback(killable);
 	});
 
 }
 
-function startRender()
+function startRender(callback = null)
 {
 	if(proc) {
 		proc.kill();
+	}
+
+	if(callback === null) {
+		callback = ({ html }) => {
+			HTTP_RES.writeHead(200);
+			HTTP_RES.end(html);
+		}
 	}
 
 	// console.log(c.green('Sexy-server-render has started'));
@@ -126,10 +144,7 @@ function startRender()
 		paths.rootBuild('./'),
 	]);
 
-	proc.on('message', ({ html }) => {
-		HTTP_RES.writeHead(200);
-		HTTP_RES.end(html);
-	});
+	proc.on('message', callback);
 }
 
 function startDevServer()
@@ -177,8 +192,85 @@ function startDevServer()
 
 function generate()
 {
-	console.log(1);
-	process.exit();
+	cleanup(paths.rootBuild(''));
+	cleanup(paths.generateBuild(''));
+
+	routes = api.routes(paths);
+
+	let currentRoute = null;
+	let currentIndex = routes.length - 1;
+
+	// generate routes config
+	createRoutes({ paths, routes });
+
+	function successBuild() {
+		if(currentIndex > 0) {
+			return;
+		}
+
+		box('Static website generation has completed')
+
+		proc.kill();
+		process.exit();
+	}
+
+	bundle('production', {}, (kill) => {
+
+		startRender((render) => {
+			currentIndex--;
+
+			let route = render.route;
+			
+			route = route.replace(/\/$/g, '/index');
+
+			let filePath = paths.generateBuild(`./${ route }.html`);
+
+			// console.log(filePath, currentIndex);
+
+			ensureDirectoryExistence(filePath);
+
+			fs.writeFileSync(filePath, render.html);
+
+			successBuild();
+		});
+
+		for (let page of routes) {
+			currentRoute = findRoute({
+	 			routes,
+	 			params: {},
+	 			pathname: page.route,
+	 		});
+
+	 		if(!currentRoute) {
+	 			currentRoute = '/error-404';
+	 		}
+
+	 		console.log(currentRoute);
+
+	 		proc.send({
+	 			route: currentRoute,
+	 			generation: true,
+	 		});
+
+		}
+	}, false);
+	
+	
+
+	// let route = findRoute({
+	// 	routes,
+	// 	params: {},
+	// 	pathname,
+	// });
+
+	// proc.send({
+	// 	route,
+	// 	options: {
+	// 		request,
+	// 	}
+	// });
+
+
 }
 /**
  * CLI commands

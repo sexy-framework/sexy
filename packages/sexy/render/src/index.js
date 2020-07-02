@@ -9,7 +9,7 @@ export { createComponent, registerComponent, DOM_HOOK_ATTR } from './components'
 export { emit } from './emit'
 export { call } from './call'
 export { dynamic } from './dynamic'
-export { loadComponent, lazy } from './load'
+export { loadComponent, lazy, lazyArray } from './load'
 
 export { render, hydrate, refresh, nextSibling, firstChild } from './dom'
 

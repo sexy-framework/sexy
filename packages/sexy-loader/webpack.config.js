@@ -27,12 +27,7 @@ module.exports = {
 		
 	},
 
-	externals: [
-	    'path',
-	    'loader-utils',
-	    'querystring',
-    ],
-
+	externals: Object.keys(require('./package.json').dependencies),
 	/**
 	 * Module
 	 *

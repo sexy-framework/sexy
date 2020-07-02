@@ -45,7 +45,10 @@ for(let route in Routes) {
 
 
 
-// router.hooks({
+router.hooks({
+	after(params) {
+		window.scrollTo(0, 0);
+	}
 // 	before(done, params) {
 // 		// cleanup
 // 		let toRemove = document.querySelectorAll('[data-to-remove]');
@@ -57,7 +60,7 @@ for(let route in Routes) {
 		
 // 		done();
 // 	}
-// });
+});
 
 router.resolve();
 

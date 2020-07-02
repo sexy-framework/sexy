@@ -8,8 +8,45 @@ export function isLazy(component)
 	return component instanceof Promise;
 }
 
-export function lazy(component, callback)
+export function lazyArray(modules, callback)
 {
+	let shouldWait = false;
+
+	for(let m of modules) {
+		if(isLazy(m)) {
+			shouldWait = true;
+		}
+	}
+
+	if(shouldWait) {
+		Promise.all(
+			modules.map(m => m.then(v => v))
+		).then((modules) => {
+
+			modules = modules.map(m => {
+				let exports = Object.keys(m);
+				if(exports.length === 1 && exports[0] === 'default') {
+					return m.default;
+				}
+
+				return m;
+			});
+
+			callback.apply(null, modules);
+		});
+	} else {
+		callback.apply(null, modules);
+	}
+}
+
+export function lazy(modules, callback)
+{
+	let component = modules;
+
+	if(Array.isArray(modules)) {
+		return lazyArray(modules, callback)
+	}
+
 	if(isLazy(component)) {
 		component.then((module) => {
 			callback(

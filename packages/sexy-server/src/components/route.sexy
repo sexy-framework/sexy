@@ -1,4 +1,4 @@
-<dynamic :is="tag" @click="navigate">
+<dynamic :is="tag" :href="href" @click="navigate">
 	<slot></slot>
 </dynamic>
 
@@ -8,6 +8,16 @@ import { router } from '../internal/router';
 let tag = p('a');
 let to = p(null);
 let history = p(true);
+
+let href = () => {
+	let page = to();
+
+	if(tag() === 'a' && window._sexy_generation) {
+		return (page !== '/' ? `${page}.html` : page);
+	}
+
+	return false;
+}
 
 function navigate() {
 	if(history()) {

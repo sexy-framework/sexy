@@ -14,6 +14,7 @@ export function envPaths()
 		clientBuild: (src) => path.resolve(cwd, './.sexy/client/', src),
 		serverBuild: (src) => path.resolve(cwd, './.sexy/server/', src),
 		rootBuild: (src) => path.resolve(cwd, './.sexy/', src),
+		generateBuild: (src) => path.resolve(cwd, './static/', src),
 		app: (src) => path.resolve(cwd, './', src),
 
 		internal: (src) => path.resolve(root, './src/internal/', src),

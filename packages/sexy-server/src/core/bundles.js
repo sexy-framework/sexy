@@ -15,7 +15,7 @@ import statsPlugin from 'stats-webpack-plugin'
 let procKillable = true;
 
 
-export async function createBundles({ paths, mode = 'development' }, callback)
+export async function createBundles({ paths, mode = 'development', publicPath = '/' }, callback)
 {
 	procKillable = true;
 
@@ -30,9 +30,11 @@ export async function createBundles({ paths, mode = 'development' }, callback)
 
 	let customErrorHandler =  errorHandler();
 
+	const options = { paths, isProduction, publicPath, appConfig, webpackConfig, routesConfig, externals, customErrorHandler };
+
 	const compiler = webpack([
-		client({ paths, isProduction, appConfig, webpackConfig, routesConfig, externals, customErrorHandler }),
-		server({ paths, isProduction, appConfig, webpackConfig, routesConfig, externals, customErrorHandler })
+		client(options),
+		server(options)
 	]);
 
 	compiler.run((err, stats) => {
@@ -109,7 +111,7 @@ function errorHandler()
 	return plugin;
 }
 
-function client({ paths, isProduction, appConfig, webpackConfig, routesConfig, externals, customErrorHandler })
+function client({ paths, isProduction, publicPath, appConfig, webpackConfig, routesConfig, externals, customErrorHandler })
 {
 	let cssExtractLoader = isProduction ? MiniCssExtractPlugin.loader : {
 		loader: 'style-loader',
@@ -129,7 +131,7 @@ function client({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 		mode: isProduction ? 'production' : 'development',
 
 		entry: webpackConfig.client.entry(),
-		output: webpackConfig.client.output(),
+		output: webpackConfig.client.output({ publicPath }),
 
 		resolve: {
 			extensions: [".js", '.sexy', ".json", ".scss"],

@@ -3,7 +3,7 @@ import c from 'chalk';
 
 export function box()
 {
-	let header = c.bold.green('Sexy framework');
+	let header = c.hex('FF69B4').bold('Sexy framework');
 
 	let text = [
 		header, '',
@@ -18,10 +18,8 @@ export function box()
 	}
 
 	let box = boxen(text.join('\n'), {
-		borderColor: 'green',
+		borderColor: '#FF69B4',
 		padding: 1,
 		margin: 1,
 	});
-
-	console.log(box);
 }

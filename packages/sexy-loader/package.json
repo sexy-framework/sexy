@@ -28,7 +28,6 @@
     "webpack-cli": "^3.3.12"
   },
   "devDepenecies": {
-    "sexy-framework": "*"
   },
   "gitHead": "75367b28b89d6b92b2203aecee10e7268cd3f4a0"
 }
