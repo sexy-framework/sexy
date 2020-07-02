@@ -14,7 +14,7 @@
   "scripts": {
     "test": "cross-env NODE_ENV=development webpack --config w.test.js ",
     "watch": "cross-env NODE_ENV=development webpack --config webpack.config.js ",
-    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js"
+    "build": "cross-env NODE_ENV=development webpack --config webpack.config.js"
   },
   "license": "MIT",
   "dependencies": {
