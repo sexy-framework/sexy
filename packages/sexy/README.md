@@ -1,7 +1,7 @@
 # Sexy framework
 
 ![npm](https://img.shields.io/npm/v/sexy-framework?color=%23&style=flat-square)
-![Badge size](https://img.badgesize.io/https://unpkg.com/sexy-framework/dist/sexy.js?compression=gzip&label=gzip&style=flat-square)
+![size](https://img.badgesize.io/https://unpkg.com/sexy-framework/dist/sexy.js?compression=gzip&label=gzip&style=flat-square)
 
 Sexy - is super fast reactive framework for building fast UI.
 Perfect Google PageSpeed metrics (better 4-5 times then NuxtJS)
