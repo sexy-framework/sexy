@@ -1,9 +1,0 @@
-<div class="logo">
-	LOGO
-</div>
-
-<style>
-	.logo {
-		display: block;
-	}
-</style>

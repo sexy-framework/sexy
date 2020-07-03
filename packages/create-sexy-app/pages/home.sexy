@@ -1,0 +1,20 @@
+<h1>
+	Home page
+</h1>
+<p>
+	Page example with different layout
+</p>
+
+<script>
+export { Layout } from '@layouts/app.sexy';
+</script>
+
+<style>
+.content {
+	text-align: center;
+}
+
+h1 {
+	font-size: 64px;
+}
+</style>

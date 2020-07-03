@@ -38,7 +38,7 @@ process.on('message', ({ route, generation = false, options = {} }) => {
 
 // stats -> namedChunkGroups | chunks | assetsByChunkName , for proload per page
 
-function make(route, page, options = {})
+export function make(route, page, options = {})
 {
 	const components = require('./components');
 	// console.log(components)
@@ -54,7 +54,7 @@ function make(route, page, options = {})
 	]);
 }
 
-export function build(route, options, callback, isProduction = true)
+export function build(route, options, callback)
 {
 	global.$router = {
 		getPathname: () => {

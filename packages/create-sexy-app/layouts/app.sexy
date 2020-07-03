@@ -1,0 +1,21 @@
+<div class="page">
+	<div class="content">
+		<div class="layout">
+			[ App layout ]
+		</div>
+		<nav.menu>
+			<logo></logo>
+		</nav.menu>
+		<sexy/>
+	</div>
+</div>
+
+<style>
+.layout {
+	text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #ccc;
+    font-size: 12px;
+    margin-bottom: 30px;
+}
+</style>

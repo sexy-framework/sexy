@@ -1,0 +1,9 @@
+<div id="menu">
+	<div class="logo">
+		<slot></slot>
+	</div>
+	<div class="buttons">
+		<Route to="/" class="button">Index</Route>
+		<Route to="/home" class="button">Home</Route>
+	</div>
+</div>

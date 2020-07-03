@@ -1,0 +1,16 @@
+<h1>
+	Sexy framework
+</h1>
+<p>
+	Welcome to sexy-boilerplate app
+</p>
+
+<style>
+.content {
+	text-align: center;
+}
+
+h1 {
+	font-size: 64px;
+}
+</style>

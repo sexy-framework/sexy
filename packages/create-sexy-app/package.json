@@ -1,0 +1,26 @@
+{
+  "name": "create-sexy-app",
+  "version": "0.4.15",
+  "main": "src/index.js",
+  "license": "MIT",
+  "gitHead": "75367b28b89d6b92b2203aecee10e7268cd3f4a0",
+  "bugs": {
+    "url": "https://github.com/sexy-framework/sexy/issues"
+  },
+  "homepage": "https://github.com/sexy-framework/sexy#readme",
+  "author": "Kirill Burkhanov <kir.burkhanov@gmail.com>",
+  "scripts": {
+    "dev": "sexy dev",
+    "build": "sexy build",
+    "start": "sexy start",
+    "generate": "sexy generate"
+  },
+  "dependencies": {
+    "fastify": "^2.14.1",
+    "fastify-caching": "^5.0.0",
+    "fastify-compress": "^2.0.1",
+    "fastify-static": "^2.7.0",
+    "fastify-url-data": "^2.4.0",
+    "sexy-server": "^0.4.19"
+  }
+}

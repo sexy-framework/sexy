@@ -1,9 +1,0 @@
-<div class="def-lay">
-	<div id="page" :data-d="d">
-		<sexy/>
-	</div>
-</div>
-
-<script>
-let d = 1;
-</script>

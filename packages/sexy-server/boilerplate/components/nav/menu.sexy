@@ -1,5 +1,0 @@
-<div id="menu">
-	<slot></slot>
-	<Route to="/" class="button">Index</Route>
-	<Route to="/home" class="button">Home</Route>
-</div>

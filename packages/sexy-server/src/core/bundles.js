@@ -130,11 +130,13 @@ function client({ paths, isProduction, publicPath, appConfig, webpackConfig, rou
 	return  {
 		mode: isProduction ? 'production' : 'development',
 
+		bail: true,
+
 		entry: webpackConfig.client.entry(),
 		output: webpackConfig.client.output({ publicPath }),
 
 		resolve: {
-			extensions: [".js", '.sexy', ".json", ".scss"],
+			extensions: [".js", '.sexy', ".json"],
 			alias: {
 				'sexy-routes': routesConfig,
 				'sexy-styles': paths.rootBuild('styles.js'),
@@ -236,7 +238,7 @@ function server({ paths, isProduction, appConfig, webpackConfig, routesConfig, e
 		optimization: webpackConfig.optimization(),
 
 		resolve: {
-			extensions: [".js", '.sexy', ".json", ".scss"],
+			extensions: [".js", '.sexy', ".json"],
 			alias: {
 				'sexy-routes': routesConfig,
 				'@layouts': paths.app('./layouts'),
