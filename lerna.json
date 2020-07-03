@@ -17,8 +17,6 @@
     }
   },
   "packages": [
-    "packages/sexy",
-    "packages/sexy-loader",
-    "packages/sexy-server"
+    "packages/*"
   ]
 }

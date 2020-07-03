@@ -28,7 +28,7 @@
   "scripts": {
   	"clear": "rm -rf ./packages/*/dist",
     "prepublish": "yarn build",
-    "build": "yarn clear && lerna run build",
+    "build": "yarn clear && lerna run build --parallel --ignore=create-sexy-app",
     "test:watch": "cross-env NODE_ENV=development webpack --config config/webpack.dev.js ",
     "test:build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js "
   },
