@@ -1,4 +1,4 @@
-import { value, subscribe } from 'sexy-framework/observable';
+import { value, subscribe } from 'sexy/observable';
 
 
 export function html(node, options, html, render)

@@ -1,4 +1,4 @@
-import { cleanup } from 'sexy-framework/observable';
+import { cleanup } from 'sexy/observable';
 
 export function directive($hooks, directive, node, options, value, render)
 {

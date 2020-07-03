@@ -6,7 +6,7 @@ const APP_ROUTES = {
 	'/': import('../pages/index.sexy')
 };
 
-import { render, hydrate, refresh, registerComponent } from 'sexy-framework/render';
+import { render, hydrate, refresh, registerComponent } from 'sexy/render';
 import Static from '../components/static.sexy'
 import PageComponent from '../pages/index.sexy'
 import Route from '../packages/sexy-server/src/components/route.sexy'
@@ -29,7 +29,7 @@ import time from './time';
 // // const PageComponent = import('../components/page.sexy')
 
 
-// import { render, hydrate, refresh } from 'sexy-framework';
+// import { render, hydrate, refresh } from 'sexy';
 
 
 

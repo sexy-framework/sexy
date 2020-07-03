@@ -1,9 +1,9 @@
 import { loadComponent } from './load';
-import { subscribe, root, value } from 'sexy-framework/observable';
+import { subscribe, root, value } from 'sexy/observable';
 import { add, persistent, diffable, castNode } from './utils.js';
 import { cleanupFragment } from './statement';
 import { call } from './call';
-// import { isManualComponent }  from 'sexy-framework/parser';
+// import { isManualComponent }  from 'sexy/parser';
 // dynamic(computed, node)
 
 

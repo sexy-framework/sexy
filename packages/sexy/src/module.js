@@ -1,3 +1,3 @@
-// require('sexy-framework/observable');
-// require('sexy-framework/transition');
-require('sexy-framework/render');
+// require('sexy/observable');
+// require('sexy/transition');
+require('sexy/render');

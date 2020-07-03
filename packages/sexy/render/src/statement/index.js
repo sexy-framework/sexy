@@ -1,4 +1,4 @@
-import { subscribe, root } from 'sexy-framework/observable';
+import { subscribe, root } from 'sexy/observable';
 import { add, persistent, diffable, castNode } from '../utils.js';
 
 export function createInitFragment(start, end)

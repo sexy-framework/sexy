@@ -35,7 +35,7 @@ export function module({
 		}
 
 		return `
-		import { observable, computed, subscribe, watch } from 'sexy-framework/observable';
+		import { observable, computed, subscribe, watch } from 'sexy/observable';
 		${ imports }
 		${ components }
 		${ afterImport }
@@ -62,11 +62,11 @@ export function module({
 			loadComponent,
 			firstChild as _firstChild$,
 			nextSibling as _nextSibling$,
-		} from 'sexy-framework/render';
+		} from 'sexy/render';
 
 		import {
 			transition as _transition$,
-		} from 'sexy-framework/transition'
+		} from 'sexy/transition'
 
 		// templates
 		${ templates }

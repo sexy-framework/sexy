@@ -2,7 +2,7 @@ import {
 	loadComponent,
 	slotReplaceTemplate,
 	firstChild
-} from 'sexy-framework/render';
+} from 'sexy/render';
 
 export const Layout = serverLayout;
 

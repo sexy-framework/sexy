@@ -5,7 +5,7 @@ import { Routes } from 'sexy-routes';
 import { router } from './router';
 
 // Client Render/Hydrate
-import { render, hydrate, registerComponent } from 'sexy-framework/render';
+import { render, hydrate, registerComponent } from 'sexy/render';
 
 // Load default components
 import * as components from './components';

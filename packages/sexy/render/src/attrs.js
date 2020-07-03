@@ -1,4 +1,4 @@
-import { watch } from 'sexy-framework/observable';
+import { watch } from 'sexy/observable';
 
 export function attrArgToObj(args)
 {

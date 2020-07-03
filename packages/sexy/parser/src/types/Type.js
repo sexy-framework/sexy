@@ -1,5 +1,5 @@
-import { rules } from 'sexy-framework/compiler';
-import { parser } from 'sexy-framework/directives';
+import { rules } from 'sexy/compiler';
+import { parser } from 'sexy/directives';
 
 const SELF_CLOSED_TAGS = ['br', 'hr', 'input'];
 

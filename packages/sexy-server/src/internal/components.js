@@ -1,4 +1,4 @@
-import { registerComponent } from 'sexy-framework/render';
+import { registerComponent } from 'sexy/render';
 
 import Route from '../components/route.sexy';
 

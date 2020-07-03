@@ -1,6 +1,6 @@
-import { parse } from 'sexy-framework/parser';
-import { compile } from 'sexy-framework/compiler';
-import { observable, computed, subscribe, watch } from 'sexy-framework/observable';
+import { parse } from 'sexy/parser';
+import { compile } from 'sexy/compiler';
+import { observable, computed, subscribe, watch } from 'sexy/observable';
 
 
 import time from './time';

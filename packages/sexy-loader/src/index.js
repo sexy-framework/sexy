@@ -3,8 +3,8 @@ import qs from 'querystring';
 import path from 'path';
 import { parseName } from './name';
 
-import { parse } from 'sexy-framework/parser';
-import { compile } from 'sexy-framework/compiler';
+import { parse } from 'sexy/parser';
+import { compile } from 'sexy/compiler';
 
 import VirtualModules from './virtual'
 
@@ -16,8 +16,8 @@ import VirtualModules from './virtual'
 // const qs = require('querystring')
 // const path = require('path')
 // const { parseName } = require('./name')
-// const { parse } = require('sexy-framework/parser')
-// const { compile } = require('sexy-framework/compiler')
+// const { parse } = require('sexy/parser')
+// const { compile } = require('sexy/compiler')
 // const VirtualModules = require('./virtual')
 
 

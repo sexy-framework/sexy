@@ -1,5 +1,5 @@
 import traverse from "@babel/traverse";
-import { parse } from 'sexy-framework/analyser';
+import { parse } from 'sexy/analyser';
 import generate from "@babel/generator";
 
 import { props } from "./props";

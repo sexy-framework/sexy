@@ -1,6 +1,6 @@
 import { JSDOM } from 'jsdom';
 import fs from 'fs';
-import { render } from 'sexy-framework/render';
+import { render } from 'sexy/render';
 import { Routes, RouteChunks } from 'sexy-routes';
 import template from './template';
 import { serverLayout, Layout } from './layout';
