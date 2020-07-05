@@ -1,192 +1,103 @@
 # Sexy framework
 
-![npm](https://img.shields.io/npm/v/sexy-framework?color=%23&style=flat-square)
-![size](https://img.badgesize.io/https://unpkg.com/sexy-framework/dist/sexy.js?compression=gzip&label=gzip&style=flat-square)
+![npm](https://img.shields.io/npm/v/sexy?color=%23&style=flat-square)
+![size](https://img.badgesize.io/https://unpkg.com/sexy/dist/sexy.js?compression=gzip&label=gzip&style=flat-square)
 
-Sexy - is super fast reactive framework for building fast UI.
-Perfect Google PageSpeed metrics (better 4-5 times then NuxtJS)
+Sexy framework – is a reactive compiler and javascript analyser for building user interfaces. Unlike other frameworks, Sexy is designed to be truly native.
+
+Sexy doesnt work in runtime. Framework analyse your components and turn them into native javascript with little overhead: 3.8kb gzip.
+
+Well, sexy was designed to work with sever rendering but you can also use it without to make responsible SPA's
+
+## Performance
 
 Sexy is fast because it compiles components to Native Javascript and it manages reactivity at compiler time!
 
-1. No reactivity libs (all deps are made by code analyser)
-2. No runtime (Framework doesnt work in runtime, only on compilation step)
-3. Partial hydration (even for loops and conditional statements)
-
-Thanks SolidJS (dom expressions) and Sinuous (fast looping) for their work that helped to make max performance.
-
-## Benefits
-- **Small.** `3.73kB` gzip.
-- **Fast.** No reactivity libs, No runtime work
+- **Small.** `3.78kB` gzip.
+- **Super Fast.** No reactivity libs, No runtime work
 - **Partial hydration.** Hydrate only dynamic and statefull parts of application
 - **Truly reactive.** automatically derived from the app state.
 - **Tips & Tricks.** Slots, Loops, Statements and Props as we get used to
 
-## Performance
+Sexy framework is faster then NuxtJS in x4.5 times to hydrate dynamic components. *First Input Delay* and TTI better in 3 times (google pagespeed).
 
-Performance is a main key of Sexy framework. (syntethic tests)
-1. Faster in x4.5 times to hydrate dynamic components then NuxtJS
-2. Faster in x3.5 times to hydrate static components then NuxtJS
-2. Faster in x3 times to hydrate components with events then NuxtJS
-2. Faster in x10 times to hydrate components then Svelte (in real test FID better in 3 times)
+## Documentation
 
-Best choice for mobile web apps development.
+To check out live examples and docs, visit [sexy-js.ninja](http://sexy-js.ninja/).
 
-Benchmark was made with 10 000 components with loop function. (Without loop its much more faster).
+## How-to
 
-## Performance TODO
-- [x] Cache value
-- [ ] Class and style optimiztion
-- [ ] Render to string (remove JSDOM to speed up server render)
+[sexy-package]: https://npmjs.com/package/sexy
+[sexy-loader-package]: https://npmjs.com/package/sexy-loader
+[sexy-server-package]: https://npmjs.com/package/sexy-server
+[create-sexy-app-package]: https://npmjs.com/package/create-sexy-app
 
-Attribute speed test with MarkoJS benchmark showed 19000 ops/sec for sexy framework and x5 hydration speed
+### 1. You can create app with SSR
 
-## Features
-
-- [x] Single file components
-- [x] Statements
-- [x] Slots
-- [x] Loops
-- [x] Props
-- [x] Hooks (mounted/unmounted)
-- [x] Components auto import/naming
-- [x] Directives (Plugins)
-- [x] Two-way bindings
-- [x] Animation (basic via class)
-- [x] Lazy loading (there is bug with root subscriber)
-- [x] Dependencies (SFC)
-- [ ] Store (Vuex, Mobx...)
-- [x] SSR
-- [x] Simple router
-- [ ] Static site generation
-- [x] Project config for SSR (styles entry, bundle analyzer...)
-- [ ] Client ssr-first mode (if there is huge page then render it on server, cache and transfer to client instead of render on client directly)
-- [ ] Recursive components
-- [ ] Dynamic components !! (tags complete)
-- [ ] Docs !!
-- [ ] Boilerplate generation !!
-- [ ] Benchmarks for hydration most popular frameworks
-
-Expression generation should be fixed and tested more
-
-## Single file components
-
-Syntax is similar to VueJs but loop and conditional statements has a bit different syntax
- 
-```vue
-@if(expression)
-<div :class="[var2]" :style="var1">
-	<slot>Default slot text</slot>
-</div>
-@elseif(expression)
-1
-@else
-2
-@endif
+```shell
+npx create-sexy-app my-app
 ```
 
-Each with multiple nodes
-```vue
-@each((item, key) in items)
-<template :key="key">
-// code
-</template>
-@endeach
+```shell
+yarn create sexy-app my-app
 ```
 
-Each with signle nodes
-```vue
-@each((item, key) in items)
-<div :key="key">
-// code
-</div>
-@endeach
+And use it in development mode:
+
+```shell
+npm run dev
 ```
 
-## Examples
+Or production:
 
-Example with Loop, external component, (bind) (two-way data binding and directive), references and style blocks
-```vue
-<div>
-	@each(item, key in items)
-		<nav.container ref="test" :key="item.v" (bind)="vv" transition:classed="fade" lazy>
-			test {{ item.v }}
-		</nav.container>
-	@endeach
-	<!-- <input type="text" (bind)="vv" ref="input"> -->
-	{{ vv }}
-</div>
-
-<script>
-import { bind } from 'sexy-framework/directives'
-
-let items = o([{
-	v: 'a'
-}, {
-	v: 'b'
-}]);
-
-let vv = o('test');
-
-function mounted()
-{
-	
-}
-
-function unmounted()
-{
-	
-}
-</script>
-
-
-<style>
-.red {
-	color: rgb(0, 0, 0);
-}
-</style>
+```shell
+npm run build && npm run start
 ```
 
+### 2. You can use it manually
 
-Example events, classes, styles
-```vue
-<div @click="change" :class="[classList, { active: tick === 1 }]" :style="{ fontSize: tick() + 'px' }">
-	<slot></slot>
-</div>
-
-<script>
-let tick = o(24);
-let test = p(null);
-let value = p(null);
-
-let classList = () => {
-	return {
-		red: tick() % 2 == 0,
-		green: tick() % 3 == 0,
-		some: test() === null,
-	}
-}
-
-function change()
-{
-	$emit('input', 2);
-}
-
-function mounted()
-{
-	console.log('container mounted');
-}
-
-function unmounted()
-{
-	console.log('container unmounted');	
-}
-</script>
+```shell
+npm install sexy sexy-loader --save
 ```
 
-## Contributors
+And use it with webpack
+
+```javascript
+module: {
+  rules: [
+    {
+      test: /.sexy$/i,
+      use: [{
+        loader: 'sexy-loader',
+        options: {
+          path: './components', // path to folder where components located
+          styles: true,
+        }
+      }]
+    },
+  ]
+}
+```
+
+Then your enty js file should contain:
+```javascript
+import { render } from 'sexy/render';
+import HelloWorld from './components/hello-world.sexy';
+
+const layout = document.getElementById('layout');
+
+render(HelloWorld, layout);
+```
+
+## Contribution
+
+We need contributors to make project production-ready.
+
+### Contributors
 
 Burkhanov Kirill (kir.burkhanov@gmail.com)
 
 ## License
 
 Copyright (c) 2020 Burkhanov Kirill. This is free software, and may be redistributed under the terms specified in the LICENSE file.
+
