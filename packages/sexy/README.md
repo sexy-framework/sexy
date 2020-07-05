@@ -89,6 +89,10 @@ const layout = document.getElementById('layout');
 render(HelloWorld, layout);
 ```
 
+## Known problems
+
+Reactivity in loops with object props is not reactive.
+
 ## Contribution
 
 We need contributors to make project production-ready.
