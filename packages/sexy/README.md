@@ -26,10 +26,10 @@ Sexy framework is faster then NuxtJS in x4.5 times to hydrate dynamic components
 Sexy is faster than VueJS in 200 times.
 
 Sexy-js Benchmark
-![benchmark-sexy](../../assets/sexy-performance.png)
+![benchmark-sexy](./assets/sexy-performance.png)
 
 NuxtJS Benchmark
-![benchmark-nuxt](../../assets/nuxt-performance.png)
+![benchmark-nuxt](./assets/nuxt-performance.png)
 
 ## Documentation
 
