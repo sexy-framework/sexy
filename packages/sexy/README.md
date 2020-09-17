@@ -21,6 +21,16 @@ Sexy is fast because it compiles components to Native Javascript and it manages 
 
 Sexy framework is faster then NuxtJS in x4.5 times to hydrate dynamic components. *First Input Delay* and TTI better in 3 times (google pagespeed).
 
+## Benchmark (lighthouse)
+
+Sexy is faster than VueJS in 200 times.
+
+Sexy-js Benchmark
+![benchmark-sexy](../../assets/sexy-performance.png)
+
+NuxtJS Benchmark
+![benchmark-nuxt](../../assets/nuxt-performance.png)
+
 ## Documentation
 
 To check out live examples and docs, visit [sexy-js.ninja](http://sexy-js.ninja/).
